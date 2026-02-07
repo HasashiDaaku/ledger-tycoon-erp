@@ -18,26 +18,60 @@ class MarketEngine:
         self.base_demand = 1000  # Base market demand per product per month
         self.price_elasticity = 0.5  # How sensitive demand is to price changes
     
-    async def calculate_market_demand(self, product_id: int) -> float:
+    async def calculate_market_demand(
+        self, 
+        product_id: int,
+        events_engine=None,
+        logs: List[str] = None
+    ) -> float:
         """
         Calculate total market demand for a product.
         
         Factors:
         - Base demand (market size)
-        - Seasonality (random variation)
-        - Overall market growth (future)
+        - Seasonal modifiers (from events_engine)
+        - Economic modifiers (booms/recessions)
+        - Random variation (±10%)
         """
+        if logs is None:
+            logs = []
+            
         # Get product
         result = await self.db.execute(
             select(Product).where(Product.id == product_id)
         )
         product = result.scalar_one()
         
-        # Seasonality: ±20% random variation
-        seasonality = random.uniform(0.8, 1.2)
+        # Base demand with small random variation
+        random_variation = random.uniform(0.9, 1.1)
+        base_demand = self.base_demand * random_variation
         
-        total_demand = self.base_demand * seasonality
-        return total_demand
+        # Apply market event modifiers if engine provided
+        if events_engine:
+            final_demand, modifiers = await events_engine.apply_demand_modifiers(
+                base_demand, 
+                product.name
+            )
+            
+            # Log demand calculation breakdown
+            logs.append(f"    📊 Base Demand: {int(base_demand)} units")
+            
+            if modifiers['seasonal'] != 1.0:
+                season = events_engine.get_season_name()
+                modifier_pct = int((modifiers['seasonal'] - 1) * 100)
+                sign = "+" if modifier_pct > 0 else ""
+                logs.append(f"    🌸 Seasonal Modifier ({season}): ×{modifiers['seasonal']:.2f} ({sign}{modifier_pct}%)")
+            
+            if modifiers['economic'] != 1.0:
+                modifier_pct = int((modifiers['economic'] - 1) * 100)
+                sign = "+" if modifier_pct > 0 else ""
+                econ_emoji = "💹" if modifiers['economic'] > 1.0 else "📉"
+                logs.append(f"    {econ_emoji} Economic Modifier: ×{modifiers['economic']:.2f} ({sign}{modifier_pct}%)")
+            
+            return final_demand
+        else:
+            # Fallback: original behavior
+            return base_demand
     
     async def distribute_sales(
         self, 

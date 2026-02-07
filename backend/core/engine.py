@@ -56,6 +56,10 @@ class GameEngine:
         await self.db.execute(delete(Company))
         await self.db.execute(delete(GameState))
         
+        # Clear market events
+        from app.models import MarketEvent
+        await self.db.execute(delete(MarketEvent))
+        
         # Reset game state
         state = GameState(current_month=1, current_year=2026)
         self.db.add(state)
@@ -133,6 +137,33 @@ class GameEngine:
                 self.db.add(company_product)
         
         await self.db.commit()
+        
+        # Initialize bot inventory to prevent Month 1 unfair advantage
+        from core.inventory_manager import InventoryManager
+        from core.bot_ai import BotAI
+        
+        inv_mgr = InventoryManager(self.db)
+        bot_ai = BotAI(self.db)
+        
+        for company in all_companies:
+            if not company.is_player:  # Only for bot companies
+                for product, base_cost, base_price in created_products:
+                    # Get recommended starting inventory (forecast will use market average since no history)
+                    recommended_qty = await inv_mgr.get_reorder_quantity(
+                        company_id=company.id,
+                        product_id=product.id
+                    )
+                    
+                    # Purchase initial inventory
+                    if recommended_qty > 0:
+                        await self.purchase_inventory(
+                            company_id=company.id,
+                            product_id=product.id,
+                            quantity=recommended_qty,
+                            unit_cost=base_cost
+                        )
+        
+        await self.db.commit()
         return player_company
     
     async def process_turn(self) -> Dict:
@@ -155,6 +186,26 @@ class GameEngine:
         log("\n" + "="*80)
         log(f"🎮 PROCESSING TURN: {self.current_month}/{self.current_year}")
         log("="*80)
+        
+        # Initialize market events engine
+        from core.market_events import MarketEventsEngine
+        events_engine = MarketEventsEngine(self.db, self.current_month, self.current_year)
+        
+        # Trigger new random events
+        new_events = await events_engine.trigger_random_events()
+        if new_events:
+            log("\n📰 NEW MARKET EVENTS:")
+            for event in new_events:
+                emoji = "🎉" if "Boom" in event.description else "⚠️" if "Disruption" in event.description else "📉"
+                log(f"  {emoji} {event.description}")
+        
+        # Display active market conditions
+        active_events = await events_engine.get_active_events()
+        if active_events:
+            log("\n📊 ACTIVE MARKET CONDITIONS:")
+            for event in active_events:
+                duration_text = f"({event.duration_months} month{'s' if event.duration_months > 1 else ''} remaining)"
+                log(f"  - {event.description} {duration_text}")
         
         # Get all companies
         result = await self.db.execute(select(Company))
@@ -197,8 +248,12 @@ class GameEngine:
                 log(f"    📊 Average Market Price: ${avg_price:.2f}")
             
             # Calculate market demand
-            demand = await self.market.calculate_market_demand(product.id)
-            log(f"    📈 Market Demand: {int(demand)} units")
+            demand = await self.market.calculate_market_demand(
+                product.id, 
+                events_engine=events_engine,
+                logs=logs
+            )
+            log(f"    📈 Final Market Demand: {int(demand)} units")
             
             # Distribute sales
             sales_distribution = await self.market.distribute_sales(
@@ -242,10 +297,14 @@ class GameEngine:
             if not company.is_player:
                 log(f"\n  {company.name}:")
                 bot_ai = BotAI(self.db)
-                await bot_ai.make_decisions(company, logs)  # Pass logs list
+                await bot_ai.make_decisions(company, logs, events_engine=events_engine)  # Pass logs list and events_engine
+        
         
         # Record Financial Snapshots (End of Month State)
         await self._record_financial_snapshots(self.current_month, self.current_year, logs)
+        
+        # Update market event durations (decrement and clean up expired events)
+        await events_engine.update_event_durations()
 
         # Advance time
         self.current_month += 1

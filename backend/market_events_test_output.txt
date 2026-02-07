@@ -1,0 +1,1111 @@
+================================================================================
+TESTING MARKET EVENTS SYSTEM
+================================================================================
+
+­ƒÄ« Initializing new game...
+Ô£à Player company created: Player Corp
+
+­ƒôª Player purchasing initial inventory...
+Ô£à Inventory purchased
+
+­ƒÄ« Running 6 month simulation...
+
+
+================================================================================
+­ƒÄ« PROCESSING TURN: 1/2026
+================================================================================
+
+­ƒôè Companies in game: 4
+  - Player Corp (PLAYER): Cash = $73,000.00
+  - TechCorp Inc (BOT): Cash = $71,530.00
+  - Global Traders (BOT): Cash = $65,540.00
+  - SmartBiz Ltd (BOT): Cash = $76,310.00
+
+­ƒôª Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+­ƒÆ░ PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$20.00
+    TechCorp Inc: Price=$20.00
+    Global Traders: Price=$20.00
+    SmartBiz Ltd: Price=$20.00
+    ­ƒôè Average Market Price: $20.00
+    ­ƒôê Final Market Demand: 1088 units
+    ­ƒôè Sales Distribution (Total Market: 1088 units):
+      Player Corp: 272 units (25.0%) ├ù $20.00 = $5,440.00
+      TechCorp Inc: 272 units (25.0%) ├ù $20.00 = $5,440.00
+      Global Traders: 272 units (25.0%) ├ù $20.00 = $5,440.00
+      SmartBiz Ltd: 272 units (25.0%) ├ù $20.00 = $5,440.00
+        ­ƒÆÁ Revenue: 272 ├ù $20.00 = $5,440.00
+        ­ƒôè COGS: 272 ├ù $10.00 = $2,720.00
+        ­ƒÆ░ Gross Profit: $2,720.00
+        ­ƒôª Inventory: 300 ÔåÆ 28 units
+        ­ƒÆÁ Revenue: 272 ├ù $20.00 = $5,440.00
+        ­ƒôè COGS: 272 ├ù $10.00 = $2,720.00
+        ­ƒÆ░ Gross Profit: $2,720.00
+        ­ƒôª Inventory: 343 ÔåÆ 71 units
+        ­ƒÆÁ Revenue: 272 ├ù $20.00 = $5,440.00
+        ­ƒôè COGS: 272 ├ù $10.00 = $2,720.00
+        ­ƒÆ░ Gross Profit: $2,720.00
+        ­ƒôª Inventory: 410 ÔåÆ 138 units
+        ­ƒÆÁ Revenue: 272 ├ù $20.00 = $5,440.00
+        ­ƒôè COGS: 272 ├ù $10.00 = $2,720.00
+        ­ƒÆ░ Gross Profit: $2,720.00
+        ­ƒôª Inventory: 280 ÔåÆ 8 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$100.00
+    TechCorp Inc: Price=$100.00
+    Global Traders: Price=$100.00
+    SmartBiz Ltd: Price=$100.00
+    ­ƒôè Average Market Price: $100.00
+    ­ƒôê Final Market Demand: 774 units
+    ­ƒôè Sales Distribution (Total Market: 772 units):
+      Player Corp: 193 units (25.0%) ├ù $100.00 = $19,300.00
+      TechCorp Inc: 193 units (25.0%) ├ù $100.00 = $19,300.00
+      Global Traders: 193 units (25.0%) ├ù $100.00 = $19,300.00
+      SmartBiz Ltd: 193 units (25.0%) ├ù $100.00 = $19,300.00
+        ­ƒÆÁ Revenue: 193 ├ù $100.00 = $19,300.00
+        ­ƒôè COGS: 193 ├ù $50.00 = $9,650.00
+        ­ƒÆ░ Gross Profit: $9,650.00
+        ­ƒôª Inventory: 300 ÔåÆ 107 units
+        ­ƒÆÁ Revenue: 193 ├ù $100.00 = $19,300.00
+        ­ƒôè COGS: 193 ├ù $50.00 = $9,650.00
+        ­ƒÆ░ Gross Profit: $9,650.00
+        ­ƒôª Inventory: 304 ÔåÆ 111 units
+        ­ƒÆÁ Revenue: 193 ├ù $100.00 = $19,300.00
+        ­ƒôè COGS: 193 ├ù $50.00 = $9,650.00
+        ­ƒÆ░ Gross Profit: $9,650.00
+        ­ƒôª Inventory: 375 ÔåÆ 182 units
+        ­ƒÆÁ Revenue: 193 ├ù $100.00 = $19,300.00
+        ­ƒôè COGS: 193 ├ù $50.00 = $9,650.00
+        ­ƒÆ░ Gross Profit: $9,650.00
+        ­ƒôª Inventory: 260 ÔåÆ 67 units
+
+  Product: Professional Tool
+    Player Corp: Price=$60.00
+    TechCorp Inc: Price=$60.00
+    Global Traders: Price=$60.00
+    SmartBiz Ltd: Price=$60.00
+    ­ƒôè Average Market Price: $60.00
+    ­ƒôê Final Market Demand: 1053 units
+    ­ƒôè Sales Distribution (Total Market: 1052 units):
+      Player Corp: 263 units (25.0%) ├ù $60.00 = $15,780.00
+      TechCorp Inc: 263 units (25.0%) ├ù $60.00 = $15,780.00
+      Global Traders: 263 units (25.0%) ├ù $60.00 = $15,780.00
+      SmartBiz Ltd: 263 units (25.0%) ├ù $60.00 = $15,780.00
+        ­ƒÆÁ Revenue: 263 ├ù $60.00 = $15,780.00
+        ­ƒôè COGS: 263 ├ù $30.00 = $7,890.00
+        ­ƒÆ░ Gross Profit: $7,890.00
+        ­ƒôª Inventory: 300 ÔåÆ 37 units
+        ­ƒÆÁ Revenue: 263 ├ù $60.00 = $15,780.00
+        ­ƒôè COGS: 263 ├ù $30.00 = $7,890.00
+        ­ƒÆ░ Gross Profit: $7,890.00
+        ­ƒôª Inventory: 328 ÔåÆ 65 units
+        ­ƒÆÁ Revenue: 263 ├ù $60.00 = $15,780.00
+        ­ƒôè COGS: 263 ├ù $30.00 = $7,890.00
+        ­ƒÆ░ Gross Profit: $7,890.00
+        ­ƒôª Inventory: 387 ÔåÆ 124 units
+        ­ƒÆÁ Revenue: 263 ├ù $60.00 = $15,780.00
+        ­ƒôè COGS: 263 ├ù $30.00 = $7,890.00
+        ­ƒÆ░ Gross Profit: $7,890.00
+        ­ƒôª Inventory: 263 ÔåÆ 0 units
+
+­ƒÅ¡ WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+­ƒñû BOT AI DECISIONS:
+
+  TechCorp Inc:
+    ­ƒÆÁ Basic Widget: $20.00 ÔåÆ $13.07 (Target margin: 30%)
+    ­ƒÆÁ Premium Gadget: $100.00 ÔåÆ $65.13 (Target margin: 30%)
+    ­ƒÆÁ Professional Tool: $60.00 ÔåÆ $37.43 (Target margin: 30%)
+    ­ƒÆ░ Cash available: $112,050.00
+    ­ƒôè Basic Widget Analysis: Forecast=290, Safety=53, Current=71
+    ­ƒøÆ Purchasing 272 ├ù Basic Widget @ $10.00 = $2,720.00
+    Ô£à Purchase complete. Remaining cash: $109,330.00
+    ­ƒôè Premium Gadget Analysis: Forecast=295, Safety=9, Current=111
+    ­ƒøÆ Purchasing 193 ├ù Premium Gadget @ $50.00 = $9,650.00
+    Ô£à Purchase complete. Remaining cash: $99,680.00
+    ­ƒôè Professional Tool Analysis: Forecast=295, Safety=33, Current=65
+    ­ƒøÆ Purchasing 263 ├ù Professional Tool @ $30.00 = $7,890.00
+    Ô£à Purchase complete. Remaining cash: $91,790.00
+
+  Global Traders:
+    ­ƒÆÁ Basic Widget: $20.00 ÔåÆ $11.08 (Target margin: 15%)
+    ­ƒÆÁ Premium Gadget: $100.00 ÔåÆ $58.14 (Target margin: 15%)
+    ­ƒÆÁ Professional Tool: $60.00 ÔåÆ $34.28 (Target margin: 15%)
+    ­ƒÆ░ Cash available: $106,060.00
+    ­ƒôè Basic Widget Analysis: Forecast=346, Safety=63, Current=138
+    ­ƒøÆ Purchasing 272 ├ù Basic Widget @ $10.00 = $2,720.00
+    Ô£à Purchase complete. Remaining cash: $103,340.00
+    ­ƒôè Premium Gadget Analysis: Forecast=353, Safety=21, Current=182
+    ­ƒøÆ Purchasing 193 ├ù Premium Gadget @ $50.00 = $9,650.00
+    Ô£à Purchase complete. Remaining cash: $93,690.00
+    ­ƒôè Professional Tool Analysis: Forecast=343, Safety=44, Current=124
+    ­ƒøÆ Purchasing 263 ├ù Professional Tool @ $30.00 = $7,890.00
+    Ô£à Purchase complete. Remaining cash: $85,800.00
+
+  SmartBiz Ltd:
+    ­ƒÆÁ Basic Widget: $20.00 ÔåÆ $14.75 (Target margin: 50%)
+    ­ƒÆÁ Premium Gadget: $100.00 ÔåÆ $72.57 (Target margin: 50%)
+    ­ƒÆÁ Professional Tool: $60.00 ÔåÆ $44.49 (Target margin: 50%)
+    ­ƒÆ░ Cash available: $116,830.00
+    ­ƒôè Basic Widget Analysis: Forecast=228, Safety=51, Current=8
+    ­ƒøÆ Purchasing 272 ├ù Basic Widget @ $10.00 = $2,720.00
+    Ô£à Purchase complete. Remaining cash: $114,110.00
+    ­ƒôè Premium Gadget Analysis: Forecast=232, Safety=28, Current=67
+    ­ƒøÆ Purchasing 193 ├ù Premium Gadget @ $50.00 = $9,650.00
+    Ô£à Purchase complete. Remaining cash: $104,460.00
+    ­ƒôè Professional Tool Analysis: Forecast=236, Safety=27, Current=0
+    ­ƒøÆ Purchasing 263 ├ù Professional Tool @ $30.00 = $7,890.00
+    Ô£à Purchase complete. Remaining cash: $96,570.00
+
+­ƒôê FINANCIAL HEALTH SNAPSHOTS:
+  Ô¡É Player Corp: Assets=$115,260.00 (Cash=$108,520.00, Inv=$6,740.00), Equity=$115,260.00, Total Profit=$15,260.00
+    TechCorp Inc: Assets=$120,260.00 (Cash=$91,790.00, Inv=$28,470.00), Equity=$120,260.00, Total Profit=$20,260.00
+    Global Traders: Assets=$120,260.00 (Cash=$85,800.00, Inv=$34,460.00), Equity=$120,260.00, Total Profit=$20,260.00
+    SmartBiz Ltd: Assets=$120,260.00 (Cash=$96,570.00, Inv=$23,690.00), Equity=$120,260.00, Total Profit=$20,260.00
+
+ÔÅ░ Advanced to: 2/2026
+
+­ƒôè FINAL SUMMARY:
+  Player Corp: Cash = $108,520.00
+  TechCorp Inc: Cash = $91,790.00
+  Global Traders: Cash = $85,800.00
+  SmartBiz Ltd: Cash = $96,570.00
+================================================================================
+
+
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+Turn 1 complete
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+
+
+================================================================================
+­ƒÄ« PROCESSING TURN: 2/2026
+================================================================================
+
+­ƒô░ NEW MARKET EVENTS:
+  ÔÜá´©Å Supply Chain Disruption: Professional Tool costs +19% for 1 month
+
+­ƒôè ACTIVE MARKET CONDITIONS:
+  - Supply Chain Disruption: Professional Tool costs +19% for 1 month (1 month remaining)
+
+­ƒôè Companies in game: 4
+  - Player Corp (PLAYER): Cash = $108,520.00
+  - TechCorp Inc (BOT): Cash = $91,790.00
+  - Global Traders (BOT): Cash = $85,800.00
+  - SmartBiz Ltd (BOT): Cash = $96,570.00
+
+­ƒôª Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+­ƒÆ░ PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$20.00
+    TechCorp Inc: Price=$13.07
+    Global Traders: Price=$11.08
+    SmartBiz Ltd: Price=$14.75
+    ­ƒôè Average Market Price: $14.72
+    ­ƒôê Final Market Demand: 1247 units
+    ­ƒôè Sales Distribution (Total Market: 1273 units):
+      Player Corp: 179 units (14.1%) ├ù $20.00 = $3,580.00
+      TechCorp Inc: 354 units (27.8%) ├ù $13.07 = $4,626.78
+      Global Traders: 444 units (34.9%) ├ù $11.08 = $4,919.52
+      SmartBiz Ltd: 296 units (23.3%) ├ù $14.75 = $4,366.00
+        ÔÜá´©Å  Insufficient inventory! Wanted 179, only had 28
+        ­ƒÆÁ Revenue: 28 ├ù $20.00 = $560.00
+        ­ƒôè COGS: 28 ├ù $10.00 = $280.00
+        ­ƒÆ░ Gross Profit: $280.00
+        ­ƒôª Inventory: 28 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 354, only had 343
+        ­ƒÆÁ Revenue: 343 ├ù $13.07 = $4,483.01
+        ­ƒôè COGS: 343 ├ù $10.00 = $3,430.00
+        ­ƒÆ░ Gross Profit: $1,053.01
+        ­ƒôª Inventory: 343 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 444, only had 410
+        ­ƒÆÁ Revenue: 410 ├ù $11.08 = $4,542.80
+        ­ƒôè COGS: 410 ├ù $10.00 = $4,100.00
+        ­ƒÆ░ Gross Profit: $442.80
+        ­ƒôª Inventory: 410 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 296, only had 280
+        ­ƒÆÁ Revenue: 280 ├ù $14.75 = $4,130.00
+        ­ƒôè COGS: 280 ├ù $10.00 = $2,800.00
+        ­ƒÆ░ Gross Profit: $1,330.00
+        ­ƒôª Inventory: 280 ÔåÆ 0 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$100.00
+    TechCorp Inc: Price=$65.13
+    Global Traders: Price=$58.14
+    SmartBiz Ltd: Price=$72.57
+    ­ƒôè Average Market Price: $73.96
+    ­ƒôê Final Market Demand: 803 units
+    ­ƒôè Sales Distribution (Total Market: 817 units):
+      Player Corp: 117 units (14.3%) ├ù $100.00 = $11,700.00
+      TechCorp Inc: 231 units (28.3%) ├ù $65.13 = $15,045.03
+      Global Traders: 271 units (33.2%) ├ù $58.14 = $15,755.94
+      SmartBiz Ltd: 198 units (24.2%) ├ù $72.57 = $14,368.86
+        ÔÜá´©Å  Insufficient inventory! Wanted 117, only had 107
+        ­ƒÆÁ Revenue: 107 ├ù $100.00 = $10,700.00
+        ­ƒôè COGS: 107 ├ù $50.00 = $5,350.00
+        ­ƒÆ░ Gross Profit: $5,350.00
+        ­ƒôª Inventory: 107 ÔåÆ 0 units
+        ­ƒÆÁ Revenue: 231 ├ù $65.13 = $15,045.03
+        ­ƒôè COGS: 231 ├ù $50.00 = $11,550.00
+        ­ƒÆ░ Gross Profit: $3,495.03
+        ­ƒôª Inventory: 304 ÔåÆ 73 units
+        ­ƒÆÁ Revenue: 271 ├ù $58.14 = $15,755.94
+        ­ƒôè COGS: 271 ├ù $50.00 = $13,550.00
+        ­ƒÆ░ Gross Profit: $2,205.94
+        ­ƒôª Inventory: 375 ÔåÆ 104 units
+        ­ƒÆÁ Revenue: 198 ├ù $72.57 = $14,368.86
+        ­ƒôè COGS: 198 ├ù $50.00 = $9,900.00
+        ­ƒÆ░ Gross Profit: $4,468.86
+        ­ƒôª Inventory: 260 ÔåÆ 62 units
+
+  Product: Professional Tool
+    Player Corp: Price=$60.00
+    TechCorp Inc: Price=$37.43
+    Global Traders: Price=$34.28
+    SmartBiz Ltd: Price=$44.49
+    ­ƒôè Average Market Price: $44.05
+    ­ƒôê Final Market Demand: 964 units
+    ­ƒôè Sales Distribution (Total Market: 983 units):
+      Player Corp: 138 units (14.0%) ├ù $60.00 = $8,280.00
+      TechCorp Inc: 291 units (29.6%) ├ù $37.43 = $10,892.13
+      Global Traders: 328 units (33.4%) ├ù $34.28 = $11,243.84
+      SmartBiz Ltd: 226 units (23.0%) ├ù $44.49 = $10,054.74
+        ÔÜá´©Å  Insufficient inventory! Wanted 138, only had 37
+        ­ƒÆÁ Revenue: 37 ├ù $60.00 = $2,220.00
+        ­ƒôè COGS: 37 ├ù $30.00 = $1,110.00
+        ­ƒÆ░ Gross Profit: $1,110.00
+        ­ƒôª Inventory: 37 ÔåÆ 0 units
+        ­ƒÆÁ Revenue: 291 ├ù $37.43 = $10,892.13
+        ­ƒôè COGS: 291 ├ù $30.00 = $8,730.00
+        ­ƒÆ░ Gross Profit: $2,162.13
+        ­ƒôª Inventory: 328 ÔåÆ 37 units
+        ­ƒÆÁ Revenue: 328 ├ù $34.28 = $11,243.84
+        ­ƒôè COGS: 328 ├ù $30.00 = $9,840.00
+        ­ƒÆ░ Gross Profit: $1,403.84
+        ­ƒôª Inventory: 387 ÔåÆ 59 units
+        ­ƒÆÁ Revenue: 226 ├ù $44.49 = $10,054.74
+        ­ƒôè COGS: 226 ├ù $30.00 = $6,780.00
+        ­ƒÆ░ Gross Profit: $3,274.74
+        ­ƒôª Inventory: 263 ÔåÆ 37 units
+
+­ƒÅ¡ WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+­ƒñû BOT AI DECISIONS:
+
+  TechCorp Inc:
+    ­ƒÆÁ Basic Widget: $13.07 ÔåÆ $13.33 (Target margin: 30%)
+    ­ƒÆÁ Premium Gadget: $65.13 ÔåÆ $66.84 (Target margin: 30%)
+    ­ƒÆÁ Professional Tool: $37.43 ÔåÆ $37.95 (Target margin: 30%)
+    ­ƒÆ░ Cash available: $122,210.17
+    ­ƒôè Basic Widget Analysis: Forecast=290, Safety=53, Current=0
+    ­ƒøÆ Purchasing 343 ├ù Basic Widget @ $10.00 = $3,430.00
+    Ô£à Purchase complete. Remaining cash: $118,780.17
+    ­ƒôè Premium Gadget Analysis: Forecast=295, Safety=9, Current=73
+    ­ƒøÆ Purchasing 231 ├ù Premium Gadget @ $50.00 = $11,550.00
+    Ô£à Purchase complete. Remaining cash: $107,230.17
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=295, Safety=33, Current=37
+    ­ƒøÆ Purchasing 291 ├ù Professional Tool @ $36.00 = $10,476.00
+    Ô£à Purchase complete. Remaining cash: $96,754.17
+
+  Global Traders:
+    ­ƒÆÁ Basic Widget: $11.08 ÔåÆ $11.11 (Target margin: 15%)
+    ­ƒÆÁ Premium Gadget: $58.14 ÔåÆ $59.32 (Target margin: 15%)
+    ­ƒÆÁ Professional Tool: $34.28 ÔåÆ $35.86 (Target margin: 15%)
+    ­ƒÆ░ Cash available: $117,342.58
+    ­ƒôè Basic Widget Analysis: Forecast=346, Safety=63, Current=0
+    ­ƒøÆ Purchasing 410 ├ù Basic Widget @ $10.00 = $4,100.00
+    Ô£à Purchase complete. Remaining cash: $113,242.58
+    ­ƒôè Premium Gadget Analysis: Forecast=353, Safety=21, Current=104
+    ­ƒøÆ Purchasing 271 ├ù Premium Gadget @ $50.00 = $13,550.00
+    Ô£à Purchase complete. Remaining cash: $99,692.58
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=343, Safety=44, Current=59
+    ­ƒøÆ Purchasing 328 ├ù Professional Tool @ $36.00 = $11,808.00
+    Ô£à Purchase complete. Remaining cash: $87,884.58
+
+  SmartBiz Ltd:
+    ­ƒÆÁ Basic Widget: $14.75 ÔåÆ $15.07 (Target margin: 50%)
+    ­ƒÆÁ Premium Gadget: $72.57 ÔåÆ $72.95 (Target margin: 50%)
+    ­ƒÆÁ Professional Tool: $44.49 ÔåÆ $43.50 (Target margin: 50%)
+    ­ƒÆ░ Cash available: $125,123.60
+    ­ƒôè Basic Widget Analysis: Forecast=228, Safety=51, Current=0
+    ­ƒøÆ Purchasing 280 ├ù Basic Widget @ $10.00 = $2,800.00
+    Ô£à Purchase complete. Remaining cash: $122,323.60
+    ­ƒôè Premium Gadget Analysis: Forecast=232, Safety=28, Current=62
+    ­ƒøÆ Purchasing 198 ├ù Premium Gadget @ $50.00 = $9,900.00
+    Ô£à Purchase complete. Remaining cash: $112,423.60
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=236, Safety=27, Current=37
+    ­ƒøÆ Purchasing 226 ├ù Professional Tool @ $36.00 = $8,136.00
+    Ô£à Purchase complete. Remaining cash: $104,287.60
+
+­ƒôê FINANCIAL HEALTH SNAPSHOTS:
+  Ô¡É Player Corp: Assets=$117,000.00 (Cash=$117,000.00, Inv=$0.00), Equity=$117,000.00, Total Profit=$17,000.00
+    TechCorp Inc: Assets=$126,970.17 (Cash=$96,754.17, Inv=$30,216.00), Equity=$126,970.17, Total Profit=$26,970.17
+    Global Traders: Assets=$124,312.58 (Cash=$87,884.58, Inv=$36,428.00), Equity=$124,312.58, Total Profit=$24,312.58
+    SmartBiz Ltd: Assets=$129,333.60 (Cash=$104,287.60, Inv=$25,046.00), Equity=$129,333.60, Total Profit=$29,333.60
+
+ÔÅ░ Advanced to: 3/2026
+
+­ƒôè FINAL SUMMARY:
+  Player Corp: Cash = $117,000.00
+  TechCorp Inc: Cash = $96,754.17
+  Global Traders: Cash = $87,884.58
+  SmartBiz Ltd: Cash = $104,287.60
+================================================================================
+
+
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+Turn 2 complete
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+
+
+================================================================================
+­ƒÄ« PROCESSING TURN: 3/2026
+================================================================================
+
+­ƒô░ NEW MARKET EVENTS:
+  ÔÜá´©Å Supply Chain Disruption: Basic Widget costs +30% for 2 months
+
+­ƒôè ACTIVE MARKET CONDITIONS:
+  - Supply Chain Disruption: Professional Tool costs +19% for 1 month (1 month remaining)
+  - Supply Chain Disruption: Basic Widget costs +30% for 2 months (2 months remaining)
+
+­ƒôè Companies in game: 4
+  - Player Corp (PLAYER): Cash = $117,000.00
+  - TechCorp Inc (BOT): Cash = $96,754.17
+  - Global Traders (BOT): Cash = $87,884.58
+  - SmartBiz Ltd (BOT): Cash = $104,287.60
+
+­ƒôª Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+­ƒÆ░ PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$20.00
+    TechCorp Inc: Price=$13.33
+    Global Traders: Price=$11.11
+    SmartBiz Ltd: Price=$15.07
+    ­ƒôè Average Market Price: $14.88
+    ­ƒôê Final Market Demand: 1146 units
+    ­ƒôè Sales Distribution (Total Market: 1170 units):
+      Player Corp: 168 units (14.4%) ├ù $20.00 = $3,360.00
+      TechCorp Inc: 321 units (27.4%) ├ù $13.33 = $4,278.93
+      Global Traders: 413 units (35.3%) ├ù $11.11 = $4,588.43
+      SmartBiz Ltd: 268 units (22.9%) ├ù $15.07 = $4,038.76
+        ÔÜá´©Å  Insufficient inventory! Wanted 168, only had 0
+        ­ƒÆÁ Revenue: 321 ├ù $13.33 = $4,278.93
+        ­ƒôè COGS: 321 ├ù $10.00 = $3,210.00
+        ­ƒÆ░ Gross Profit: $1,068.93
+        ­ƒôª Inventory: 343 ÔåÆ 22 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 413, only had 410
+        ­ƒÆÁ Revenue: 410 ├ù $11.11 = $4,555.10
+        ­ƒôè COGS: 410 ├ù $10.00 = $4,100.00
+        ­ƒÆ░ Gross Profit: $455.10
+        ­ƒôª Inventory: 410 ÔåÆ 0 units
+        ­ƒÆÁ Revenue: 268 ├ù $15.07 = $4,038.76
+        ­ƒôè COGS: 268 ├ù $10.00 = $2,680.00
+        ­ƒÆ░ Gross Profit: $1,358.76
+        ­ƒôª Inventory: 280 ÔåÆ 12 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$100.00
+    TechCorp Inc: Price=$66.84
+    Global Traders: Price=$59.32
+    SmartBiz Ltd: Price=$72.95
+    ­ƒôè Average Market Price: $74.78
+    ­ƒôê Final Market Demand: 1031 units
+    ­ƒôè Sales Distribution (Total Market: 1048 units):
+      Player Corp: 154 units (14.7%) ├ù $100.00 = $15,400.00
+      TechCorp Inc: 292 units (27.9%) ├ù $66.84 = $19,517.28
+      Global Traders: 345 units (32.9%) ├ù $59.32 = $20,465.40
+      SmartBiz Ltd: 257 units (24.5%) ├ù $72.95 = $18,748.15
+        ÔÜá´©Å  Insufficient inventory! Wanted 154, only had 0
+        ­ƒÆÁ Revenue: 292 ├ù $66.84 = $19,517.28
+        ­ƒôè COGS: 292 ├ù $50.00 = $14,600.00
+        ­ƒÆ░ Gross Profit: $4,917.28
+        ­ƒôª Inventory: 304 ÔåÆ 12 units
+        ­ƒÆÁ Revenue: 345 ├ù $59.32 = $20,465.40
+        ­ƒôè COGS: 345 ├ù $50.00 = $17,250.00
+        ­ƒÆ░ Gross Profit: $3,215.40
+        ­ƒôª Inventory: 375 ÔåÆ 30 units
+        ­ƒÆÁ Revenue: 257 ├ù $72.95 = $18,748.15
+        ­ƒôè COGS: 257 ├ù $50.00 = $12,850.00
+        ­ƒÆ░ Gross Profit: $5,898.15
+        ­ƒôª Inventory: 260 ÔåÆ 3 units
+
+  Product: Professional Tool
+    Player Corp: Price=$60.00
+    TechCorp Inc: Price=$37.95
+    Global Traders: Price=$35.86
+    SmartBiz Ltd: Price=$43.50
+    ­ƒôè Average Market Price: $44.33
+    ­ƒôê Final Market Demand: 1053 units
+    ­ƒôè Sales Distribution (Total Market: 1072 units):
+      Player Corp: 153 units (14.3%) ├ù $60.00 = $9,180.00
+      TechCorp Inc: 317 units (29.6%) ├ù $37.95 = $12,030.15
+      Global Traders: 342 units (31.9%) ├ù $35.86 = $12,264.12
+      SmartBiz Ltd: 260 units (24.3%) ├ù $43.50 = $11,310.00
+        ÔÜá´©Å  Insufficient inventory! Wanted 153, only had 0
+        ­ƒÆÁ Revenue: 317 ├ù $37.95 = $12,030.15
+        ­ƒôè COGS: 317 ├ù $35.32 = $11,197.45
+        ­ƒÆ░ Gross Profit: $832.70
+        ­ƒôª Inventory: 328 ÔåÆ 11 units
+        ­ƒÆÁ Revenue: 342 ├ù $35.86 = $12,264.12
+        ­ƒôè COGS: 342 ├ù $35.09 = $11,999.16
+        ­ƒÆ░ Gross Profit: $264.96
+        ­ƒôª Inventory: 387 ÔåÆ 45 units
+        ­ƒÆÁ Revenue: 260 ├ù $43.50 = $11,310.00
+        ­ƒôè COGS: 260 ├ù $35.16 = $9,140.53
+        ­ƒÆ░ Gross Profit: $2,169.47
+        ­ƒôª Inventory: 263 ÔåÆ 3 units
+
+­ƒÅ¡ WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+­ƒñû BOT AI DECISIONS:
+
+  TechCorp Inc:
+    ­ƒÆÁ Basic Widget: $13.33 ÔåÆ $13.07 (Target margin: 30%)
+    ­ƒÆÁ Premium Gadget: $66.84 ÔåÆ $63.45 (Target margin: 30%)
+    ­ƒÆÁ Professional Tool: $37.95 ÔåÆ $37.76 (Target margin: 30%)
+    ­ƒÆ░ Cash available: $132,580.53
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=290, Safety=53, Current=22
+    ­ƒøÆ Purchasing 321 ├ù Basic Widget @ $13.00 = $4,173.00
+    Ô£à Purchase complete. Remaining cash: $128,407.53
+    ­ƒôè Premium Gadget Analysis: Forecast=295, Safety=9, Current=12
+    ­ƒøÆ Purchasing 292 ├ù Premium Gadget @ $50.00 = $14,600.00
+    Ô£à Purchase complete. Remaining cash: $113,807.53
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=295, Safety=33, Current=11
+    ­ƒøÆ Purchasing 317 ├ù Professional Tool @ $36.00 = $11,412.00
+    Ô£à Purchase complete. Remaining cash: $102,395.53
+
+  Global Traders:
+    ­ƒÆÁ Basic Widget: $11.11 ÔåÆ $11.01 (Target margin: 15%)
+    ­ƒÆÁ Premium Gadget: $59.32 ÔåÆ $56.98 (Target margin: 15%)
+    ­ƒÆÁ Professional Tool: $35.86 ÔåÆ $33.00 (Target margin: 15%)
+    ­ƒÆ░ Cash available: $125,169.20
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=346, Safety=63, Current=0
+    ­ƒøÆ Purchasing 410 ├ù Basic Widget @ $13.00 = $5,330.00
+    Ô£à Purchase complete. Remaining cash: $119,839.20
+    ­ƒôè Premium Gadget Analysis: Forecast=353, Safety=21, Current=30
+    ­ƒøÆ Purchasing 345 ├ù Premium Gadget @ $50.00 = $17,250.00
+    Ô£à Purchase complete. Remaining cash: $102,589.20
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=343, Safety=44, Current=45
+    ­ƒøÆ Purchasing 342 ├ù Professional Tool @ $36.00 = $12,312.00
+    Ô£à Purchase complete. Remaining cash: $90,277.20
+
+  SmartBiz Ltd:
+    ­ƒÆÁ Basic Widget: $15.07 ÔåÆ $15.18 (Target margin: 50%)
+    ­ƒÆÁ Premium Gadget: $72.95 ÔåÆ $72.82 (Target margin: 50%)
+    ­ƒÆÁ Professional Tool: $43.50 ÔåÆ $45.78 (Target margin: 50%)
+    ­ƒÆ░ Cash available: $138,384.51
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=228, Safety=51, Current=12
+    ­ƒøÆ Purchasing 268 ├ù Basic Widget @ $13.00 = $3,484.00
+    Ô£à Purchase complete. Remaining cash: $134,900.51
+    ­ƒôè Premium Gadget Analysis: Forecast=232, Safety=28, Current=3
+    ­ƒøÆ Purchasing 257 ├ù Premium Gadget @ $50.00 = $12,850.00
+    Ô£à Purchase complete. Remaining cash: $122,050.51
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=236, Safety=27, Current=3
+    ­ƒøÆ Purchasing 260 ├ù Professional Tool @ $36.00 = $9,360.00
+    Ô£à Purchase complete. Remaining cash: $112,690.51
+
+­ƒôê FINANCIAL HEALTH SNAPSHOTS:
+  Ô¡É Player Corp: Assets=$112,000.00 (Cash=$112,000.00, Inv=$0.00), Equity=$112,000.00, Total Profit=$12,000.00
+    TechCorp Inc: Assets=$133,789.08 (Cash=$102,395.53, Inv=$31,393.55), Equity=$133,789.08, Total Profit=$33,789.08
+    Global Traders: Assets=$128,248.04 (Cash=$90,277.20, Inv=$37,970.84), Equity=$128,248.04, Total Profit=$28,248.04
+    SmartBiz Ltd: Assets=$138,759.98 (Cash=$112,690.51, Inv=$26,069.47), Equity=$138,759.98, Total Profit=$38,759.98
+
+ÔÅ░ Advanced to: 4/2026
+
+­ƒôè FINAL SUMMARY:
+  Player Corp: Cash = $112,000.00
+  TechCorp Inc: Cash = $102,395.53
+  Global Traders: Cash = $90,277.20
+  SmartBiz Ltd: Cash = $112,690.51
+================================================================================
+
+
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+Turn 3 complete
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+
+
+================================================================================
+­ƒÄ« PROCESSING TURN: 4/2026
+================================================================================
+
+­ƒôè ACTIVE MARKET CONDITIONS:
+  - Supply Chain Disruption: Professional Tool costs +19% for 1 month (1 month remaining)
+  - Supply Chain Disruption: Basic Widget costs +30% for 2 months (1 month remaining)
+
+­ƒôè Companies in game: 4
+  - Player Corp (PLAYER): Cash = $112,000.00
+  - TechCorp Inc (BOT): Cash = $102,395.53
+  - Global Traders (BOT): Cash = $90,277.20
+  - SmartBiz Ltd (BOT): Cash = $112,690.51
+
+­ƒôª Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+­ƒÆ░ PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$20.00
+    TechCorp Inc: Price=$13.07
+    Global Traders: Price=$11.01
+    SmartBiz Ltd: Price=$15.18
+    ­ƒôè Average Market Price: $14.81
+    ­ƒôê Final Market Demand: 1301 units
+    ­ƒôè Sales Distribution (Total Market: 1331 units):
+      Player Corp: 189 units (14.2%) ├ù $20.00 = $3,780.00
+      TechCorp Inc: 372 units (27.9%) ├ù $13.07 = $4,862.04
+      Global Traders: 471 units (35.4%) ├ù $11.01 = $5,185.71
+      SmartBiz Ltd: 299 units (22.5%) ├ù $15.18 = $4,538.82
+        ÔÜá´©Å  Insufficient inventory! Wanted 189, only had 0
+        ÔÜá´©Å  Insufficient inventory! Wanted 372, only had 343
+        ­ƒÆÁ Revenue: 343 ├ù $13.07 = $4,483.01
+        ­ƒôè COGS: 343 ├ù $12.81 = $4,393.00
+        ­ƒÆ░ Gross Profit: $90.01
+        ­ƒôª Inventory: 343 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 471, only had 410
+        ­ƒÆÁ Revenue: 410 ├ù $11.01 = $4,514.10
+        ­ƒôè COGS: 410 ├ù $13.00 = $5,330.00
+        ­ƒÆ░ Gross Profit: $-815.90
+        ­ƒôª Inventory: 410 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 299, only had 280
+        ­ƒÆÁ Revenue: 280 ├ù $15.18 = $4,250.40
+        ­ƒôè COGS: 280 ├ù $12.87 = $3,604.00
+        ­ƒÆ░ Gross Profit: $646.40
+        ­ƒôª Inventory: 280 ÔåÆ 0 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$100.00
+    TechCorp Inc: Price=$63.45
+    Global Traders: Price=$56.98
+    SmartBiz Ltd: Price=$72.82
+    ­ƒôè Average Market Price: $73.31
+    ­ƒôê Final Market Demand: 1030 units
+    ­ƒôè Sales Distribution (Total Market: 1050 units):
+      Player Corp: 147 units (14.0%) ├ù $100.00 = $14,700.00
+      TechCorp Inc: 303 units (28.9%) ├ù $63.45 = $19,225.35
+      Global Traders: 352 units (33.5%) ├ù $56.98 = $20,056.96
+      SmartBiz Ltd: 248 units (23.6%) ├ù $72.82 = $18,059.36
+        ÔÜá´©Å  Insufficient inventory! Wanted 147, only had 0
+        ­ƒÆÁ Revenue: 303 ├ù $63.45 = $19,225.35
+        ­ƒôè COGS: 303 ├ù $50.00 = $15,150.00
+        ­ƒÆ░ Gross Profit: $4,075.35
+        ­ƒôª Inventory: 304 ÔåÆ 1 units
+        ­ƒÆÁ Revenue: 352 ├ù $56.98 = $20,056.96
+        ­ƒôè COGS: 352 ├ù $50.00 = $17,600.00
+        ­ƒÆ░ Gross Profit: $2,456.96
+        ­ƒôª Inventory: 375 ÔåÆ 23 units
+        ­ƒÆÁ Revenue: 248 ├ù $72.82 = $18,059.36
+        ­ƒôè COGS: 248 ├ù $50.00 = $12,400.00
+        ­ƒÆ░ Gross Profit: $5,659.36
+        ­ƒôª Inventory: 260 ÔåÆ 12 units
+
+  Product: Professional Tool
+    Player Corp: Price=$60.00
+    TechCorp Inc: Price=$37.76
+    Global Traders: Price=$33.00
+    SmartBiz Ltd: Price=$45.78
+    ­ƒôè Average Market Price: $44.13
+    ­ƒôê Final Market Demand: 1034 units
+    ­ƒôè Sales Distribution (Total Market: 1058 units):
+      Player Corp: 148 units (14.0%) ├ù $60.00 = $8,880.00
+      TechCorp Inc: 308 units (29.1%) ├ù $37.76 = $11,630.08
+      Global Traders: 370 units (35.0%) ├ù $33.00 = $12,210.00
+      SmartBiz Ltd: 232 units (21.9%) ├ù $45.78 = $10,620.96
+        ÔÜá´©Å  Insufficient inventory! Wanted 148, only had 0
+        ­ƒÆÁ Revenue: 308 ├ù $37.76 = $11,630.08
+        ­ƒôè COGS: 308 ├ù $35.98 = $11,081.01
+        ­ƒÆ░ Gross Profit: $549.07
+        ­ƒôª Inventory: 328 ÔåÆ 20 units
+        ­ƒÆÁ Revenue: 370 ├ù $33.00 = $12,210.00
+        ­ƒôè COGS: 370 ├ù $35.89 = $13,280.65
+        ­ƒÆ░ Gross Profit: $-1,070.65
+        ­ƒôª Inventory: 387 ÔåÆ 17 units
+        ­ƒÆÁ Revenue: 232 ├ù $45.78 = $10,620.96
+        ­ƒôè COGS: 232 ├ù $35.99 = $8,349.77
+        ­ƒÆ░ Gross Profit: $2,271.19
+        ­ƒôª Inventory: 263 ÔåÆ 31 units
+
+­ƒÅ¡ WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+­ƒñû BOT AI DECISIONS:
+
+  TechCorp Inc:
+    ­ƒÆÁ Basic Widget: $13.07 ÔåÆ $12.44 (Target margin: 30%)
+    ­ƒÆÁ Premium Gadget: $63.45 ÔåÆ $62.57 (Target margin: 30%)
+    ­ƒÆÁ Professional Tool: $37.76 ÔåÆ $37.74 (Target margin: 30%)
+    ­ƒÆ░ Cash available: $137,733.97
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=290, Safety=53, Current=0
+    ­ƒøÆ Purchasing 343 ├ù Basic Widget @ $13.00 = $4,459.00
+    Ô£à Purchase complete. Remaining cash: $133,274.97
+    ­ƒôè Premium Gadget Analysis: Forecast=295, Safety=9, Current=1
+    ­ƒøÆ Purchasing 303 ├ù Premium Gadget @ $50.00 = $15,150.00
+    Ô£à Purchase complete. Remaining cash: $118,124.97
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=295, Safety=33, Current=20
+    ­ƒøÆ Purchasing 308 ├ù Professional Tool @ $36.00 = $11,088.00
+    Ô£à Purchase complete. Remaining cash: $107,036.97
+
+  Global Traders:
+    ­ƒÆÁ Basic Widget: $11.01 ÔåÆ $11.72 (Target margin: 15%)
+    ­ƒÆÁ Premium Gadget: $56.98 ÔåÆ $58.59 (Target margin: 15%)
+    ­ƒÆÁ Professional Tool: $33.00 ÔåÆ $33.00 (Target margin: 15%)
+    ­ƒÆ░ Cash available: $127,058.26
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=346, Safety=63, Current=0
+    ­ƒøÆ Purchasing 410 ├ù Basic Widget @ $13.00 = $5,330.00
+    Ô£à Purchase complete. Remaining cash: $121,728.26
+    ­ƒôè Premium Gadget Analysis: Forecast=353, Safety=21, Current=23
+    ­ƒøÆ Purchasing 352 ├ù Premium Gadget @ $50.00 = $17,600.00
+    Ô£à Purchase complete. Remaining cash: $104,128.26
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=343, Safety=44, Current=17
+    ­ƒøÆ Purchasing 370 ├ù Professional Tool @ $36.00 = $13,320.00
+    Ô£à Purchase complete. Remaining cash: $90,808.26
+
+  SmartBiz Ltd:
+    ­ƒÆÁ Basic Widget: $15.18 ÔåÆ $14.43 (Target margin: 50%)
+    ­ƒÆÁ Premium Gadget: $72.82 ÔåÆ $76.46 (Target margin: 50%)
+    ­ƒÆÁ Professional Tool: $45.78 ÔåÆ $45.90 (Target margin: 50%)
+    ­ƒÆ░ Cash available: $145,621.23
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=228, Safety=51, Current=0
+    ­ƒøÆ Purchasing 280 ├ù Basic Widget @ $13.00 = $3,640.00
+    Ô£à Purchase complete. Remaining cash: $141,981.23
+    ­ƒôè Premium Gadget Analysis: Forecast=232, Safety=28, Current=12
+    ­ƒøÆ Purchasing 248 ├ù Premium Gadget @ $50.00 = $12,400.00
+    Ô£à Purchase complete. Remaining cash: $129,581.23
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=236, Safety=27, Current=31
+    ­ƒøÆ Purchasing 232 ├ù Professional Tool @ $36.00 = $8,352.00
+    Ô£à Purchase complete. Remaining cash: $121,229.23
+
+­ƒôê FINANCIAL HEALTH SNAPSHOTS:
+  Ô¡É Player Corp: Assets=$107,000.00 (Cash=$107,000.00, Inv=$0.00), Equity=$107,000.00, Total Profit=$7,000.00
+    TechCorp Inc: Assets=$138,503.52 (Cash=$107,036.97, Inv=$31,466.55), Equity=$138,503.52, Total Profit=$38,503.52
+    Global Traders: Assets=$128,818.45 (Cash=$90,808.26, Inv=$38,010.19), Equity=$128,818.45, Total Profit=$28,818.45
+    SmartBiz Ltd: Assets=$147,336.93 (Cash=$121,229.23, Inv=$26,107.70), Equity=$147,336.93, Total Profit=$47,336.93
+
+ÔÅ░ Advanced to: 5/2026
+
+­ƒôè FINAL SUMMARY:
+  Player Corp: Cash = $107,000.00
+  TechCorp Inc: Cash = $107,036.97
+  Global Traders: Cash = $90,808.26
+  SmartBiz Ltd: Cash = $121,229.23
+================================================================================
+
+
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+Turn 4 complete
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+
+
+================================================================================
+­ƒÄ« PROCESSING TURN: 5/2026
+================================================================================
+
+­ƒô░ NEW MARKET EVENTS:
+  ­ƒÄë Economic Boom! Market demand +25% for 2 months
+
+­ƒôè ACTIVE MARKET CONDITIONS:
+  - Supply Chain Disruption: Professional Tool costs +19% for 1 month (1 month remaining)
+  - Supply Chain Disruption: Basic Widget costs +30% for 2 months (1 month remaining)
+  - Economic Boom! Market demand +25% for 2 months (2 months remaining)
+
+­ƒôè Companies in game: 4
+  - Player Corp (PLAYER): Cash = $107,000.00
+  - TechCorp Inc (BOT): Cash = $107,036.97
+  - Global Traders (BOT): Cash = $90,808.26
+  - SmartBiz Ltd (BOT): Cash = $121,229.23
+
+­ƒôª Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+­ƒÆ░ PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$20.00
+    TechCorp Inc: Price=$12.44
+    Global Traders: Price=$11.72
+    SmartBiz Ltd: Price=$14.43
+    ­ƒôè Average Market Price: $14.65
+    ­ƒôê Final Market Demand: 1410 units
+    ­ƒôè Sales Distribution (Total Market: 1438 units):
+      Player Corp: 202 units (14.0%) ├ù $20.00 = $4,040.00
+      TechCorp Inc: 427 units (29.7%) ├ù $12.44 = $5,311.88
+      Global Traders: 464 units (32.3%) ├ù $11.72 = $5,438.08
+      SmartBiz Ltd: 345 units (24.0%) ├ù $14.43 = $4,978.35
+        ÔÜá´©Å  Insufficient inventory! Wanted 202, only had 0
+        ÔÜá´©Å  Insufficient inventory! Wanted 427, only had 343
+        ­ƒÆÁ Revenue: 343 ├ù $12.44 = $4,266.92
+        ­ƒôè COGS: 343 ├ù $13.00 = $4,459.00
+        ­ƒÆ░ Gross Profit: $-192.08
+        ­ƒôª Inventory: 343 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 464, only had 410
+        ­ƒÆÁ Revenue: 410 ├ù $11.72 = $4,805.20
+        ­ƒôè COGS: 410 ├ù $13.00 = $5,330.00
+        ­ƒÆ░ Gross Profit: $-524.80
+        ­ƒôª Inventory: 410 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 345, only had 280
+        ­ƒÆÁ Revenue: 280 ├ù $14.43 = $4,040.40
+        ­ƒôè COGS: 280 ├ù $13.00 = $3,640.00
+        ­ƒÆ░ Gross Profit: $400.40
+        ­ƒôª Inventory: 280 ÔåÆ 0 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$100.00
+    TechCorp Inc: Price=$62.57
+    Global Traders: Price=$58.59
+    SmartBiz Ltd: Price=$76.46
+    ­ƒôè Average Market Price: $74.41
+    ­ƒôê Final Market Demand: 1153 units
+    ­ƒôè Sales Distribution (Total Market: 1176 units):
+      Player Corp: 170 units (14.5%) ├ù $100.00 = $17,000.00
+      TechCorp Inc: 354 units (30.1%) ├ù $62.57 = $22,149.78
+      Global Traders: 387 units (32.9%) ├ù $58.59 = $22,674.33
+      SmartBiz Ltd: 265 units (22.5%) ├ù $76.46 = $20,261.90
+        ÔÜá´©Å  Insufficient inventory! Wanted 170, only had 0
+        ÔÜá´©Å  Insufficient inventory! Wanted 354, only had 304
+        ­ƒÆÁ Revenue: 304 ├ù $62.57 = $19,021.28
+        ­ƒôè COGS: 304 ├ù $50.00 = $15,200.00
+        ­ƒÆ░ Gross Profit: $3,821.28
+        ­ƒôª Inventory: 304 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 387, only had 375
+        ­ƒÆÁ Revenue: 375 ├ù $58.59 = $21,971.25
+        ­ƒôè COGS: 375 ├ù $50.00 = $18,750.00
+        ­ƒÆ░ Gross Profit: $3,221.25
+        ­ƒôª Inventory: 375 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 265, only had 260
+        ­ƒÆÁ Revenue: 260 ├ù $76.46 = $19,879.60
+        ­ƒôè COGS: 260 ├ù $50.00 = $13,000.00
+        ­ƒÆ░ Gross Profit: $6,879.60
+        ­ƒôª Inventory: 260 ÔåÆ 0 units
+
+  Product: Professional Tool
+    Player Corp: Price=$60.00
+    TechCorp Inc: Price=$37.74
+    Global Traders: Price=$33.00
+    SmartBiz Ltd: Price=$45.90
+    ­ƒôè Average Market Price: $44.16
+    ­ƒôê Final Market Demand: 1404 units
+    ­ƒôè Sales Distribution (Total Market: 1436 units):
+      Player Corp: 201 units (14.0%) ├ù $60.00 = $12,060.00
+      TechCorp Inc: 418 units (29.1%) ├ù $37.74 = $15,775.32
+      Global Traders: 503 units (35.0%) ├ù $33.00 = $16,599.00
+      SmartBiz Ltd: 314 units (21.9%) ├ù $45.90 = $14,412.60
+        ÔÜá´©Å  Insufficient inventory! Wanted 201, only had 0
+        ÔÜá´©Å  Insufficient inventory! Wanted 418, only had 328
+        ­ƒÆÁ Revenue: 328 ├ù $37.74 = $12,378.72
+        ­ƒôè COGS: 328 ├ù $36.00 = $11,807.55
+        ­ƒÆ░ Gross Profit: $571.17
+        ­ƒôª Inventory: 328 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 503, only had 387
+        ­ƒÆÁ Revenue: 387 ├ù $33.00 = $12,771.00
+        ­ƒôè COGS: 387 ├ù $36.00 = $13,930.19
+        ­ƒÆ░ Gross Profit: $-1,159.19
+        ­ƒôª Inventory: 387 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 314, only had 263
+        ­ƒÆÁ Revenue: 263 ├ù $45.90 = $12,071.70
+        ­ƒôè COGS: 263 ├ù $36.00 = $9,467.70
+        ­ƒÆ░ Gross Profit: $2,604.00
+        ­ƒôª Inventory: 263 ÔåÆ 0 units
+
+­ƒÅ¡ WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+­ƒñû BOT AI DECISIONS:
+
+  TechCorp Inc:
+    ­ƒÆÁ Basic Widget: $12.44 ÔåÆ $12.70 (Target margin: 30%)
+    ­ƒÆÁ Premium Gadget: $62.57 ÔåÆ $62.05 (Target margin: 30%)
+    ­ƒÆÁ Professional Tool: $37.74 ÔåÆ $37.06 (Target margin: 30%)
+    ­ƒÆ░ Cash available: $142,703.89
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=290, Safety=53, Current=0
+    ­ƒøÆ Purchasing 343 ├ù Basic Widget @ $13.00 = $4,459.00
+    Ô£à Purchase complete. Remaining cash: $138,244.89
+    ­ƒôè Premium Gadget Analysis: Forecast=295, Safety=9, Current=0
+    ­ƒøÆ Purchasing 304 ├ù Premium Gadget @ $50.00 = $15,200.00
+    Ô£à Purchase complete. Remaining cash: $123,044.89
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=295, Safety=33, Current=0
+    ­ƒøÆ Purchasing 328 ├ù Professional Tool @ $36.00 = $11,808.00
+    Ô£à Purchase complete. Remaining cash: $111,236.89
+
+  Global Traders:
+    ­ƒÆÁ Basic Widget: $11.72 ÔåÆ $11.90 (Target margin: 15%)
+    ­ƒÆÁ Premium Gadget: $58.59 ÔåÆ $59.46 (Target margin: 15%)
+    ­ƒÆÁ Professional Tool: $33.00 ÔåÆ $33.00 (Target margin: 15%)
+    ­ƒÆ░ Cash available: $130,355.71
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=346, Safety=63, Current=0
+    ­ƒøÆ Purchasing 410 ├ù Basic Widget @ $13.00 = $5,330.00
+    Ô£à Purchase complete. Remaining cash: $125,025.71
+    ­ƒôè Premium Gadget Analysis: Forecast=353, Safety=21, Current=0
+    ­ƒøÆ Purchasing 375 ├ù Premium Gadget @ $50.00 = $18,750.00
+    Ô£à Purchase complete. Remaining cash: $106,275.71
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=343, Safety=44, Current=0
+    ­ƒøÆ Purchasing 387 ├ù Professional Tool @ $36.00 = $13,932.00
+    Ô£à Purchase complete. Remaining cash: $92,343.71
+
+  SmartBiz Ltd:
+    ­ƒÆÁ Basic Widget: $14.43 ÔåÆ $15.14 (Target margin: 50%)
+    ­ƒÆÁ Premium Gadget: $76.46 ÔåÆ $75.31 (Target margin: 50%)
+    ­ƒÆÁ Professional Tool: $45.90 ÔåÆ $46.83 (Target margin: 50%)
+    ­ƒÆ░ Cash available: $157,220.93
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=228, Safety=51, Current=0
+    ­ƒøÆ Purchasing 280 ├ù Basic Widget @ $13.00 = $3,640.00
+    Ô£à Purchase complete. Remaining cash: $153,580.93
+    ­ƒôè Premium Gadget Analysis: Forecast=232, Safety=28, Current=0
+    ­ƒøÆ Purchasing 260 ├ù Premium Gadget @ $50.00 = $13,000.00
+    Ô£à Purchase complete. Remaining cash: $140,580.93
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=236, Safety=27, Current=0
+    ­ƒøÆ Purchasing 263 ├ù Professional Tool @ $36.00 = $9,468.00
+    Ô£à Purchase complete. Remaining cash: $131,112.93
+
+­ƒôê FINANCIAL HEALTH SNAPSHOTS:
+  Ô¡É Player Corp: Assets=$102,000.00 (Cash=$102,000.00, Inv=$0.00), Equity=$102,000.00, Total Profit=$2,000.00
+    TechCorp Inc: Assets=$142,703.89 (Cash=$111,236.89, Inv=$31,467.00), Equity=$142,703.89, Total Profit=$42,703.89
+    Global Traders: Assets=$130,355.71 (Cash=$92,343.71, Inv=$38,012.00), Equity=$130,355.71, Total Profit=$30,355.71
+    SmartBiz Ltd: Assets=$157,220.93 (Cash=$131,112.93, Inv=$26,108.00), Equity=$157,220.93, Total Profit=$57,220.93
+
+ÔÅ░ Advanced to: 6/2026
+
+­ƒôè FINAL SUMMARY:
+  Player Corp: Cash = $102,000.00
+  TechCorp Inc: Cash = $111,236.89
+  Global Traders: Cash = $92,343.71
+  SmartBiz Ltd: Cash = $131,112.93
+================================================================================
+
+
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+Turn 5 complete
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+
+
+================================================================================
+­ƒÄ« PROCESSING TURN: 6/2026
+================================================================================
+
+­ƒôè ACTIVE MARKET CONDITIONS:
+  - Supply Chain Disruption: Professional Tool costs +19% for 1 month (1 month remaining)
+  - Supply Chain Disruption: Basic Widget costs +30% for 2 months (1 month remaining)
+  - Economic Boom! Market demand +25% for 2 months (1 month remaining)
+
+­ƒôè Companies in game: 4
+  - Player Corp (PLAYER): Cash = $102,000.00
+  - TechCorp Inc (BOT): Cash = $111,236.89
+  - Global Traders (BOT): Cash = $92,343.71
+  - SmartBiz Ltd (BOT): Cash = $131,112.93
+
+­ƒôª Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+­ƒÆ░ PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$20.00
+    TechCorp Inc: Price=$12.70
+    Global Traders: Price=$11.90
+    SmartBiz Ltd: Price=$15.14
+    ­ƒôè Average Market Price: $14.94
+    ­ƒôê Final Market Demand: 1107 units
+    ­ƒôè Sales Distribution (Total Market: 1127 units):
+      Player Corp: 164 units (14.6%) ├ù $20.00 = $3,280.00
+      TechCorp Inc: 336 units (29.8%) ├ù $12.70 = $4,267.20
+      Global Traders: 367 units (32.6%) ├ù $11.90 = $4,367.30
+      SmartBiz Ltd: 260 units (23.1%) ├ù $15.14 = $3,936.40
+        ÔÜá´©Å  Insufficient inventory! Wanted 164, only had 0
+        ­ƒÆÁ Revenue: 336 ├ù $12.70 = $4,267.20
+        ­ƒôè COGS: 336 ├ù $13.00 = $4,368.00
+        ­ƒÆ░ Gross Profit: $-100.80
+        ­ƒôª Inventory: 343 ÔåÆ 7 units
+        ­ƒÆÁ Revenue: 367 ├ù $11.90 = $4,367.30
+        ­ƒôè COGS: 367 ├ù $13.00 = $4,771.00
+        ­ƒÆ░ Gross Profit: $-403.70
+        ­ƒôª Inventory: 410 ÔåÆ 43 units
+        ­ƒÆÁ Revenue: 260 ├ù $15.14 = $3,936.40
+        ­ƒôè COGS: 260 ├ù $13.00 = $3,380.00
+        ­ƒÆ░ Gross Profit: $556.40
+        ­ƒôª Inventory: 280 ÔåÆ 20 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$100.00
+    TechCorp Inc: Price=$62.05
+    Global Traders: Price=$59.46
+    SmartBiz Ltd: Price=$75.31
+    ­ƒôè Average Market Price: $74.20
+    ­ƒôê Final Market Demand: 1780 units
+    ­ƒôè Sales Distribution (Total Market: 1815 units):
+      Player Corp: 261 units (14.4%) ├ù $100.00 = $26,100.00
+      TechCorp Inc: 552 units (30.4%) ├ù $62.05 = $34,251.60
+      Global Traders: 585 units (32.2%) ├ù $59.46 = $34,784.10
+      SmartBiz Ltd: 417 units (23.0%) ├ù $75.31 = $31,404.27
+        ÔÜá´©Å  Insufficient inventory! Wanted 261, only had 0
+        ÔÜá´©Å  Insufficient inventory! Wanted 552, only had 304
+        ­ƒÆÁ Revenue: 304 ├ù $62.05 = $18,863.20
+        ­ƒôè COGS: 304 ├ù $50.00 = $15,200.00
+        ­ƒÆ░ Gross Profit: $3,663.20
+        ­ƒôª Inventory: 304 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 585, only had 375
+        ­ƒÆÁ Revenue: 375 ├ù $59.46 = $22,297.50
+        ­ƒôè COGS: 375 ├ù $50.00 = $18,750.00
+        ­ƒÆ░ Gross Profit: $3,547.50
+        ­ƒôª Inventory: 375 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 417, only had 260
+        ­ƒÆÁ Revenue: 260 ├ù $75.31 = $19,580.60
+        ­ƒôè COGS: 260 ├ù $50.00 = $13,000.00
+        ­ƒÆ░ Gross Profit: $6,580.60
+        ­ƒôª Inventory: 260 ÔåÆ 0 units
+
+  Product: Professional Tool
+    Player Corp: Price=$60.00
+    TechCorp Inc: Price=$37.06
+    Global Traders: Price=$33.00
+    SmartBiz Ltd: Price=$46.83
+    ­ƒôè Average Market Price: $44.22
+    ­ƒôê Final Market Demand: 1189 units
+    ­ƒôè Sales Distribution (Total Market: 1218 units):
+      Player Corp: 170 units (14.0%) ├ù $60.00 = $10,200.00
+      TechCorp Inc: 364 units (29.9%) ├ù $37.06 = $13,489.84
+      Global Traders: 426 units (35.0%) ├ù $33.00 = $14,058.00
+      SmartBiz Ltd: 258 units (21.2%) ├ù $46.83 = $12,082.14
+        ÔÜá´©Å  Insufficient inventory! Wanted 170, only had 0
+        ÔÜá´©Å  Insufficient inventory! Wanted 364, only had 328
+        ­ƒÆÁ Revenue: 328 ├ù $37.06 = $12,155.68
+        ­ƒôè COGS: 328 ├ù $36.00 = $11,808.00
+        ­ƒÆ░ Gross Profit: $347.68
+        ­ƒôª Inventory: 328 ÔåÆ 0 units
+        ÔÜá´©Å  Insufficient inventory! Wanted 426, only had 387
+        ­ƒÆÁ Revenue: 387 ├ù $33.00 = $12,771.00
+        ­ƒôè COGS: 387 ├ù $36.00 = $13,932.00
+        ­ƒÆ░ Gross Profit: $-1,161.00
+        ­ƒôª Inventory: 387 ÔåÆ 0 units
+        ­ƒÆÁ Revenue: 258 ├ù $46.83 = $12,082.14
+        ­ƒôè COGS: 258 ├ù $36.00 = $9,288.00
+        ­ƒÆ░ Gross Profit: $2,794.14
+        ­ƒôª Inventory: 263 ÔåÆ 5 units
+
+­ƒÅ¡ WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+­ƒñû BOT AI DECISIONS:
+
+  TechCorp Inc:
+    ­ƒÆÁ Basic Widget: $12.70 ÔåÆ $13.14 (Target margin: 30%)
+    ­ƒÆÁ Premium Gadget: $62.05 ÔåÆ $64.34 (Target margin: 30%)
+    ­ƒÆÁ Professional Tool: $37.06 ÔåÆ $40.64 (Target margin: 30%)
+    ­ƒÆ░ Cash available: $146,522.97
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=303, Safety=57, Current=7
+    ­ƒøÆ Purchasing 354 ├ù Basic Widget @ $13.00 = $4,602.00
+    Ô£à Purchase complete. Remaining cash: $141,920.97
+    ­ƒôè Premium Gadget Analysis: Forecast=336, Safety=245, Current=0
+    ­ƒøÆ Purchasing 582 ├ù Premium Gadget @ $50.00 = $29,100.00
+    Ô£à Purchase complete. Remaining cash: $112,820.97
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=308, Safety=74, Current=0
+    ­ƒøÆ Purchasing 382 ├ù Professional Tool @ $36.00 = $13,752.00
+    Ô£à Purchase complete. Remaining cash: $99,068.97
+
+  Global Traders:
+    ­ƒÆÁ Basic Widget: $11.90 ÔåÆ $11.72 (Target margin: 15%)
+    ­ƒÆÁ Premium Gadget: $59.46 ÔåÆ $58.03 (Target margin: 15%)
+    ­ƒÆÁ Professional Tool: $33.00 ÔåÆ $35.03 (Target margin: 15%)
+    ­ƒÆ░ Cash available: $131,779.51
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=358, Safety=33, Current=43
+    ­ƒøÆ Purchasing 348 ├ù Basic Widget @ $13.00 = $4,524.00
+    Ô£à Purchase complete. Remaining cash: $127,255.51
+    ­ƒôè Premium Gadget Analysis: Forecast=395, Safety=216, Current=0
+    ­ƒøÆ Purchasing 611 ├ù Premium Gadget @ $50.00 = $30,550.00
+    Ô£à Purchase complete. Remaining cash: $96,705.51
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=355, Safety=95, Current=0
+    ­ƒøÆ Purchasing 450 ├ù Professional Tool @ $36.00 = $16,200.00
+    Ô£à Purchase complete. Remaining cash: $80,505.51
+
+  SmartBiz Ltd:
+    ­ƒÆÁ Basic Widget: $15.14 ÔåÆ $15.55 (Target margin: 50%)
+    ­ƒÆÁ Premium Gadget: $75.31 ÔåÆ $74.18 (Target margin: 50%)
+    ­ƒÆÁ Professional Tool: $46.83 ÔåÆ $44.42 (Target margin: 50%)
+    ­ƒÆ░ Cash available: $166,712.07
+    ÔÜá´©Å  Supply Chain Impact: $10.00 ÔåÆ $13.00 (├ù1.30, +30%)
+    ­ƒôè Basic Widget Analysis: Forecast=238, Safety=55, Current=20
+    ­ƒøÆ Purchasing 273 ├ù Basic Widget @ $13.00 = $3,549.00
+    Ô£à Purchase complete. Remaining cash: $163,163.07
+    ­ƒôè Premium Gadget Analysis: Forecast=265, Safety=172, Current=0
+    ­ƒøÆ Purchasing 437 ├ù Premium Gadget @ $50.00 = $21,850.00
+    Ô£à Purchase complete. Remaining cash: $141,313.07
+    ÔÜá´©Å  Supply Chain Impact: $30.00 ÔåÆ $36.00 (├ù1.20, +19%)
+    ­ƒôè Professional Tool Analysis: Forecast=241, Safety=33, Current=5
+    ­ƒøÆ Purchasing 270 ├ù Professional Tool @ $36.00 = $9,720.00
+    Ô£à Purchase complete. Remaining cash: $131,593.07
+
+­ƒôê FINANCIAL HEALTH SNAPSHOTS:
+  Ô¡É Player Corp: Assets=$97,000.00 (Cash=$97,000.00, Inv=$0.00), Equity=$97,000.00, Total Profit=$-3,000.00
+    TechCorp Inc: Assets=$146,613.97 (Cash=$99,068.97, Inv=$47,545.00), Equity=$146,613.97, Total Profit=$46,613.97
+    Global Traders: Assets=$132,338.51 (Cash=$80,505.51, Inv=$51,833.00), Equity=$132,338.51, Total Profit=$32,338.51
+    SmartBiz Ltd: Assets=$167,152.07 (Cash=$131,593.07, Inv=$35,559.00), Equity=$167,152.07, Total Profit=$67,152.07
+
+ÔÅ░ Advanced to: 7/2026
+
+­ƒôè FINAL SUMMARY:
+  Player Corp: Cash = $97,000.00
+  TechCorp Inc: Cash = $99,068.97
+  Global Traders: Cash = $80,505.51
+  SmartBiz Ltd: Cash = $131,593.07
+================================================================================
+
+
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+Turn 6 complete
+­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä­ƒöä
+
+
+================================================================================
+Ô£à SIMULATION COMPLETE
+================================================================================

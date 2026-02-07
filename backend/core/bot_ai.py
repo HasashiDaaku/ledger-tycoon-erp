@@ -31,7 +31,7 @@ class BotAI:
             BotPersonality.BALANCED: {"margin": 0.30, "price_adjust": 1.00},
         }
     
-    async def make_decisions(self, company: Company, logs: List[str] = None):
+    async def make_decisions(self, company: Company, logs: List[str] = None, events_engine=None):
         """
         Make strategic decisions for a bot company.
         
@@ -50,7 +50,7 @@ class BotAI:
         await self._adjust_pricing(company, personality, logs)
         
         # 2. Inventory management
-        await self._manage_inventory(company, logs)
+        await self._manage_inventory(company, logs, events_engine)
     
     def _get_personality(self, company: Company) -> str:
         """Get or assign personality to a bot."""
@@ -96,9 +96,10 @@ class BotAI:
         
         await self.db.commit()
     
-    async def _manage_inventory(self, company: Company, logs: List[str]):
-        """Purchase inventory if running low."""
-        from app.models import InventoryItem, Product
+    async def _manage_inventory(self, company: Company, logs: List[str], events_engine=None):
+        """Purchase inventory using intelligent demand forecasting."""
+        from app.models import Product
+        from core.inventory_manager import InventoryManager
         
         # Get cash balance
         cash = await self.accounting.get_company_cash(company.id)
@@ -113,55 +114,83 @@ class BotAI:
             logs.append(msg_low)
             return
         
+        # Initialize inventory manager
+        inv_mgr = InventoryManager(self.db)
+        
         # Get all products
         result = await self.db.execute(select(Product))
         products = result.scalars().all()
         
         for product in products:
-            # Check current inventory
-            inv_result = await self.db.execute(
-                select(InventoryItem)
-                .where(InventoryItem.company_id == company.id)
-                .where(InventoryItem.product_id == product.id)
+            # Get intelligent reorder recommendation
+            recommended_qty = await inv_mgr.get_reorder_quantity(
+                company_id=company.id,
+                product_id=product.id
             )
-            inv_item = inv_result.scalar_one_or_none()
             
-            current_qty = inv_item.quantity if inv_item else 0
+            if recommended_qty == 0:
+                msg_skip = f"    ℹ️  {product.name}: Inventory sufficient (no reorder needed)"
+                print(msg_skip)
+                logs.append(msg_skip)
+                continue
             
-            # If inventory is low, purchase more
-            if current_qty < 50:  # Threshold
-                # Purchase 100 units
-                purchase_qty = 100
-                unit_cost = product.base_cost
-                total_cost = purchase_qty * unit_cost
-                
-                if cash < total_cost:
-                    msg_nofunds = f"    ⚠️  Not enough cash to buy {product.name} (need ${total_cost:,.2f})"
-                    print(msg_nofunds)
-                    logs.append(msg_nofunds)
-                    continue
-                
-                msg_buy = f"    🛒 Purchasing {purchase_qty} × {product.name} @ ${unit_cost:.2f} = ${total_cost:,.2f}"
-                print(msg_buy)
-                logs.append(msg_buy)
-                
-                # Import here to avoid circular dependency
-                from core.engine import GameEngine
-                engine = GameEngine(self.db)
-                
-                try:
-                    await engine.purchase_inventory(
-                        company_id=company.id,
-                        product_id=product.id,
-                        quantity=purchase_qty,
-                        unit_cost=unit_cost
-                    )
-                    cash -= total_cost
-                    msg_success = f"    ✅ Purchase complete. Remaining cash: ${cash:,.2f}"
-                    print(msg_success)
-                    logs.append(msg_success)
-                except Exception as e:
-                    msg_fail = f"    ❌ Purchase failed: {e}"
-                    print(msg_fail)
-                    logs.append(msg_fail)# or other error - skip
-                    pass
+            # Get base cost and apply market event modifiers
+            base_cost = product.base_cost
+            cost_modifier = 1.0
+            
+            if events_engine:
+                cost_modifier = await events_engine.get_cost_modifier(product.id)
+            
+            unit_cost = base_cost * cost_modifier
+            
+            # Log cost impact if modifier applied
+            if cost_modifier != 1.0:
+                modifier_pct = int((cost_modifier - 1) * 100)
+                msg_cost = f"    ⚠️  Supply Chain Impact: ${base_cost:.2f} → ${unit_cost:.2f} (×{cost_modifier:.2f}, +{modifier_pct}%)"
+                print(msg_cost)
+                logs.append(msg_cost)
+            
+            # Apply cash flow constraint
+            max_affordable = int(cash / unit_cost)
+            purchase_qty = min(recommended_qty, max_affordable)
+            
+            if purchase_qty == 0:
+                msg_nofunds = f"    ⚠️  Not enough cash to buy {product.name}"
+                print(msg_nofunds)
+                logs.append(msg_nofunds)
+                continue
+            
+            total_cost = purchase_qty * unit_cost
+            
+            # Get forecast info for logging
+            forecast = await inv_mgr.forecast_demand(company.id, product.id)
+            safety_stock = await inv_mgr.calculate_safety_stock(company.id, product.id)
+            current_inv = await inv_mgr.get_current_inventory(company.id, product.id)
+            
+            msg_analysis = f"    📊 {product.name} Analysis: Forecast={int(forecast)}, Safety={int(safety_stock)}, Current={current_inv}"
+            print(msg_analysis)
+            logs.append(msg_analysis)
+            
+            msg_buy = f"    🛒 Purchasing {purchase_qty} × {product.name} @ ${unit_cost:.2f} = ${total_cost:,.2f}"
+            print(msg_buy)
+            logs.append(msg_buy)
+            
+            # Import here to avoid circular dependency
+            from core.engine import GameEngine
+            engine = GameEngine(self.db)
+            
+            try:
+                await engine.purchase_inventory(
+                    company_id=company.id,
+                    product_id=product.id,
+                    quantity=purchase_qty,
+                    unit_cost=unit_cost
+                )
+                cash -= total_cost
+                msg_success = f"    ✅ Purchase complete. Remaining cash: ${cash:,.2f}"
+                print(msg_success)
+                logs.append(msg_success)
+            except Exception as e:
+                msg_fail = f"    ❌ Purchase failed: {e}"
+                print(msg_fail)
+                logs.append(msg_fail)

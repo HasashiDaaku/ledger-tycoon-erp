@@ -157,3 +157,19 @@ class FinancialSnapshot(Base):
     net_income = Column(Float) # Profit for this specific month
     
     company = relationship("Company")
+
+class MarketEvent(Base):
+    """Tracks active market events and their effects."""
+    __tablename__ = "market_events"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    event_type = Column(String)  # "ECONOMIC_BOOM", "RECESSION", "SUPPLY_DISRUPTION", "SEASONAL"
+    start_month = Column(Integer)
+    start_year = Column(Integer)
+    duration_months = Column(Integer)  # Remaining duration
+    intensity = Column(Float)  # Multiplier: 1.25 for +25%, 0.80 for -20%, etc
+    affected_product_id = Column(Integer, ForeignKey("products.id"), nullable=True)  # Null for economy-wide
+    description = Column(String)
+    
+    product = relationship("Product")
+
