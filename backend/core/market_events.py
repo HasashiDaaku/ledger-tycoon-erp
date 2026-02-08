@@ -138,6 +138,7 @@ class MarketEventsEngine:
             select(MarketEvent)
             .where(MarketEvent.event_type.in_(["ECONOMIC_BOOM", "RECESSION"]))
             .where(MarketEvent.duration_months > 0)
+            .limit(1)  # Only get the first active economic event
         )
         event = result.scalar_one_or_none()
         
@@ -150,6 +151,7 @@ class MarketEventsEngine:
             .where(MarketEvent.event_type == "SUPPLY_DISRUPTION")
             .where(MarketEvent.affected_product_id == product_id)
             .where(MarketEvent.duration_months > 0)
+            .limit(1)  # Only get the first active disruption for this product
         )
         event = result.scalar_one_or_none()
         
