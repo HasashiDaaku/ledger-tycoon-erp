@@ -39,7 +39,9 @@ app.add_middleware(
 
 # Include routers
 app.include_router(simulation.router)
-app.include_router(ledger.router)
+# app.include_router(ledger.router) # Previous mocked ledger?
+from app.routers import ledger_api
+app.include_router(ledger_api.router)
 
 @app.get("/")
 async def root():

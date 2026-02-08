@@ -22,7 +22,7 @@ class Account(Base):
     
     # Relationships
     company = relationship("Company", back_populates="accounts")
-    entries = relationship("JournalEntry", back_populates="account")
+    journal_entries = relationship("JournalEntry", back_populates="account")
 
 class Transaction(Base):
     __tablename__ = "transactions"
@@ -33,7 +33,7 @@ class Transaction(Base):
     company_id = Column(Integer, ForeignKey("companies.id"))
 
     company = relationship("Company", back_populates="transactions")
-    entries = relationship("JournalEntry", back_populates="transaction")
+    journal_entries = relationship("JournalEntry", back_populates="transaction")
 
 class JournalEntry(Base):
     __tablename__ = "journal_entries"
@@ -44,8 +44,8 @@ class JournalEntry(Base):
     amount = Column(Float) # Positive for Debit, Negative for Credit? Or use explicit Debit/Credit columns?
                            # Convention: Positive = Debit, Negative = Credit. Sum must be 0.
     
-    transaction = relationship("Transaction", back_populates="entries")
-    account = relationship("Account", back_populates="entries")
+    transaction = relationship("Transaction", back_populates="journal_entries")
+    account = relationship("Account", back_populates="journal_entries")
 
 class Company(Base):
     __tablename__ = "companies"

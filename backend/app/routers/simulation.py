@@ -104,14 +104,37 @@ async def get_game_state(db: AsyncSession = Depends(get_db)):
     
     cash_balance = await engine.accounting.get_company_cash(player.id)
     
+    # Prepare enhanced company responses
+    from core.bot_ai import BotAI
+    bot_ai = BotAI(db)
+    
+    company_responses = []
+    for c in companies:
+        # Get cash for each company
+        c_cash = await engine.accounting.get_company_cash(c.id)
+        
+        # Get personality
+        personality = "Player"
+        if not c.is_player:
+            personality = bot_ai._get_personality(c)
+            
+        company_responses.append(
+            CompanyResponse(
+                id=c.id,
+                name=c.name,
+                is_player=c.is_player,
+                cash=c_cash,
+                brand_equity=c.brand_equity,
+                strategy_memory=c.strategy_memory,
+                personality=personality
+            )
+        )
+    
     return GameStateResponse(
         current_month=engine.current_month,
         current_year=engine.current_year,
         cash_balance=cash_balance,
-        companies=[
-            CompanyResponse(id=c.id, name=c.name, is_player=c.is_player)
-            for c in companies
-        ]
+        companies=company_responses
     )
 
 @router.post("/turn", response_model=TurnResultResponse)

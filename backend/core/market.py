@@ -99,14 +99,27 @@ class MarketEngine:
         if not company_products:
             return {}
         
-        # Calculate market shares using inverse price weighting
+        # Calculate market shares using inverse price weighting AND Brand Equity
+        # Higher brand equity = higher weight
         # Lower price = higher weight
-        total_weight = sum(1 / cp.price for cp in company_products)
+        weights = {}
+        for cp in company_products:
+            # We need to get the company for brand_equity
+            result = await self.db.execute(
+                select(Company).where(Company.id == cp.company_id)
+            )
+            company = result.scalar_one()
+            
+            # Weight formula: (1 / price) * brand_equity
+            # This means twice the brand equity = twice the market share at same price
+            weights[cp.company_id] = (1 / cp.price) * company.brand_equity
+            
+        total_weight = sum(weights.values())
         
         sales_distribution = {}
         for cp in company_products:
-            # Market share = (1 / cp.price) / sum(1/all_prices)
-            market_share = (1 / cp.price) / total_weight
+            # Market share = weight / total_weight
+            market_share = weights[cp.company_id] / total_weight
             
             # Apply price elasticity
             # If price is much higher than average, reduce demand
@@ -120,6 +133,7 @@ class MarketEngine:
         
         return sales_distribution
     
+
     async def process_product_sales(
         self,
         product_id: int,
@@ -136,6 +150,9 @@ class MarketEngine:
         
         if logs is None:
             logs = []
+            
+        total_unmet_demand = 0
+        total_missed_revenue = 0.0
         
         for company_id, demand_units_float in sales_distribution.items():
             demand_units = int(demand_units_float)
@@ -152,10 +169,21 @@ class MarketEngine:
             inv_item = result.scalar_one_or_none()
             
             units_sold = demand_units
+            unmet_units = 0
+            
             if not inv_item or inv_item.quantity < units_sold:
                 # Not enough inventory
                 actual_sold = inv_item.quantity if inv_item else 0
-                msg = f"        ⚠️  Insufficient inventory! Wanted {units_sold}, only had {actual_sold}"
+                unmet_units = units_sold - actual_sold
+                
+                # Calculate missed revenue
+                price = company_prices[company_id]
+                missed_rev = unmet_units * price
+                
+                total_unmet_demand += unmet_units
+                total_missed_revenue += missed_rev
+                
+                msg = f"        ⚠️  Insufficient inventory! Wanted {units_sold}, only had {actual_sold} (Missed Sales: {unmet_units} units, ${missed_rev:,.2f})"
                 print(msg)
                 logs.append(msg)
                 units_sold = actual_sold
@@ -242,3 +270,9 @@ class MarketEngine:
                         (inventory_acc.id, -cogs),    # Credit Inventory
                     ]
                 )
+                
+        # Log Summary of Missed Opportunities
+        if total_unmet_demand > 0:
+            msg_missed = f"    📉 Market Opportunity Lost: {total_unmet_demand} units unmet demand (Potential Revenue: ${total_missed_revenue:,.2f})"
+            print(msg_missed)
+            logs.append(msg_missed)

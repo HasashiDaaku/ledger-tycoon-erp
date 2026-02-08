@@ -1,0 +1,822 @@
+Starting turn 7/2026...
+
+================================================================================
+🎮 PROCESSING TURN: 7/2026
+================================================================================
+
+📊 ACTIVE MARKET CONDITIONS:
+  - Economic Boom! Market demand +25% for 2 months (1 month remaining)
+
+📊 Companies in game: 4
+  - Player Corp (PLAYER): Cash = $62,325.36
+  - TechCorp Inc (BOT): Cash = $109,654.50
+  - Global Traders (BOT): Cash = $66,731.33
+  - SmartBiz Ltd (BOT): Cash = $129,769.72
+
+📦 Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+💰 PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$19.96
+    TechCorp Inc: Price=$13.42
+    Global Traders: Price=$11.44
+    SmartBiz Ltd: Price=$15.44
+    📊 Average Market Price: $15.06
+    📈 Final Market Demand: 1071 units
+    📊 Sales Distribution (Total Market: 1126 units):
+      Player Corp: 55 units (4.9%) × $19.96 = $1,097.80
+      TechCorp Inc: 236 units (21.0%) × $13.42 = $3,167.12
+      Global Traders: 544 units (48.3%) × $11.44 = $6,223.36
+      SmartBiz Ltd: 291 units (25.8%) × $15.44 = $4,493.04
+        💵 Revenue: 55 × $19.96 = $1,097.80
+        📊 COGS: 55 × $10.00 = $550.00
+        💰 Gross Profit: $547.80
+        📦 Inventory: 626 → 571 units
+        💵 Revenue: 236 × $13.42 = $3,167.12
+        📊 COGS: 236 × $10.00 = $2,360.00
+        💰 Gross Profit: $807.12
+        📦 Inventory: 406 → 170 units
+        ⚠️  Insufficient inventory! Wanted 544, only had 468
+        💵 Revenue: 468 × $11.44 = $5,353.92
+        📊 COGS: 468 × $10.00 = $4,680.00
+        💰 Gross Profit: $673.92
+        📦 Inventory: 468 → 0 units
+        💵 Revenue: 291 × $15.44 = $4,493.04
+        📊 COGS: 291 × $10.00 = $2,910.00
+        💰 Gross Profit: $1,583.04
+        📦 Inventory: 306 → 15 units
+
+  Product: Premium Gadget
+    Player Corp: Price=$99.96
+    TechCorp Inc: Price=$63.05
+    Global Traders: Price=$55.08
+    SmartBiz Ltd: Price=$75.83
+    📊 Average Market Price: $73.48
+    📈 Final Market Demand: 1516 units
+    📊 Sales Distribution (Total Market: 1601 units):
+      Player Corp: 73 units (4.6%) × $99.96 = $7,297.08
+      TechCorp Inc: 349 units (21.8%) × $63.05 = $22,004.45
+      Global Traders: 775 units (48.4%) × $55.08 = $42,687.00
+      SmartBiz Ltd: 404 units (25.2%) × $75.83 = $30,635.32
+        💵 Revenue: 73 × $99.96 = $7,297.08
+        📊 COGS: 73 × $50.00 = $3,650.00
+        💰 Gross Profit: $3,647.08
+        📦 Inventory: 640 → 567 units
+        💵 Revenue: 349 × $63.05 = $22,004.45
+        📊 COGS: 349 × $50.00 = $17,450.00
+        💰 Gross Profit: $4,554.45
+        📦 Inventory: 454 → 105 units
+        ⚠️  Insufficient inventory! Wanted 775, only had 491
+        💵 Revenue: 491 × $55.08 = $27,044.28
+        📊 COGS: 491 × $50.00 = $24,550.00
+        💰 Gross Profit: $2,494.28
+        📦 Inventory: 491 → 0 units
+        ⚠️  Insufficient inventory! Wanted 404, only had 363
+        💵 Revenue: 363 × $75.83 = $27,526.29
+        📊 COGS: 363 × $50.00 = $18,150.00
+        💰 Gross Profit: $9,376.29
+        📦 Inventory: 363 → 0 units
+
+  Product: Professional Tool
+    Player Corp: Price=$59.96
+    TechCorp Inc: Price=$40.58
+    Global Traders: Price=$35.57
+    SmartBiz Ltd: Price=$45.00
+    📊 Average Market Price: $45.28
+    📈 Final Market Demand: 1365 units
+    📊 Sales Distribution (Total Market: 1431 units):
+      Player Corp: 71 units (5.0%) × $59.96 = $4,257.16
+      TechCorp Inc: 301 units (21.0%) × $40.58 = $12,214.58
+      Global Traders: 667 units (46.6%) × $35.57 = $23,725.19
+      SmartBiz Ltd: 392 units (27.4%) × $45.00 = $17,640.00
+        💵 Revenue: 71 × $59.96 = $4,257.16
+        📊 COGS: 71 × $30.00 = $2,130.00
+        💰 Gross Profit: $2,127.16
+        📦 Inventory: 768 → 697 units
+        💵 Revenue: 301 × $40.58 = $12,214.58
+        📊 COGS: 301 × $30.00 = $9,030.00
+        💰 Gross Profit: $3,184.58
+        📦 Inventory: 475 → 174 units
+        ⚠️  Insufficient inventory! Wanted 667, only had 599
+        💵 Revenue: 599 × $35.57 = $21,306.43
+        📊 COGS: 599 × $30.00 = $17,970.00
+        💰 Gross Profit: $3,336.43
+        📦 Inventory: 599 → 0 units
+        💵 Revenue: 392 × $45.00 = $17,640.00
+        📊 COGS: 392 × $30.00 = $11,760.00
+        💰 Gross Profit: $5,880.00
+        📦 Inventory: 426 → 34 units
+
+🏭 WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+🤖 BOT AI DECISIONS:
+
+  TechCorp Inc:
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Basic Widget
+      📦 Current Inventory: 170 units @ avg $10.00/unit
+      📊 Base Cost: $10.00
+      💰 Target Margin: 30%
+      ➡️  Base Target Price: $13.00 (10.00 × 1.30)
+      ➡️  Cost-Aware Target: $13.00 (10.00 × 1.30)
+      ➡️  Minimum Viable Price: $10.50 (10.00 × 1.05)
+      ✅ FINAL PRICE: $13.00 (cost-aware target)
+    💵 Basic Widget: $13.42 → $12.98 (Target margin: 30%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Premium Gadget
+      📦 Current Inventory: 105 units @ avg $50.00/unit
+      📊 Base Cost: $50.00
+      💰 Target Margin: 30%
+      ➡️  Base Target Price: $65.00 (50.00 × 1.30)
+      ➡️  Cost-Aware Target: $65.00 (50.00 × 1.30)
+      ➡️  Minimum Viable Price: $52.50 (50.00 × 1.05)
+      ✅ FINAL PRICE: $65.00 (cost-aware target)
+    💵 Premium Gadget: $63.05 → $66.39 (Target margin: 30%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Professional Tool
+      📦 Current Inventory: 174 units @ avg $30.00/unit
+      📊 Base Cost: $30.00
+      💰 Target Margin: 30%
+      ➡️  Base Target Price: $39.00 (30.00 × 1.30)
+      ➡️  Cost-Aware Target: $39.00 (30.00 × 1.30)
+      ➡️  Minimum Viable Price: $31.50 (30.00 × 1.05)
+      ✅ FINAL PRICE: $39.00 (cost-aware target)
+    💵 Professional Tool: $40.58 → $40.79 (Target margin: 30%)
+    💰 Cash available: $147,040.65
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Basic Widget
+      🛒 Purchase Cost: $10.00/unit
+      📊 Target Margin: 30%
+      ➡️  Break-Even Price: $13.00 (10.00 × 1.30)
+      📈 Market Expectation: $20.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -35.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $13.00 is below market $20.00 - profitable purchase
+    📊 Basic Widget Analysis: Forecast=270, Safety=136, Current=170
+    🛒 Purchasing 236 × Basic Widget @ $10.00 = $2,360.00
+    ✅ Purchase complete. Remaining cash: $144,680.65
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Premium Gadget
+      🛒 Purchase Cost: $50.00/unit
+      📊 Target Margin: 30%
+      ➡️  Break-Even Price: $65.00 (50.00 × 1.30)
+      📈 Market Expectation: $100.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -35.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $65.00 is below market $100.00 - profitable purchase
+    📊 Premium Gadget Analysis: Forecast=339, Safety=123, Current=105
+    🛒 Purchasing 358 × Premium Gadget @ $50.00 = $17,900.00
+    ✅ Purchase complete. Remaining cash: $126,780.65
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Professional Tool
+      🛒 Purchase Cost: $30.00/unit
+      📊 Target Margin: 30%
+      ➡️  Break-Even Price: $39.00 (30.00 × 1.30)
+      📈 Market Expectation: $60.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -35.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $39.00 is below market $60.00 - profitable purchase
+    📊 Professional Tool Analysis: Forecast=329, Safety=134, Current=174
+    🛒 Purchasing 290 × Professional Tool @ $30.00 = $8,700.00
+    ✅ Purchase complete. Remaining cash: $118,080.65
+    📢 BRANDING REPORT:
+      💰 Marketing Spend: $3,542.42 (3% of available cash)
+      📈 Brand Equity: 2.28 → 2.64 (+0.35)
+
+  Global Traders:
+    🧠 MEMORY UPDATE: First stockout for Basic Widget recorded.
+    🧠 MEMORY UPDATE: First stockout for Premium Gadget recorded.
+    🧠 MEMORY UPDATE: First stockout for Professional Tool recorded.
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Basic Widget
+      📦 Current Inventory: 0 units @ avg $10.00/unit
+      📊 Base Cost: $10.00
+      💰 Target Margin: 15%
+      ➡️  Base Target Price: $11.50 (10.00 × 1.15)
+      ➡️  Cost-Aware Target: $11.50 (10.00 × 1.15)
+      ➡️  Minimum Viable Price: $10.50 (10.00 × 1.05)
+      ✅ FINAL PRICE: $11.50 (cost-aware target)
+    💵 Basic Widget: $11.44 → $11.66 (Target margin: 15%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Premium Gadget
+      📦 Current Inventory: 0 units @ avg $50.00/unit
+      📊 Base Cost: $50.00
+      💰 Target Margin: 15%
+      ➡️  Base Target Price: $57.50 (50.00 × 1.15)
+      ➡️  Cost-Aware Target: $57.50 (50.00 × 1.15)
+      ➡️  Minimum Viable Price: $52.50 (50.00 × 1.05)
+      ✅ FINAL PRICE: $57.50 (cost-aware target)
+    💵 Premium Gadget: $55.08 → $59.80 (Target margin: 15%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Professional Tool
+      📦 Current Inventory: 0 units @ avg $30.00/unit
+      📊 Base Cost: $30.00
+      💰 Target Margin: 15%
+      ➡️  Base Target Price: $34.50 (30.00 × 1.15)
+      ➡️  Cost-Aware Target: $34.50 (30.00 × 1.15)
+      ➡️  Minimum Viable Price: $31.50 (30.00 × 1.05)
+      ✅ FINAL PRICE: $34.50 (cost-aware target)
+    💵 Professional Tool: $35.57 → $34.71 (Target margin: 15%)
+    💰 Cash available: $120,435.96
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Basic Widget
+      🛒 Purchase Cost: $10.00/unit
+      📊 Target Margin: 15%
+      ➡️  Break-Even Price: $11.50 (10.00 × 1.15)
+      📈 Market Expectation: $20.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -42.5% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $11.50 is below market $20.00 - profitable purchase
+    📊 Basic Widget Analysis: Forecast=390, Safety=265, Current=0
+    🛒 Purchasing 655 × Basic Widget @ $10.00 = $6,550.00
+    ✅ Purchase complete. Remaining cash: $113,885.96
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Premium Gadget
+      🛒 Purchase Cost: $50.00/unit
+      📊 Target Margin: 15%
+      ➡️  Break-Even Price: $57.50 (50.00 × 1.15)
+      📈 Market Expectation: $100.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -42.5% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $57.50 is below market $100.00 - profitable purchase
+    📊 Premium Gadget Analysis: Forecast=490, Safety=422, Current=0
+    🛒 Purchasing 911 × Premium Gadget @ $50.00 = $45,550.00
+    ✅ Purchase complete. Remaining cash: $68,335.96
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Professional Tool
+      🛒 Purchase Cost: $30.00/unit
+      📊 Target Margin: 15%
+      ➡️  Break-Even Price: $34.50 (30.00 × 1.15)
+      📈 Market Expectation: $60.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -42.5% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $34.50 is below market $60.00 - profitable purchase
+    📊 Professional Tool Analysis: Forecast=476, Safety=346, Current=0
+    🛒 Purchasing 822 × Professional Tool @ $30.00 = $24,660.00
+    ✅ Purchase complete. Remaining cash: $43,675.96
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    📢 BRANDING REPORT:
+      💰 Marketing Spend: $4,367.60 (10% of available cash)
+      📈 Brand Equity: 4.21 → 4.65 (+0.44)
+
+  SmartBiz Ltd:
+    🧠 MEMORY UPDATE: First stockout for Premium Gadget recorded.
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Basic Widget
+      📦 Current Inventory: 15 units @ avg $10.00/unit
+      📊 Base Cost: $10.00
+      💰 Target Margin: 50%
+      ➡️  Base Target Price: $15.00 (10.00 × 1.50)
+      ➡️  Cost-Aware Target: $15.00 (10.00 × 1.50)
+      ➡️  Minimum Viable Price: $10.50 (10.00 × 1.05)
+      ✅ FINAL PRICE: $15.00 (cost-aware target)
+    💵 Basic Widget: $15.44 → $15.39 (Target margin: 50%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Premium Gadget
+      📦 Current Inventory: 0 units @ avg $50.00/unit
+      📊 Base Cost: $50.00
+      💰 Target Margin: 50%
+      ➡️  Base Target Price: $75.00 (50.00 × 1.50)
+      ➡️  Cost-Aware Target: $75.00 (50.00 × 1.50)
+      ➡️  Minimum Viable Price: $52.50 (50.00 × 1.05)
+      ✅ FINAL PRICE: $75.00 (cost-aware target)
+    💵 Premium Gadget: $75.83 → $76.54 (Target margin: 50%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Professional Tool
+      📦 Current Inventory: 34 units @ avg $30.00/unit
+      📊 Base Cost: $30.00
+      💰 Target Margin: 50%
+      ➡️  Base Target Price: $45.00 (30.00 × 1.50)
+      ➡️  Cost-Aware Target: $45.00 (30.00 × 1.50)
+      ➡️  Minimum Viable Price: $31.50 (30.00 × 1.05)
+      ✅ FINAL PRICE: $45.00 (cost-aware target)
+    💵 Professional Tool: $45.00 → $45.27 (Target margin: 50%)
+    💰 Cash available: $179,429.05
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Basic Widget
+      🛒 Purchase Cost: $10.00/unit
+      📊 Target Margin: 50%
+      ➡️  Break-Even Price: $15.00 (10.00 × 1.50)
+      📈 Market Expectation: $20.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -25.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $15.00 is below market $20.00 - profitable purchase
+    📊 Basic Widget Analysis: Forecast=238, Safety=113, Current=15
+    🛒 Purchasing 336 × Basic Widget @ $10.00 = $3,360.00
+    ✅ Purchase complete. Remaining cash: $176,069.05
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Premium Gadget
+      🛒 Purchase Cost: $50.00/unit
+      📊 Target Margin: 50%
+      ➡️  Break-Even Price: $75.00 (50.00 × 1.50)
+      📈 Market Expectation: $100.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -25.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $75.00 is below market $100.00 - profitable purchase
+    📊 Premium Gadget Analysis: Forecast=315, Safety=133, Current=0
+    🛒 Purchasing 447 × Premium Gadget @ $50.00 = $22,350.00
+    ✅ Purchase complete. Remaining cash: $153,719.05
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Professional Tool
+      🛒 Purchase Cost: $30.00/unit
+      📊 Target Margin: 50%
+      ➡️  Break-Even Price: $45.00 (30.00 × 1.50)
+      📈 Market Expectation: $60.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -25.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $45.00 is below market $60.00 - profitable purchase
+    📊 Professional Tool Analysis: Forecast=319, Safety=155, Current=34
+    🛒 Purchasing 439 × Professional Tool @ $30.00 = $13,170.00
+    ✅ Purchase complete. Remaining cash: $140,549.05
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    📢 BRANDING REPORT:
+      💰 Marketing Spend: $7,027.45 (5% of available cash)
+      📈 Brand Equity: 3.46 → 4.16 (+0.70)
+
+📈 FINANCIAL HEALTH SNAPSHOTS:
+  ⭐ Player Corp: Assets=$124,947.40 (Cash=$69,977.40, Inv=$54,970.00), Equity=$124,947.40, Total Profit=$24,947.40
+    TechCorp Inc: Assets=$155,668.23 (Cash=$114,538.23, Inv=$41,130.00), Equity=$155,668.23, Total Profit=$55,668.23
+    Global Traders: Assets=$116,068.36 (Cash=$39,308.36, Inv=$76,760.00), Equity=$116,068.36, Total Profit=$16,068.36
+    SmartBiz Ltd: Assets=$173,571.60 (Cash=$133,521.60, Inv=$40,050.00), Equity=$173,571.60, Total Profit=$73,571.60
+
+⏰ Advanced to: 8/2026
+
+📉 BRAND EQUITY DECAY:
+    TechCorp Inc: 2.64 → 2.47 (-0.16 decay)
+    Global Traders: 4.65 → 4.29 (-0.37 decay)
+    SmartBiz Ltd: 4.16 → 3.84 (-0.32 decay)
+
+🏆 MARKET COMPETITIVENESS & BRANDING:
+  - Global Traders: Brand Equity 4.29 (+328.5% Market Weight Advantage)
+  - SmartBiz Ltd: Brand Equity 3.84 (+284.4% Market Weight Advantage)
+  - TechCorp Inc: Brand Equity 2.47 (+147.4% Market Weight Advantage)
+  - Player Corp: Brand Equity 1.00 (+0.0% Market Weight Advantage)
+
+🧠 STRATEGY EVOLUTION REPORT:
+  TechCorp Inc (balanced strategy):
+    ✅ Strategy Stable (No active adaptations)
+  Global Traders (aggressive strategy):
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    🔄 Active Adaptations: Safety Stock 127% |
+  SmartBiz Ltd (premium strategy):
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    🔄 Active Adaptations: Safety Stock 109% |
+
+🏆 MARKET COMPETITIVENESS & BRANDING:
+  - Global Traders: Brand Equity 4.29 (+328.5% Market Weight Advantage)
+  - SmartBiz Ltd: Brand Equity 3.84 (+284.4% Market Weight Advantage)
+  - TechCorp Inc: Brand Equity 2.47 (+147.4% Market Weight Advantage)
+  - Player Corp: Brand Equity 1.00 (+0.0% Market Weight Advantage)
+
+📊 FINAL SUMMARY:
+  Player Corp: Cash = $69,977.40
+  TechCorp Inc: Cash = $114,538.23
+  Global Traders: Cash = $39,308.36
+  SmartBiz Ltd: Cash = $133,521.60
+================================================================================
+
+
+
+--- TURN LOGS ---
+
+================================================================================
+🎮 PROCESSING TURN: 7/2026
+================================================================================
+
+📊 ACTIVE MARKET CONDITIONS:
+  - Economic Boom! Market demand +25% for 2 months (1 month remaining)
+
+📊 Companies in game: 4
+  - Player Corp (PLAYER): Cash = $62,325.36
+  - TechCorp Inc (BOT): Cash = $109,654.50
+  - Global Traders (BOT): Cash = $66,731.33
+  - SmartBiz Ltd (BOT): Cash = $129,769.72
+
+📦 Products: 3
+  - Basic Widget (SKU: WIDGET-001): Base Cost=$10.0, Base Price=$20.0
+  - Premium Gadget (SKU: GADGET-002): Base Cost=$50.0, Base Price=$100.0
+  - Professional Tool (SKU: TOOL-003): Base Cost=$30.0, Base Price=$60.0
+
+💰 PROCESSING SALES:
+
+  Product: Basic Widget
+    Player Corp: Price=$19.96
+    TechCorp Inc: Price=$13.42
+    Global Traders: Price=$11.44
+    SmartBiz Ltd: Price=$15.44
+    📊 Average Market Price: $15.06
+    📊 Base Demand: 952 units
+    🌸 Seasonal Modifier (Summer): ×0.90 (-9%)
+    💹 Economic Modifier: ×1.25 (+25%)
+    📈 Final Market Demand: 1071 units
+    📊 Sales Distribution (Total Market: 1126 units):
+      Player Corp: 55 units (4.9%) × $19.96 = $1,097.80
+      TechCorp Inc: 236 units (21.0%) × $13.42 = $3,167.12
+      Global Traders: 544 units (48.3%) × $11.44 = $6,223.36
+      SmartBiz Ltd: 291 units (25.8%) × $15.44 = $4,493.04
+        💵 Revenue: 55 × $19.96 = $1,097.80
+        📊 COGS: 55 × $10.00 = $550.00
+        💰 Gross Profit: $547.80
+        📦 Inventory: 626 → 571 units
+        💰 Financial Transaction: +$1,097.80 added to Cash (Account 1-1000)
+        💵 Revenue: 236 × $13.42 = $3,167.12
+        📊 COGS: 236 × $10.00 = $2,360.00
+        💰 Gross Profit: $807.12
+        📦 Inventory: 406 → 170 units
+        💰 Financial Transaction: +$3,167.12 added to Cash (Account 2-1000)
+        ⚠️  Insufficient inventory! Wanted 544, only had 468
+        💵 Revenue: 468 × $11.44 = $5,353.92
+        📊 COGS: 468 × $10.00 = $4,680.00
+        💰 Gross Profit: $673.92
+        📦 Inventory: 468 → 0 units
+        💰 Financial Transaction: +$5,353.92 added to Cash (Account 3-1000)
+        💵 Revenue: 291 × $15.44 = $4,493.04
+        📊 COGS: 291 × $10.00 = $2,910.00
+        💰 Gross Profit: $1,583.04
+        📦 Inventory: 306 → 15 units
+        💰 Financial Transaction: +$4,493.04 added to Cash (Account 4-1000)
+
+  Product: Premium Gadget
+    Player Corp: Price=$99.96
+    TechCorp Inc: Price=$63.05
+    Global Traders: Price=$55.08
+    SmartBiz Ltd: Price=$75.83
+    📊 Average Market Price: $73.48
+    📊 Base Demand: 933 units
+    🌸 Seasonal Modifier (Summer): ×1.30 (+30%)
+    💹 Economic Modifier: ×1.25 (+25%)
+    📈 Final Market Demand: 1516 units
+    📊 Sales Distribution (Total Market: 1601 units):
+      Player Corp: 73 units (4.6%) × $99.96 = $7,297.08
+      TechCorp Inc: 349 units (21.8%) × $63.05 = $22,004.45
+      Global Traders: 775 units (48.4%) × $55.08 = $42,687.00
+      SmartBiz Ltd: 404 units (25.2%) × $75.83 = $30,635.32
+        💵 Revenue: 73 × $99.96 = $7,297.08
+        📊 COGS: 73 × $50.00 = $3,650.00
+        💰 Gross Profit: $3,647.08
+        📦 Inventory: 640 → 567 units
+        💰 Financial Transaction: +$7,297.08 added to Cash (Account 1-1000)
+        💵 Revenue: 349 × $63.05 = $22,004.45
+        📊 COGS: 349 × $50.00 = $17,450.00
+        💰 Gross Profit: $4,554.45
+        📦 Inventory: 454 → 105 units
+        💰 Financial Transaction: +$22,004.45 added to Cash (Account 2-1000)
+        ⚠️  Insufficient inventory! Wanted 775, only had 491
+        💵 Revenue: 491 × $55.08 = $27,044.28
+        📊 COGS: 491 × $50.00 = $24,550.00
+        💰 Gross Profit: $2,494.28
+        📦 Inventory: 491 → 0 units
+        💰 Financial Transaction: +$27,044.28 added to Cash (Account 3-1000)
+        ⚠️  Insufficient inventory! Wanted 404, only had 363
+        💵 Revenue: 363 × $75.83 = $27,526.29
+        📊 COGS: 363 × $50.00 = $18,150.00
+        💰 Gross Profit: $9,376.29
+        📦 Inventory: 363 → 0 units
+        💰 Financial Transaction: +$27,526.29 added to Cash (Account 4-1000)
+
+  Product: Professional Tool
+    Player Corp: Price=$59.96
+    TechCorp Inc: Price=$40.58
+    Global Traders: Price=$35.57
+    SmartBiz Ltd: Price=$45.00
+    📊 Average Market Price: $45.28
+    📊 Base Demand: 1092 units
+    💹 Economic Modifier: ×1.25 (+25%)
+    📈 Final Market Demand: 1365 units
+    📊 Sales Distribution (Total Market: 1431 units):
+      Player Corp: 71 units (5.0%) × $59.96 = $4,257.16
+      TechCorp Inc: 301 units (21.0%) × $40.58 = $12,214.58
+      Global Traders: 667 units (46.6%) × $35.57 = $23,725.19
+      SmartBiz Ltd: 392 units (27.4%) × $45.00 = $17,640.00
+        💵 Revenue: 71 × $59.96 = $4,257.16
+        📊 COGS: 71 × $30.00 = $2,130.00
+        💰 Gross Profit: $2,127.16
+        📦 Inventory: 768 → 697 units
+        💰 Financial Transaction: +$4,257.16 added to Cash (Account 1-1000)
+        💵 Revenue: 301 × $40.58 = $12,214.58
+        📊 COGS: 301 × $30.00 = $9,030.00
+        💰 Gross Profit: $3,184.58
+        📦 Inventory: 475 → 174 units
+        💰 Financial Transaction: +$12,214.58 added to Cash (Account 2-1000)
+        ⚠️  Insufficient inventory! Wanted 667, only had 599
+        💵 Revenue: 599 × $35.57 = $21,306.43
+        📊 COGS: 599 × $30.00 = $17,970.00
+        💰 Gross Profit: $3,336.43
+        📦 Inventory: 599 → 0 units
+        💰 Financial Transaction: +$21,306.43 added to Cash (Account 3-1000)
+        💵 Revenue: 392 × $45.00 = $17,640.00
+        📊 COGS: 392 × $30.00 = $11,760.00
+        💰 Gross Profit: $5,880.00
+        📦 Inventory: 426 → 34 units
+        💰 Financial Transaction: +$17,640.00 added to Cash (Account 4-1000)
+
+🏭 WAREHOUSE COSTS:
+    Build/Rent: Main Warehouse (-$5,000.00)
+
+🤖 BOT AI DECISIONS:
+
+  TechCorp Inc:
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Basic Widget
+      📦 Current Inventory: 170 units @ avg $10.00/unit
+      📊 Base Cost: $10.00
+      💰 Target Margin: 30%
+      ➡️  Base Target Price: $13.00 (10.00 × 1.30)
+      ➡️  Cost-Aware Target: $13.00 (10.00 × 1.30)
+      ➡️  Minimum Viable Price: $10.50 (10.00 × 1.05)
+      ✅ FINAL PRICE: $13.00 (cost-aware target)
+    💵 Basic Widget: $13.42 → $12.98 (Target margin: 30%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Premium Gadget
+      📦 Current Inventory: 105 units @ avg $50.00/unit
+      📊 Base Cost: $50.00
+      💰 Target Margin: 30%
+      ➡️  Base Target Price: $65.00 (50.00 × 1.30)
+      ➡️  Cost-Aware Target: $65.00 (50.00 × 1.30)
+      ➡️  Minimum Viable Price: $52.50 (50.00 × 1.05)
+      ✅ FINAL PRICE: $65.00 (cost-aware target)
+    💵 Premium Gadget: $63.05 → $66.39 (Target margin: 30%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Professional Tool
+      📦 Current Inventory: 174 units @ avg $30.00/unit
+      📊 Base Cost: $30.00
+      💰 Target Margin: 30%
+      ➡️  Base Target Price: $39.00 (30.00 × 1.30)
+      ➡️  Cost-Aware Target: $39.00 (30.00 × 1.30)
+      ➡️  Minimum Viable Price: $31.50 (30.00 × 1.05)
+      ✅ FINAL PRICE: $39.00 (cost-aware target)
+    💵 Professional Tool: $40.58 → $40.79 (Target margin: 30%)
+    💰 Cash available: $147,040.65
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Basic Widget
+      🛒 Purchase Cost: $10.00/unit
+      📊 Target Margin: 30%
+      ➡️  Break-Even Price: $13.00 (10.00 × 1.30)
+      📈 Market Expectation: $20.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -35.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $13.00 is below market $20.00 - profitable purchase
+    📊 Basic Widget Analysis: Forecast=270, Safety=136, Current=170
+    🛒 Purchasing 236 × Basic Widget @ $10.00 = $2,360.00
+    ✅ Purchase complete. Remaining cash: $144,680.65
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Premium Gadget
+      🛒 Purchase Cost: $50.00/unit
+      📊 Target Margin: 30%
+      ➡️  Break-Even Price: $65.00 (50.00 × 1.30)
+      📈 Market Expectation: $100.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -35.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $65.00 is below market $100.00 - profitable purchase
+    📊 Premium Gadget Analysis: Forecast=339, Safety=123, Current=105
+    🛒 Purchasing 358 × Premium Gadget @ $50.00 = $17,900.00
+    ✅ Purchase complete. Remaining cash: $126,780.65
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Professional Tool
+      🛒 Purchase Cost: $30.00/unit
+      📊 Target Margin: 30%
+      ➡️  Break-Even Price: $39.00 (30.00 × 1.30)
+      📈 Market Expectation: $60.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -35.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $39.00 is below market $60.00 - profitable purchase
+    📊 Professional Tool Analysis: Forecast=329, Safety=134, Current=174
+    🛒 Purchasing 290 × Professional Tool @ $30.00 = $8,700.00
+    ✅ Purchase complete. Remaining cash: $118,080.65
+    📢 BRANDING REPORT:
+      💰 Marketing Spend: $3,542.42 (3% of available cash)
+      📈 Brand Equity: 2.28 → 2.64 (+0.35)
+
+  Global Traders:
+    🧠 MEMORY UPDATE: First stockout for Basic Widget recorded.
+    🧠 MEMORY UPDATE: First stockout for Premium Gadget recorded.
+    🧠 MEMORY UPDATE: First stockout for Professional Tool recorded.
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Basic Widget
+      📦 Current Inventory: 0 units @ avg $10.00/unit
+      📊 Base Cost: $10.00
+      💰 Target Margin: 15%
+      ➡️  Base Target Price: $11.50 (10.00 × 1.15)
+      ➡️  Cost-Aware Target: $11.50 (10.00 × 1.15)
+      ➡️  Minimum Viable Price: $10.50 (10.00 × 1.05)
+      ✅ FINAL PRICE: $11.50 (cost-aware target)
+    💵 Basic Widget: $11.44 → $11.66 (Target margin: 15%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Premium Gadget
+      📦 Current Inventory: 0 units @ avg $50.00/unit
+      📊 Base Cost: $50.00
+      💰 Target Margin: 15%
+      ➡️  Base Target Price: $57.50 (50.00 × 1.15)
+      ➡️  Cost-Aware Target: $57.50 (50.00 × 1.15)
+      ➡️  Minimum Viable Price: $52.50 (50.00 × 1.05)
+      ✅ FINAL PRICE: $57.50 (cost-aware target)
+    💵 Premium Gadget: $55.08 → $59.80 (Target margin: 15%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Professional Tool
+      📦 Current Inventory: 0 units @ avg $30.00/unit
+      📊 Base Cost: $30.00
+      💰 Target Margin: 15%
+      ➡️  Base Target Price: $34.50 (30.00 × 1.15)
+      ➡️  Cost-Aware Target: $34.50 (30.00 × 1.15)
+      ➡️  Minimum Viable Price: $31.50 (30.00 × 1.05)
+      ✅ FINAL PRICE: $34.50 (cost-aware target)
+    💵 Professional Tool: $35.57 → $34.71 (Target margin: 15%)
+    💰 Cash available: $120,435.96
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Basic Widget
+      🛒 Purchase Cost: $10.00/unit
+      📊 Target Margin: 15%
+      ➡️  Break-Even Price: $11.50 (10.00 × 1.15)
+      📈 Market Expectation: $20.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -42.5% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $11.50 is below market $20.00 - profitable purchase
+    📊 Basic Widget Analysis: Forecast=390, Safety=265, Current=0
+    🛒 Purchasing 655 × Basic Widget @ $10.00 = $6,550.00
+    ✅ Purchase complete. Remaining cash: $113,885.96
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Premium Gadget
+      🛒 Purchase Cost: $50.00/unit
+      📊 Target Margin: 15%
+      ➡️  Break-Even Price: $57.50 (50.00 × 1.15)
+      📈 Market Expectation: $100.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -42.5% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $57.50 is below market $100.00 - profitable purchase
+    📊 Premium Gadget Analysis: Forecast=490, Safety=422, Current=0
+    🛒 Purchasing 911 × Premium Gadget @ $50.00 = $45,550.00
+    ✅ Purchase complete. Remaining cash: $68,335.96
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Professional Tool
+      🛒 Purchase Cost: $30.00/unit
+      📊 Target Margin: 15%
+      ➡️  Break-Even Price: $34.50 (30.00 × 1.15)
+      📈 Market Expectation: $60.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -42.5% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $34.50 is below market $60.00 - profitable purchase
+    📊 Professional Tool Analysis: Forecast=476, Safety=346, Current=0
+    🛒 Purchasing 822 × Professional Tool @ $30.00 = $24,660.00
+    ✅ Purchase complete. Remaining cash: $43,675.96
+    🧠 ADAPTATION: Safety Stock +27% (Due to past stockouts)
+    📢 BRANDING REPORT:
+      💰 Marketing Spend: $4,367.60 (10% of available cash)
+      📈 Brand Equity: 4.21 → 4.65 (+0.44)
+
+  SmartBiz Ltd:
+    🧠 MEMORY UPDATE: First stockout for Premium Gadget recorded.
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Basic Widget
+      📦 Current Inventory: 15 units @ avg $10.00/unit
+      📊 Base Cost: $10.00
+      💰 Target Margin: 50%
+      ➡️  Base Target Price: $15.00 (10.00 × 1.50)
+      ➡️  Cost-Aware Target: $15.00 (10.00 × 1.50)
+      ➡️  Minimum Viable Price: $10.50 (10.00 × 1.05)
+      ✅ FINAL PRICE: $15.00 (cost-aware target)
+    💵 Basic Widget: $15.44 → $15.39 (Target margin: 50%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Premium Gadget
+      📦 Current Inventory: 0 units @ avg $50.00/unit
+      📊 Base Cost: $50.00
+      💰 Target Margin: 50%
+      ➡️  Base Target Price: $75.00 (50.00 × 1.50)
+      ➡️  Cost-Aware Target: $75.00 (50.00 × 1.50)
+      ➡️  Minimum Viable Price: $52.50 (50.00 × 1.05)
+      ✅ FINAL PRICE: $75.00 (cost-aware target)
+    💵 Premium Gadget: $75.83 → $76.54 (Target margin: 50%)
+    💡 COST-AWARE PRICING ANALYSIS:
+      Product: Professional Tool
+      📦 Current Inventory: 34 units @ avg $30.00/unit
+      📊 Base Cost: $30.00
+      💰 Target Margin: 50%
+      ➡️  Base Target Price: $45.00 (30.00 × 1.50)
+      ➡️  Cost-Aware Target: $45.00 (30.00 × 1.50)
+      ➡️  Minimum Viable Price: $31.50 (30.00 × 1.05)
+      ✅ FINAL PRICE: $45.00 (cost-aware target)
+    💵 Professional Tool: $45.00 → $45.27 (Target margin: 50%)
+    💰 Cash available: $179,429.05
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Basic Widget
+      🛒 Purchase Cost: $10.00/unit
+      📊 Target Margin: 50%
+      ➡️  Break-Even Price: $15.00 (10.00 × 1.50)
+      📈 Market Expectation: $20.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -25.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $15.00 is below market $20.00 - profitable purchase
+    📊 Basic Widget Analysis: Forecast=238, Safety=113, Current=15
+    🛒 Purchasing 336 × Basic Widget @ $10.00 = $3,360.00
+    ✅ Purchase complete. Remaining cash: $176,069.05
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Premium Gadget
+      🛒 Purchase Cost: $50.00/unit
+      📊 Target Margin: 50%
+      ➡️  Break-Even Price: $75.00 (50.00 × 1.50)
+      📈 Market Expectation: $100.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -25.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $75.00 is below market $100.00 - profitable purchase
+    📊 Premium Gadget Analysis: Forecast=315, Safety=133, Current=0
+    🛒 Purchasing 447 × Premium Gadget @ $50.00 = $22,350.00
+    ✅ Purchase complete. Remaining cash: $153,719.05
+    💡 PURCHASE VIABILITY ANALYSIS:
+      Product: Professional Tool
+      🛒 Purchase Cost: $30.00/unit
+      📊 Target Margin: 50%
+      ➡️  Break-Even Price: $45.00 (30.00 × 1.50)
+      📈 Market Expectation: $60.00 (base price)
+      ⚠️  VIABILITY: HIGH (break-even -25.0% vs market)
+      🔧 DECISION: Purchase at 100% of recommended quantity
+      📝 Reason: Break-even $45.00 is below market $60.00 - profitable purchase
+    📊 Professional Tool Analysis: Forecast=319, Safety=155, Current=34
+    🛒 Purchasing 439 × Professional Tool @ $30.00 = $13,170.00
+    ✅ Purchase complete. Remaining cash: $140,549.05
+    🧠 ADAPTATION: Safety Stock +9% (Due to past stockouts)
+    📢 BRANDING REPORT:
+      💰 Marketing Spend: $7,027.45 (5% of available cash)
+      📈 Brand Equity: 3.46 → 4.16 (+0.70)
+
+📈 FINANCIAL HEALTH SNAPSHOTS:
+  ⭐ Player Corp: Assets=$124,947.40 (Cash=$69,977.40, Inv=$54,970.00), Equity=$124,947.40, Total Profit=$24,947.40
+    TechCorp Inc: Assets=$155,668.23 (Cash=$114,538.23, Inv=$41,130.00), Equity=$155,668.23, Total Profit=$55,668.23
+    Global Traders: Assets=$116,068.36 (Cash=$39,308.36, Inv=$76,760.00), Equity=$116,068.36, Total Profit=$16,068.36
+    SmartBiz Ltd: Assets=$173,571.60 (Cash=$133,521.60, Inv=$40,050.00), Equity=$173,571.60, Total Profit=$73,571.60
+
+📊 MONTHLY ANALYTICAL SUMMARY (COPY-PASTE READY):
+PERIOD: 7/2026
+--------------------------------------------------
+PRODUCT: Basic Widget
+  Avg Price: $15.06 | Total Demand: 1126 | Total Sales: 1050
+    [Player Corp] Price: 19.96 | Sales: 55 | Share: 5.2%
+    [TechCorp Inc] Price: 13.42 | Sales: 236 | Share: 22.5%
+    [Global Traders] Price: 11.44 | Sales: 468 | Share: 44.6%
+    [SmartBiz Ltd] Price: 15.44 | Sales: 291 | Share: 27.7%
+PRODUCT: Premium Gadget
+  Avg Price: $73.48 | Total Demand: 1601 | Total Sales: 1276
+    [Player Corp] Price: 99.96 | Sales: 73 | Share: 5.7%
+    [TechCorp Inc] Price: 63.05 | Sales: 349 | Share: 27.4%
+    [Global Traders] Price: 55.08 | Sales: 491 | Share: 38.5%
+    [SmartBiz Ltd] Price: 75.83 | Sales: 363 | Share: 28.4%
+PRODUCT: Professional Tool
+  Avg Price: $45.28 | Total Demand: 1431 | Total Sales: 1363
+    [Player Corp] Price: 59.96 | Sales: 71 | Share: 5.2%
+    [TechCorp Inc] Price: 40.58 | Sales: 301 | Share: 22.1%
+    [Global Traders] Price: 35.57 | Sales: 599 | Share: 43.9%
+    [SmartBiz Ltd] Price: 45.00 | Sales: 392 | Share: 28.8%
+--------------------------------------------------
+FINANCIAL SNAPSHOT (ALL COMPANIES):
+  [Player Corp] Cash: 69977.40 | Assets: 124947.40 | Total Profit: 24947.40
+  [TechCorp Inc] Cash: 114538.23 | Assets: 155668.23 | Total Profit: 55668.23
+  [Global Traders] Cash: 39308.36 | Assets: 116068.36 | Total Profit: 16068.36
+  [SmartBiz Ltd] Cash: 133521.60 | Assets: 173571.60 | Total Profit: 73571.60
+==================================================
+
+
+⏰ Advanced to: 8/2026
+
+📉 BRAND EQUITY DECAY:
+    TechCorp Inc: 2.64 → 2.47 (-0.16 decay)
+    Global Traders: 4.65 → 4.29 (-0.37 decay)
+    SmartBiz Ltd: 4.16 → 3.84 (-0.32 decay)
+
+🏆 MARKET COMPETITIVENESS & BRANDING:
+  - Global Traders: Brand Equity 4.29 (+328.5% Market Weight Advantage)
+  - SmartBiz Ltd: Brand Equity 3.84 (+284.4% Market Weight Advantage)
+  - TechCorp Inc: Brand Equity 2.47 (+147.4% Market Weight Advantage)
+  - Player Corp: Brand Equity 1.00 (+0.0% Market Weight Advantage)
+
+🧠 STRATEGY EVOLUTION REPORT:
+  TechCorp Inc (balanced strategy):
+    ✅ Strategy Stable (No active adaptations)
+  Global Traders (aggressive strategy):
+    🔄 Active Adaptations: Safety Stock 127% |
+  SmartBiz Ltd (premium strategy):
+    🔄 Active Adaptations: Safety Stock 109% |
+
+🏆 MARKET COMPETITIVENESS & BRANDING:
+  - Global Traders: Brand Equity 4.29 (+328.5% Market Weight Advantage)
+  - SmartBiz Ltd: Brand Equity 3.84 (+284.4% Market Weight Advantage)
+  - TechCorp Inc: Brand Equity 2.47 (+147.4% Market Weight Advantage)
+  - Player Corp: Brand Equity 1.00 (+0.0% Market Weight Advantage)
+
+📊 FINAL SUMMARY:
+  Player Corp: Cash = $69,977.40
+  TechCorp Inc: Cash = $114,538.23
+  Global Traders: Cash = $39,308.36
+  SmartBiz Ltd: Cash = $133,521.60
+================================================================================
+

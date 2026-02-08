@@ -1,0 +1,19 @@
+================================================================================
+VERIFYING STRATEGY MEMORY LOGIC
+================================================================================
+
+🧪 Setting up Pricing Regret Scenario...
+
+🧪 Setting up Inventory Waste Scenario...
+
+🔄 Running _update_strategy_memory...
+  > Processing TechCorp Inc...
+  > Processing Global Traders...
+    🧠 MEMORY UPDATE: Inventory Waste for Basic Widget: 3.1 turns stuck (Sold 0/5000)
+  > Processing SmartBiz Ltd...
+
+📝 CAPTURED LOGS:
+    🧠 MEMORY UPDATE: Inventory Waste for Basic Widget: 3.1 turns stuck (Sold 0/5000)
+----------------------------------------
+❌ Pricing Regret NOT Found
+✅ Inventory Waste Logic Verified

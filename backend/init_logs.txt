@@ -1,0 +1,58 @@
+================================================================================
+TESTING BOT INITIAL INVENTORY SETUP
+================================================================================
+
+🎮 Initializing new game...
+    📦 WAC INITIALIZATION: 1 | New Item Created | Buy: 441 @ $10.00
+    🧮 Initial WAC: $10.00
+    📦 WAC INITIALIZATION: 2 | New Item Created | Buy: 319 @ $50.00
+    🧮 Initial WAC: $50.00
+    📦 WAC INITIALIZATION: 3 | New Item Created | Buy: 372 @ $30.00
+    🧮 Initial WAC: $30.00
+    📦 WAC INITIALIZATION: 1 | New Item Created | Buy: 441 @ $10.00
+    🧮 Initial WAC: $10.00
+    📦 WAC INITIALIZATION: 2 | New Item Created | Buy: 319 @ $50.00
+    🧮 Initial WAC: $50.00
+    📦 WAC INITIALIZATION: 3 | New Item Created | Buy: 372 @ $30.00
+    🧮 Initial WAC: $30.00
+    📦 WAC INITIALIZATION: 1 | New Item Created | Buy: 441 @ $10.00
+    🧮 Initial WAC: $10.00
+    📦 WAC INITIALIZATION: 2 | New Item Created | Buy: 319 @ $50.00
+    🧮 Initial WAC: $50.00
+    📦 WAC INITIALIZATION: 3 | New Item Created | Buy: 372 @ $30.00
+    🧮 Initial WAC: $30.00
+✅ Player company created: Player Corp
+
+📊 Companies created: 4
+
+============================================================
+Company: Player Corp (PLAYER)
+💰 Cash: $100,000.00
+⚠️  NO INVENTORY
+
+============================================================
+Company: TechCorp Inc (BOT)
+💰 Cash: $68,480.00
+📦 Inventory:
+   - 441 units @ $10.00 = $4,410.00
+   - 319 units @ $50.00 = $15,950.00
+   - 372 units @ $30.00 = $11,160.00
+📊 Total Inventory Value: $31,520.00
+
+============================================================
+Company: Global Traders (BOT)
+💰 Cash: $68,480.00
+📦 Inventory:
+   - 441 units @ $10.00 = $4,410.00
+   - 319 units @ $50.00 = $15,950.00
+   - 372 units @ $30.00 = $11,160.00
+📊 Total Inventory Value: $31,520.00
+
+============================================================
+Company: SmartBiz Ltd (BOT)
+💰 Cash: $68,480.00
+📦 Inventory:
+   - 441 units @ $10.00 = $4,410.00
+   - 319 units @ $50.00 = $15,950.00
+   - 372 units @ $30.00 = $11,160.00
+📊 Total Inventory Value: $31,520.00

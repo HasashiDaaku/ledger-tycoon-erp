@@ -24,18 +24,12 @@ class InventoryManager:
         self, 
         company_id: int, 
         product_id: int, 
-        periods_back: int = 3
+        periods_back: int = 3,
+        events_engine=None  # New: Enable context-aware forecasting
     ) -> float:
         """
         Forecast future demand using weighted moving average of historical sales.
-        
-        Args:
-            company_id: Company to forecast for
-            product_id: Product to forecast
-            periods_back: Number of historical periods to analyze
-            
-        Returns:
-            Forecasted demand (units)
+        If events_engine is provided, applies current market modifiers (seasonality, economic).
         """
         # Get historical sales data
         result = await self.db.execute(
@@ -47,25 +41,40 @@ class InventoryManager:
         )
         history = result.scalars().all()
         
+        forecast = 0.0
+        
         if not history:
             # No history - use market average demand
             avg_result = await self.db.execute(
                 select(func.avg(MarketHistory.demand_captured))
                 .where(MarketHistory.product_id == product_id)
             )
-            avg_demand = avg_result.scalar() or 300.0
-            return avg_demand
-        
-        # Weighted moving average (recent periods weighted higher)
-        weights = [3, 2, 1][:len(history)]  # Most recent gets weight 3
-        total_weight = sum(weights)
-        
-        weighted_demand = sum(
-            h.demand_captured * weights[i] 
-            for i, h in enumerate(history)
-        )
-        
-        forecast = weighted_demand / total_weight
+            forecast = avg_result.scalar() or 300.0
+        else:
+            # Weighted moving average (recent periods weighted higher)
+            weights = [3, 2, 1][:len(history)]  # Most recent gets weight 3
+            total_weight = sum(weights)
+            
+            weighted_demand = sum(
+                h.demand_captured * weights[i] 
+                for i, h in enumerate(history)
+            )
+            
+            forecast = weighted_demand / total_weight
+            
+        # Apply market modifiers if engine provided
+        if events_engine:
+            # Need product name for specific event matching
+            p_result = await self.db.execute(
+                select(Product.name).where(Product.id == product_id)
+            )
+            product_name = p_result.scalar_one_or_none()
+            
+            if product_name:
+                # Apply modifiers (Seasonality, Economy, etc.)
+                # this returns (adjusted_demand, modifiers_dict)
+                forecast, _ = await events_engine.apply_demand_modifiers(forecast, product_name)
+                
         return forecast
     
     async def calculate_safety_stock(
@@ -120,7 +129,8 @@ class InventoryManager:
     async def get_reorder_quantity(
         self, 
         company_id: int, 
-        product_id: int
+        product_id: int,
+        events_engine=None  # New param
     ) -> int:
         """
         Calculate recommended reorder quantity.
@@ -130,7 +140,8 @@ class InventoryManager:
         Returns:
             Recommended order quantity (units), minimum 0
         """
-        forecast = await self.forecast_demand(company_id, product_id)
+        # Pass events_engine to forecast for context-aware prediction
+        forecast = await self.forecast_demand(company_id, product_id, events_engine=events_engine)
         safety_stock = await self.calculate_safety_stock(company_id, product_id)
         current_inv = await self.get_current_inventory(company_id, product_id)
         

@@ -105,13 +105,100 @@ class BotAI:
                 memory["stockouts"][pid_str] = current_count + 1
                 stockout_occurred = True
                 
-                # Log the failure
+                # Log the failure with detailed count
                 if current_count == 0:
                     msg = f"    🧠 MEMORY UPDATE: First stockout for {product.name} recorded."
                 else:
-                    msg = f"    🧠 MEMORY UPDATE: Stockout #{current_count+1} for {product.name}."
+                    msg = f"    🧠 MEMORY UPDATE: Stockout #{int(current_count+1)} for {product.name}."
                 print(msg)
                 logs.append(msg)
+        
+        # Check Pricing Regret (High prices causing lost sales)
+        # We need to know if we had inventory but failed to sell due to price
+        # Logic: If inventory > 0 AND units_sold < (inventory * 0.2) AND price > market_avg * 1.10
+        
+        # Get Market History for this turn
+        # We need to access the current turn's history. 
+        # Engine calls this after processing sales, so history should exist.
+        from app.models import MarketHistory
+        from sqlalchemy import func
+
+        # Get current turn info from somewhere? Passed in? No. 
+        # We can query the latest history entry for this company/product
+        
+        for product in products:
+            pid_str = str(product.id)
+            
+            # 1. Get Inventory
+            inv_res = await self.db.execute(
+                select(InventoryItem).where(
+                    InventoryItem.company_id == company.id, 
+                    InventoryItem.product_id == product.id
+                )
+            )
+            item = inv_res.scalar_one_or_none()
+            current_qty = item.quantity if item else 0
+            
+            # 2. Get Latest Market History (Sales data)
+            hist_res = await self.db.execute(
+                select(MarketHistory)
+                .where(
+                    MarketHistory.company_id == company.id,
+                    MarketHistory.product_id == product.id
+                )
+                .order_by(MarketHistory.year.desc(), MarketHistory.month.desc())
+                .limit(1)
+            )
+            history = hist_res.scalar_one_or_none()
+            
+            if history:
+                units_sold = history.units_sold
+                price = history.price
+                
+                # --- INVENTORY WASTE LOGIC ---
+                # If we have inventory but sold very little
+                if current_qty > 0 and units_sold < (current_qty * 0.1): # Sold less than 10% of stock
+                    current_waste = memory["inventory_waste"].get(pid_str, 0)
+                    memory["inventory_waste"][pid_str] = current_waste + 1
+                    
+                    if memory["inventory_waste"][pid_str] > 2:
+                        msg = f"    🧠 MEMORY UPDATE: Inventory Waste for {product.name}: {memory['inventory_waste'][pid_str]} turns stuck (Sold {units_sold}/{current_qty+units_sold})"
+                        print(msg)
+                        logs.append(msg)
+                else:
+                    # Reset if we are selling
+                    memory["inventory_waste"][pid_str] = 0
+
+                # --- PRICING REGRET LOGIC ---
+                # Need average market price
+                # Get all history for this product/turn
+                avg_res = await self.db.execute(
+                    select(func.avg(MarketHistory.price))
+                    .where(
+                        MarketHistory.product_id == product.id,
+                        MarketHistory.year == history.year,
+                        MarketHistory.month == history.month
+                    )
+                )
+                avg_price = avg_res.scalar() or price
+                
+                # Condition: Price is premium (>10% above avg) AND Sales were poor (<20% of available)
+                # Available = current + sold
+                available = current_qty + units_sold
+                if available > 0:
+                    sell_through = units_sold / available
+                    if price > (avg_price * 1.10) and sell_through < 0.20:
+                        current_regret = memory["pricing_regret"].get(pid_str, 0)
+                        memory["pricing_regret"][pid_str] = current_regret + 1.0
+                        
+                        if memory["pricing_regret"][pid_str] > 2:
+                             msg = f"    🧠 MEMORY UPDATE: Pricing Regret for {product.name}: Score {memory['pricing_regret'][pid_str]:.1f} (Price ${price:.2f} vs Avg ${avg_price:.2f})"
+                             print(msg)
+                             logs.append(msg)
+                    else:
+                        # Decay regret if we are competitive or selling well
+                        if memory["pricing_regret"].get(pid_str, 0) > 0:
+                            memory["pricing_regret"][pid_str] = max(0, memory["pricing_regret"][pid_str] - 0.5)
         
         # 2. Memory Decay (Forget old mistakes slowly)
         # Every turn, reduce stockout counts by 0.1 (so 10 turns heals 1 stockout)
@@ -120,7 +207,9 @@ class BotAI:
                 memory["stockouts"][pid] = max(0, memory["stockouts"][pid] - 0.1)
                 
         # Save back to DB
+        from sqlalchemy.orm.attributes import flag_modified
         company.strategy_memory = memory
+        flag_modified(company, "strategy_memory")
         await self.db.commit()
 
     async def _apply_learned_adjustments(self, company: Company, personality: str, logs: List[str]) -> dict:
@@ -427,7 +516,8 @@ class BotAI:
             
             recommended_qty = await inv_mgr.get_reorder_quantity(
                 company_id=company.id,
-                product_id=product.id
+                product_id=product.id,
+                events_engine=events_engine
             )
             
             # Add learned extra safety stock
@@ -488,7 +578,7 @@ class BotAI:
             total_cost = purchase_qty * unit_cost
             
             # Get forecast info for logging
-            forecast = await inv_mgr.forecast_demand(company.id, product.id)
+            forecast = await inv_mgr.forecast_demand(company.id, product.id, events_engine=events_engine)
             base_safety_stock = await inv_mgr.calculate_safety_stock(company.id, product.id)
             safety_stock = base_safety_stock * safety_multiplier # Apply learning multiplier
             current_inv = await inv_mgr.get_current_inventory(company.id, product.id)

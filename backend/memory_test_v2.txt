@@ -1,0 +1,14 @@
+================================================================================
+VERIFYING STRATEGY MEMORY LOGIC
+================================================================================
+
+🧪 Testing Stockout Persistence...
+🔄 Running Turn 1 (Expect First Stockout)...
+    🧠 MEMORY UPDATE: First stockout for Basic Widget recorded.
+    🧠 MEMORY UPDATE: First stockout for Basic Widget recorded.
+Memory after Turn 1: {'stockouts': {'1': 0.9}, 'pricing_regret': {'2': 1.0}, 'inventory_waste': {'1': 0, '2': 1, '3': 0}, 'adaptations': []}
+
+🔄 Running Turn 2 (Expect Stockout #2)...
+    🧠 MEMORY UPDATE: Stockout #1 for Basic Widget.
+    🧠 MEMORY UPDATE: Stockout #1 for Basic Widget.
+Memory after Turn 2: {'stockouts': {'1': 1.7999999999999998}, 'pricing_regret': {'2': 2.0}, 'inventory_waste': {'1': 0, '2': 2, '3': 0}, 'adaptations': []}

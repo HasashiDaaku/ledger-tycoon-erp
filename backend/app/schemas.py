@@ -16,6 +16,10 @@ class CompanyCreate(CompanyBase):
 class CompanyResponse(CompanyBase):
     id: int
     is_player: bool
+    cash: Optional[float] = 0.0
+    brand_equity: float = 1.0
+    strategy_memory: Optional[dict] = {}
+    personality: Optional[str] = "Unknown"
     
     class Config:
         from_attributes = True

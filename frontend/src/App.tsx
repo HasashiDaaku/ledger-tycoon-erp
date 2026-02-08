@@ -1,57 +1,12 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { AnalyticsDashboard } from './AnalyticsDashboard'
+import { GeneralLedgerTable } from './components/GeneralLedgerTable'
+import { JournalEntriesTable } from './components/JournalEntriesTable'
+import { MarketIntelligence } from './components/MarketIntelligence'
+import type { GameState, Account, Product, FinancialMetrics, InventoryItem, LogEntry } from './types/index'
 
 const API_URL = 'http://localhost:8000'
-
-interface Company {
-  id: number
-  name: string
-  is_player: boolean
-}
-
-interface GameState {
-  current_month: number
-  current_year: number
-  cash_balance: number
-  companies: Company[]
-}
-
-interface Account {
-  id: number
-  name: string
-  code: string
-  type: string
-  balance: number
-}
-
-interface Product {
-  id: number
-  name: string
-  sku: string
-  base_cost: number
-  base_price: number
-  your_price: number
-  units_sold: number
-  revenue: number
-}
-
-interface FinancialMetrics {
-  cash_balance: number
-  net_worth: number
-  profit_margin: number
-  roi: number
-  debt_ratio: number
-}
-
-interface InventoryItem {
-  product_id: number
-  product_name: string
-  sku: string
-  quantity: number
-  wac: number
-  total_value: number
-}
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false)
@@ -60,9 +15,9 @@ function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [inventory, setInventory] = useState<InventoryItem[]>([])
   const [metrics, setMetrics] = useState<FinancialMetrics | null>(null)
-  const [logs, setLogs] = useState<{ month: number, year: number, lines: string[] }[]>([])
+  const [logs, setLogs] = useState<LogEntry[]>([])
   const [loading, setLoading] = useState(false)
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'pricing' | 'inventory' | 'reports' | 'logs' | 'analytics'>('dashboard')
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'pricing' | 'inventory' | 'reports' | 'logs' | 'analytics' | 'market'>('dashboard')
 
   const startGame = async () => {
     setLoading(true)
@@ -97,11 +52,23 @@ function App() {
 
   const loadAccounts = async () => {
     try {
-      const response = await fetch(`${API_URL}/ledger/accounts`)
+      // Use the General Ledger endpoint. Assuming Player Company ID is 1.
+      // In a real app, we'd get this from context or auth.
+      const response = await fetch(`${API_URL}/ledger/general-ledger/1`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json()
-      setAccounts(data)
+      // Ensure data is an array before setting
+      if (Array.isArray(data)) {
+        setAccounts(data)
+      } else {
+        console.error('Expected array for accounts, got:', data)
+        setAccounts([])
+      }
     } catch (error) {
       console.error('Error loading accounts:', error)
+      setAccounts([])
     }
   }
 
@@ -118,8 +85,12 @@ function App() {
   const loadMetrics = async () => {
     try {
       const response = await fetch(`${API_URL}/ledger/metrics`)
-      const data = await response.json()
-      setMetrics(data)
+      if (response.ok) {
+        const data = await response.json()
+        setMetrics(data)
+      } else {
+        console.warn("Metrics endpoint not found or error, skipping.")
+      }
     } catch (error) {
       console.error('Error loading metrics:', error)
     }
@@ -275,6 +246,12 @@ function App() {
           📄 Reports
         </button>
         <button
+          className={activeTab === 'market' ? 'active' : ''}
+          onClick={() => setActiveTab('market')}
+        >
+          🌍 Market Intel
+        </button>
+        <button
           className={activeTab === 'logs' ? 'active' : ''}
           onClick={() => setActiveTab('logs')}
         >
@@ -334,30 +311,40 @@ function App() {
               )}
             </section>
 
-            <section className="panel accounts-panel">
-              <h2>Chart of Accounts</h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th>Account</th>
-                    <th>Type</th>
-                    <th>Balance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {accounts.map(account => (
-                    <tr key={account.id}>
-                      <td>{account.code}</td>
-                      <td>{account.name}</td>
-                      <td><span className={`badge badge-${account.type.toLowerCase()}`}>{account.type}</span></td>
-                      <td className={account.balance >= 0 ? 'positive' : 'negative'}>
-                        ${Math.abs(account.balance).toLocaleString()}
-                      </td>
+
+            <div className="accounting-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <section className="panel accounts-panel">
+                <h2>Chart of Accounts</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Account</th>
+                      <th>Type</th>
+                      <th>Balance</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {Array.isArray(accounts) && accounts.map(account => (
+                      <tr key={account.id}>
+                        <td>{account.code}</td>
+                        <td>{account.name}</td>
+                        <td><span className={`badge badge-${account.type.toLowerCase()}`}>{account.type}</span></td>
+                        <td className={account.balance >= 0 ? 'positive' : 'negative'}>
+                          ${Math.abs(account.balance).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
+
+              <GeneralLedgerTable accounts={accounts} />
+            </div>
+
+            <section className="panel" style={{ marginTop: '20px' }}>
+              {/* Assuming Player Company ID is 1 for now, or we can find it in gameState */}
+              <JournalEntriesTable companyId={gameState?.companies.find(c => c.is_player)?.id || 1} />
             </section>
           </div>
         )}
@@ -513,6 +500,10 @@ function App() {
               )}
             </section>
           </div>
+        )}
+
+        {activeTab === 'market' && (
+          <MarketIntelligence />
         )}
       </main>
     </div>

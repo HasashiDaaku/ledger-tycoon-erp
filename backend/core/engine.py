@@ -7,8 +7,8 @@ Manages the game loop, turn processing, and game state.
 from typing import List, Dict
 from datetime import datetime, timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-from app.models import Company, Product, Warehouse, InventoryItem, CompanyProduct, FinancialSnapshot
+from sqlalchemy import select, func
+from app.models import Company, Product, Warehouse, InventoryItem, CompanyProduct, FinancialSnapshot, JournalEntry, Account, AccountType
 from core.accounting import AccountingEngine
 from core.market import MarketEngine
 import random
@@ -207,6 +207,9 @@ class GameEngine:
                 duration_text = f"({event.duration_months} month{'s' if event.duration_months > 1 else ''} remaining)"
                 log(f"  - {event.description} {duration_text}")
         
+        # Log Price Elasticity
+        log(f"  ⚡ Market Price Elasticity: {self.market.price_elasticity} (Sensitivity to price changes)")
+        
         # Get all companies
         result = await self.db.execute(select(Company))
         companies = result.scalars().all()
@@ -338,6 +341,9 @@ class GameEngine:
         
         # New: Branding & Competitive Advantage Report
         await self._record_brand_report(logs)
+
+        # New: General Ledger Report for Verification
+        await self._log_general_ledger(logs)
         
         # Final state
         log("\n📊 FINAL SUMMARY:")
@@ -441,10 +447,19 @@ class GameEngine:
         
         if inv_item:
             # Update WAC (Weighted Average Cost)
-            old_total = inv_item.quantity * inv_item.wac
+            old_qty = inv_item.quantity
+            old_total = old_qty * inv_item.wac
             new_total = old_total + total_cost
             inv_item.quantity += quantity
             inv_item.wac = new_total / inv_item.quantity
+            
+            # Log WAC calculation
+            if old_qty == 0:
+                 print(f"    📦 WAC INITIALIZATION (First Stock): {product_id} | Buy: {quantity} @ ${unit_cost:.2f}")
+                 print(f"    🧮 Initial WAC: ${inv_item.wac:.2f}")
+            else:
+                 print(f"    📦 WAC UPDATE: {product_id} | Old WAC: ${old_total/old_qty:.2f} | New Buy: {quantity} @ ${unit_cost:.2f}")
+                 print(f"    🧮 New WAC: ${new_total:.2f} / {inv_item.quantity} units = ${inv_item.wac:.2f}")
         else:
             # Create new inventory item
             inv_item = InventoryItem(
@@ -455,6 +470,10 @@ class GameEngine:
                 warehouse_id=None  # TODO: assign to specific warehouse
             )
             self.db.add(inv_item)
+            
+            # Log WAC initialization
+            print(f"    📦 WAC INITIALIZATION: {product_id} | New Item Created | Buy: {quantity} @ ${unit_cost:.2f}")
+            print(f"    🧮 Initial WAC: ${unit_cost:.2f}")
         
         await self.db.commit()
 
@@ -486,8 +505,44 @@ class GameEngine:
             total_assets = cash + inv_value
             total_equity = total_assets # Simplify: Equity = Assets (assuming 0 liabilities)
             
-            # Calculate Cumulative Profit
-            total_profit = await self.accounting.get_monthly_net_income(company.id)
+            # Calculate Cumulative Profit (Net Income)
+            net_income = await self.accounting.get_monthly_net_income(company.id)
+            
+            # --- New: Calculate Profit Margin & ROI ---
+            # Need Revenue and Equity/Capital base
+            
+            # Get Revenue sum (Account type REVENUE or code 4xxx)
+            # Direct query for efficiency
+            stmt = (
+                select(func.sum(JournalEntry.amount))
+                .join(Account, Account.id == JournalEntry.account_id)
+                .where(Account.company_id == company.id)
+                .where(Account.type == "REVENUE") # Or code startswith '4'
+            )
+            revenue_val = (await self.db.execute(stmt)).scalar() or 0.0
+            # Revenue is Credit (negative), convert to + for ratio
+            revenue_abs = abs(revenue_val)
+            
+            profit_margin = 0.0
+            if revenue_abs > 0:
+                profit_margin = (net_income / revenue_abs) * 100
+                
+            # ROI = Net Income / Total Investment (Owner's Capital)
+            # Fetch Capital Account (3000)
+            stmt_cap = (
+                 select(func.sum(JournalEntry.amount))
+                .join(Account, Account.id == JournalEntry.account_id)
+                .where(Account.company_id == company.id)
+                .where(Account.code.endswith("-3000"))
+            )
+            capital_val = (await self.db.execute(stmt_cap)).scalar() or 0.0
+            capital_abs = abs(capital_val)
+            
+            roi = 0.0
+            if capital_abs > 0:
+                roi = (net_income / capital_abs) * 100
+                
+            # ------------------------------------------
             
             snapshot = FinancialSnapshot(
                 company_id=company.id,
@@ -497,14 +552,22 @@ class GameEngine:
                 inventory_value=inv_value,
                 total_assets=total_assets,
                 total_equity=total_equity,
-                net_income=total_profit
+                net_income=net_income
             )
             self.db.add(snapshot)
             
             if logs is not None:
                 # Add highlighting for player company to match dashboard focus
                 prefix = "  ⭐ " if company.is_player else "    "
-                log_msg = f"{prefix}{company.name}: Assets=${total_assets:,.2f} (Cash=${cash:,.2f}, Inv=${inv_value:,.2f}), Equity=${total_equity:,.2f}, Total Profit=${total_profit:,.2f}"
+                
+                # Format with new metrics
+                log_msg = (
+                    f"{prefix}{company.name}: "
+                    f"Assets=${total_assets:,.2f} (Cash=${cash:,.2f}, Inv=${inv_value:,.2f}), "
+                    f"Equity=${total_equity:,.2f}, "
+                    f"Total Profit=${net_income:,.2f} "
+                    f"| Margin: {profit_margin:.1f}% | ROI: {roi:.1f}%"
+                )
                 print(log_msg)
                 logs.append(log_msg)
 
@@ -545,12 +608,35 @@ class GameEngine:
             logs.append("FINANCIAL SNAPSHOT (ALL COMPANIES):")
             for company in companies:
                 cash = await self.accounting.get_company_cash(company.id)
-                total_profit = await self.accounting.get_monthly_net_income(company.id)
+                net_income = await self.accounting.get_monthly_net_income(company.id)
                 inv_res = await self.db.execute(select(InventoryItem).where(InventoryItem.company_id == company.id))
                 inv_val = sum(item.quantity * item.wac for item in inv_res.scalars().all())
                 assets = cash + inv_val
                 
-                logs.append(f"  [{company.name}] Cash: {cash:.2f} | Assets: {assets:.2f} | Total Profit: {total_profit:.2f}")
+                # --- Metrics Logic duplicated for summary ---
+                stmt_rev = (
+                    select(func.sum(JournalEntry.amount))
+                    .join(Account, Account.id == JournalEntry.account_id)
+                    .where(Account.company_id == company.id)
+                    .where(Account.type == "REVENUE")
+                )
+                revenue_val = (await self.db.execute(stmt_rev)).scalar() or 0.0
+                revenue_abs = abs(revenue_val)
+                
+                stmt_cap = (
+                     select(func.sum(JournalEntry.amount))
+                    .join(Account, Account.id == JournalEntry.account_id)
+                    .where(Account.company_id == company.id)
+                    .where(Account.code.endswith("-3000"))
+                )
+                capital_val = (await self.db.execute(stmt_cap)).scalar() or 0.0
+                capital_abs = abs(capital_val)
+                
+                margin = (net_income / revenue_abs * 100) if revenue_abs > 0 else 0.0
+                roi = (net_income / capital_abs * 100) if capital_abs > 0 else 0.0
+                # ---------------------------------------------
+                
+                logs.append(f"  [{company.name}] Cash: {cash:.2f} | Assets: {assets:.2f} | Profit: {net_income:.2f} | Margin: {margin:.1f}% | ROI: {roi:.1f}%")
             logs.append("=" * 50 + "\n")
 
     async def _apply_brand_decay(self, logs: List[str] = None):
@@ -618,11 +704,26 @@ class GameEngine:
             stockouts = memory.get("stockouts", {})
             total_stockouts = sum(stockouts.values())
             
+            regrets = memory.get("pricing_regret", {})
+            total_regret = sum(regrets.values())
+            
+            waste = memory.get("inventory_waste", {})
+            total_waste = sum(waste.values())
+            
             msg_header = f"  {bot.name} ({personality} strategy):"
             print(msg_header)
             logs.append(msg_header)
+
+            # Log Brand Equity
+            log_brand = f"    🌐 Brand Presence: {bot.brand_equity:.2f}x Multiplier"
+            print(log_brand)
+            logs.append(log_brand)
             
+            # Check for problems
+            has_problems = False
+
             if total_stockouts > 0:
+                has_problems = True
                 # Format stockout details
                 details = []
                 for pid, count in stockouts.items():
@@ -636,6 +737,24 @@ class GameEngine:
                     msg_mem = f"    ⚠️  Stockout Memory: {', '.join(details)}"
                     print(msg_mem)
                     logs.append(msg_mem)
+
+            if total_regret > 0:
+                has_problems = True
+                affected_prods = len(regrets)
+                msg_regret = f"    📉 Pricing Errors: Detected in {affected_prods} products ({int(total_regret)} cumulative instances)."
+                print(msg_regret)
+                logs.append(msg_regret)
+
+            if total_waste > 0:
+                has_problems = True
+                msg_waste = f"    🗑️  Inventory Waste: Sluggish movement detected in {int(total_waste)} instances."
+                print(msg_waste)
+                logs.append(msg_waste)
+            
+            if not has_problems:
+                msg_smooth = "    ✅ Operations: Smooth (No stockouts, waste, or pricing errors)"
+                print(msg_smooth)
+                logs.append(msg_smooth)
             
             # Show active adaptations
             adjustments = await bot_ai._apply_learned_adjustments(bot, personality, logs=[])
@@ -659,3 +778,81 @@ class GameEngine:
                 msg_stable = "    ✅ Strategy Stable (No active adaptations)"
                 print(msg_stable)
                 logs.append(msg_stable)
+
+    async def _log_general_ledger(self, logs: List[str]):
+        """
+        Log the General Ledger (Trial Balance) for AI verification.
+        
+        This outputs a structured table of all account balances and verifies 
+        the fundamental accounting equation (Debits = Credits).
+        """
+        from app.models import Account
+        from sqlalchemy import select
+        
+        header = "\n📒 GENERAL LEDGER REPORT (Trial Balance):"
+        print(header)
+        logs.append(header)
+        
+        # Get all companies
+        result = await self.db.execute(select(Company))
+        companies = result.scalars().all()
+        
+        for company in companies:
+            # Highlight player company
+            prefix = "⭐ " if company.is_player else "  "
+            type_label = "(PLAYER)" if company.is_player else "(BOT)"
+            company_header = f"{prefix}{company.name} {type_label}"
+            print(company_header)
+            logs.append(company_header)
+            
+            # Get accounts
+            acc_result = await self.db.execute(
+                select(Account).where(Account.company_id == company.id).order_by(Account.code)
+            )
+            accounts = acc_result.scalars().all()
+            
+            # Track totals for verification
+            total_debits = 0.0
+            total_credits = 0.0
+            
+            # Header row for clarity
+            table_header = "    Code | Account Name              | Type      | Balance"
+            print(table_header)
+            logs.append(table_header)
+            logs.append("    " + "-" * 60)
+            
+            for acc in accounts:
+                # Calculate balance dynamically
+                balance = await self.accounting.get_account_balance(acc.id)
+                
+                if balance == 0:
+                    continue
+                
+                # Accounting Logic:
+                # Assets & Expenses: Positive Balance = Debit
+                # Liabilities, Equity, Revenue: Positive Balance = Credit (stored as negative in DB?)
+                # actually get_account_balance returns the sum of amounts.
+                # In our system:
+                # Debits are positive, Credits are negative.
+                # So if balance is positive, it's a Debit balance. If negative, Credit balance.
+                
+                line = f"    {acc.code:<4} | {acc.name:<25} | {acc.type:<9} | ${balance:,.2f}"
+                print(line)
+                logs.append(line)
+            
+            # Verify accounting equation
+            # We need to fetch balances for ALL accounts to sum them up correctly
+            # (The loop above skips 0 balances, but that's fine for sum)
+            net_balance = 0.0
+            for acc in accounts:
+                 net_balance += await self.accounting.get_account_balance(acc.id)
+            
+            # Status check
+            status_icon = "✅" if abs(net_balance) < 0.01 else "❌"
+            status_msg = "BALANCED" if abs(net_balance) < 0.01 else f"IMBALANCED ({net_balance})"
+            
+            summary = f"    {status_icon} Net Verification: ${net_balance:.2f} -> {status_msg}"
+            print(summary)
+            logs.append(summary)
+            print("    " + "=" * 60)
+            logs.append("    " + "=" * 60)

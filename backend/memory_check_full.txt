@@ -1,0 +1,16 @@
+Company: Player Corp
+  Memory: {'stockouts': {}, 'pricing_regret': {}, 'inventory_waste': {}, 'adaptations': []}
+  Brand Equity: 1.0
+--------------------
+Company: TechCorp Inc
+  Memory: {'stockouts': {'1': 8.900000000000002, '2': 9.900000000000002, '3': 8.900000000000002}, 'pricing_regret': {}, 'inventory_waste': {'1': 0, '2': 0, '3': 0}, 'adaptations': []}
+  Brand Equity: 3.0650264015417
+--------------------
+Company: Global Traders
+  Memory: {'stockouts': {'1': 8.000000000000002, '2': 9.000000000000002, '3': 9.000000000000002}, 'pricing_regret': {}, 'inventory_waste': {'1': 0, '2': 0, '3': 0}, 'adaptations': []}
+  Brand Equity: 4.962174155318868
+--------------------
+Company: SmartBiz Ltd
+  Memory: {'stockouts': {'1': 4.9, '2': 9.900000000000002, '3': 3.5999999999999996}, 'pricing_regret': {}, 'inventory_waste': {'1': 0, '2': 0, '3': 0}, 'adaptations': []}
+  Brand Equity: 4.963133477511446
+--------------------
