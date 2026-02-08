@@ -19,7 +19,7 @@ from app.schemas import (
 from app.models import Company, Product, CompanyProduct, MarketHistory, FinancialSnapshot
 from core.engine import GameEngine
 
-router = APIRouter(prefix="/game", tags=["game"])
+router = APIRouter(tags=["game"])
 
 @router.get("/history/market", response_model=List[MarketHistoryResponse])
 async def get_market_history(
@@ -276,3 +276,104 @@ async def get_inventory(db: AsyncSession = Depends(get_db)):
         })
     
     return inventory
+    
+@router.post("/player/marketing")
+async def set_marketing_budget(
+    budget_percent: float,
+    db: AsyncSession = Depends(get_db)
+):
+    """Set player's marketing budget percentage (0.0 - 0.5)."""
+    if not (0.0 <= budget_percent <= 0.5):
+        raise HTTPException(status_code=400, detail="Budget must be between 0% and 50%")
+    
+    result = await db.execute(select(Company).where(Company.is_player == True))
+    player = result.scalar_one_or_none()
+    if not player:
+        raise HTTPException(status_code=404, detail="Player company not found")
+    
+    # Update strategy memory
+    memory = dict(player.strategy_memory) if player.strategy_memory else {}
+    memory["marketing_budget_percent"] = budget_percent
+    
+    # We need to re-assign to trigger SQLAlchemy change detection for JSON
+    player.strategy_memory = memory
+    from sqlalchemy.orm.attributes import flag_modified
+    flag_modified(player, "strategy_memory")
+    
+    await db.commit()
+    
+    return {"message": f"Marketing budget set to {budget_percent*100:.1f}%", "budget_percent": budget_percent}
+
+@router.get("/events/pending")
+async def get_pending_decision_events(db: AsyncSession = Depends(get_db)):
+    """Get events requiring player decisions."""
+    from core.market_events import MarketEventsEngine
+    from app.models import GameState
+    import json
+    
+    # Get current game state
+    result = await db.execute(select(GameState))
+    game_state = result.scalar_one_or_none()
+    if not game_state:
+        return {"pending_events": []}
+    
+    events_engine = MarketEventsEngine(db, game_state.current_month, game_state.current_year)
+    events = await events_engine.get_pending_decision_events()
+    
+    return {
+        "pending_events": [
+            {
+                "id": e.id,
+                "title": json.loads(e.event_data)["title"] if e.event_data else e.description,
+                "description": json.loads(e.event_data)["description"] if e.event_data else "",
+                "choices": json.loads(e.event_data)["choices"] if e.event_data else [],
+                "deadline_month": e.decision_deadline_month,
+                "deadline_year": e.decision_deadline_year
+            }
+            for e in events
+        ]
+    }
+
+@router.post("/events/{event_id}/decide")
+async def make_decision(
+    event_id: int,
+    choice_id: str,
+    db: AsyncSession = Depends(get_db)
+):
+    """Player makes a decision on an event."""
+    from app.models import MarketEvent, GameState
+    from core.market_events import MarketEventsEngine
+    
+    # Get event
+    event = await db.get(MarketEvent, event_id)
+    
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    
+    if not event.requires_player_decision:
+        raise HTTPException(status_code=400, detail="This event does not require a decision")
+    
+    if event.decision_made:
+        raise HTTPException(status_code=400, detail="Decision already made for this event")
+    
+    # Get player company
+    result = await db.execute(
+        select(Company).where(Company.is_player == True)
+    )
+    player_company = result.scalar_one()
+    
+    # Get game state
+    result = await db.execute(select(GameState))
+    game_state = result.scalar_one()
+    
+    # Apply decision effects
+    events_engine = MarketEventsEngine(db, game_state.current_month, game_state.current_year)
+    effect_log = await events_engine.apply_decision_effects(event, choice_id, player_company.id)
+    await db.commit()
+    
+    return {
+        "message": "Decision recorded",
+        "choice": choice_id,
+        "effects_log": effect_log
+    }
+

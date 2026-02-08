@@ -6,3 +6,9 @@ pydantic-settings>=2.0.0
 python-multipart
 # Database
 aiosqlite # For async SQLite support
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+httpx>=0.24.0

@@ -17,7 +17,13 @@ export function MarketIntelligence() {
         try {
             const res = await fetch(`${API_URL}/game/state`);
             const data = await res.json();
-            setCompanies(data.companies);
+            // Sort companies: Player first, then by Brand Equity desc
+            const sorted = data.companies.sort((a: Company, b: Company) => {
+                if (a.is_player) return -1;
+                if (b.is_player) return 1;
+                return (b.brand_equity || 0) - (a.brand_equity || 0);
+            });
+            setCompanies(sorted);
         } catch (err) {
             console.error("Error fetching market intel:", err);
         } finally {
@@ -25,7 +31,8 @@ export function MarketIntelligence() {
         }
     };
 
-    const competitors = companies.filter(c => !c.is_player);
+    // No longer filtering out the player
+    const displayedCompanies = companies;
 
     if (loading) return <div>Data loading...</div>;
 
@@ -37,7 +44,7 @@ export function MarketIntelligence() {
             </div>
 
             <p style={{ color: '#aaa', marginBottom: '1rem' }}>
-                Real-time analysis of competitor strategies, financial health, and AI decision patterns.
+                Real-time analysis of market presence, financial health, and competitor strategies.
             </p>
 
             <div className="competitor-grid" style={{
@@ -45,14 +52,14 @@ export function MarketIntelligence() {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 gap: '1rem'
             }}>
-                {competitors.map(comp => (
+                {displayedCompanies.map(comp => (
                     <CompetitorCard key={comp.id} company={comp} />
                 ))}
             </div>
 
-            {competitors.length === 0 && (
+            {displayedCompanies.length === 0 && (
                 <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
-                    No competitors found. Start a new game to generate AI opponents.
+                    No companies found. Start a new game to generate the market.
                 </div>
             )}
         </div>

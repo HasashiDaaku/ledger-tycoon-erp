@@ -6,10 +6,19 @@ interface CompetitorCardProps {
 }
 
 export const CompetitorCard: React.FC<CompetitorCardProps> = ({ company }) => {
-    if (company.is_player) return null;
+    // Removed: if (company.is_player) return null;
 
     const brandPercent = Math.min((company.brand_equity || 1.0) * 50, 100); // 1.0 = 50%, 2.0 = 100%
     const personalityColor = getPersonalityColor(company.personality || 'Unknown');
+
+    // Highlight styling for player
+    const borderStyle = company.is_player
+        ? `2px solid #FFD700` // Gold for player
+        : `2px solid ${personalityColor}`;
+
+    const bgStyle = company.is_player
+        ? '#1a1a1a linear-gradient(45deg, rgba(255, 215, 0, 0.05), transparent)'
+        : '#1a1a1a';
 
     // Count total stockouts
     const stockouts = company.strategy_memory?.stockouts
@@ -23,19 +32,29 @@ export const CompetitorCard: React.FC<CompetitorCardProps> = ({ company }) => {
 
     return (
         <div className="competitor-card" style={{
-            border: `2px solid ${personalityColor}`,
+            border: borderStyle,
             padding: '1rem',
             margin: '0.5rem',
             borderRadius: '8px',
-            backgroundColor: '#1a1a1a'
+            backgroundColor: '#1a1a1a',
+            background: bgStyle,
+            boxShadow: company.is_player ? '0 0 15px rgba(255, 215, 0, 0.1)' : 'none'
         }}>
-            <h3 style={{ borderBottom: `2px solid ${personalityColor}` }}>{company.name}</h3>
+            <h3 style={{
+                borderBottom: `2px solid ${company.is_player ? '#FFD700' : personalityColor}`,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}>
+                {company.name}
+                {company.is_player && <span style={{ fontSize: '0.8em', background: '#FFD700', color: 'black', padding: '2px 6px', borderRadius: '4px' }}>YOU</span>}
+            </h3>
 
             <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
                 <div className="stat-item">
                     <label>Strategy:</label>
-                    <span style={{ color: personalityColor, fontWeight: 'bold' }}>
-                        {company.personality || "Unknown"}
+                    <span style={{ color: company.is_player ? '#FFD700' : personalityColor, fontWeight: 'bold' }}>
+                        {company.personality || "Player"}
                     </span>
                 </div>
                 <div className="stat-item">
@@ -51,7 +70,7 @@ export const CompetitorCard: React.FC<CompetitorCardProps> = ({ company }) => {
                         className="progress-bar-fill"
                         style={{
                             width: `${brandPercent}%`,
-                            backgroundColor: personalityColor,
+                            backgroundColor: company.is_player ? '#FFD700' : personalityColor,
                             height: '100%',
                             borderRadius: '5px',
                             transition: 'width 0.5s ease'
@@ -62,7 +81,7 @@ export const CompetitorCard: React.FC<CompetitorCardProps> = ({ company }) => {
             </div>
 
             <div className="memory-section" style={{ marginTop: '1rem', borderTop: '1px solid #444', paddingTop: '0.5rem' }}>
-                <h4>🧠 AI Memory</h4>
+                <h4>{company.is_player ? '📊 Operational Health' : '🧠 AI Memory'}</h4>
                 <div className="memory-tags" style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                     {stockouts > 0 && (
                         <span className="tag" style={{ background: '#d32f2f', color: 'white', padding: '2px 6px', borderRadius: '4px', fontSize: '0.8rem' }}>
@@ -91,6 +110,7 @@ function getPersonalityColor(personality: string): string {
         case 'balanced': return '#448aff';   // Blue
         case 'premium': return '#ffd740';    // Gold
         case 'conservative': return '#69f0ae'; // Green
+        case 'player': return '#FFD700';     // Gold for Player
         default: return '#9e9e9e';           // Grey
     }
 }

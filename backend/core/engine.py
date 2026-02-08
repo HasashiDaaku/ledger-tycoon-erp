@@ -167,6 +167,18 @@ class GameEngine:
         return player_company
     
     async def process_turn(self) -> Dict:
+        """Safe wrapper for processing a turn with error logging."""
+        try:
+            return await self._process_turn_unsafe()
+        except Exception as e:
+            import traceback
+            error_msg = f"CRITICAL ERROR in process_turn: {e}\n{traceback.format_exc()}"
+            print(error_msg)
+            with open("backend_error.log", "w", encoding="utf-8") as f:
+                f.write(error_msg)
+            raise e
+
+    async def _process_turn_unsafe(self) -> Dict:
         """Process one turn (month) of the game."""
         from sqlalchemy import delete
         from app.models import FinancialSnapshot, MarketHistory
@@ -305,12 +317,17 @@ class GameEngine:
                 # 2. Make new decisions based on updated memory
                 await bot_ai.make_decisions(company, logs, events_engine=events_engine)  # Pass logs list and events_engine
         
+        # New: Player Marketing Logic
+        await self._manage_player_branding(logs)
         
         # Record Financial Snapshots (End of Month State)
         await self._record_financial_snapshots(self.current_month, self.current_year, logs)
         
-        # Update market event durations (decrement and clean up expired events)
-        await events_engine.update_event_durations()
+        # Trigger decision events (20% chance)
+        decision_event = await events_engine.trigger_decision_event()
+        if decision_event:
+            log("\n" + events_engine.format_decision_event_log(decision_event))
+            await self.db.commit()  # Commit the decision event
 
         # Advance time
         self.current_month += 1
@@ -334,10 +351,23 @@ class GameEngine:
         # New: Branding & Competitive Advantage Report
         await self._record_brand_report(logs)
         
-        # New: Strategy Evolution Report accounts for learning
+        # New: Startegy Evolution Report accounts for learning
         await self._record_strategy_evolution(logs)
         
         await self.db.commit()
+        
+        # Update market event durations (decrement and clean up expired events)
+        # This must happen AFTER commit to ensure changes are persisted
+        
+        # Process economic evolution (Improve/Worsen active events)
+        await events_engine.process_economic_evolution()
+        await self.db.commit()
+
+        await events_engine.update_event_durations()
+        await self.db.commit()  # Commit the duration updates
+
+        # New: Player Performance Report
+        await self._record_player_report(logs)
         
         # New: Branding & Competitive Advantage Report
         await self._record_brand_report(logs)
@@ -638,6 +668,136 @@ class GameEngine:
                 
                 logs.append(f"  [{company.name}] Cash: {cash:.2f} | Assets: {assets:.2f} | Profit: {net_income:.2f} | Margin: {margin:.1f}% | ROI: {roi:.1f}%")
             logs.append("=" * 50 + "\n")
+
+    async def _manage_player_branding(self, logs: List[str]):
+        """
+        Manage Player's marketing spend based on their set budget.
+        """
+        try:
+            result = await self.db.execute(select(Company).where(Company.is_player == True))
+            player = result.scalar_one_or_none()
+            
+            if not player:
+                return
+
+            # Get current cash
+            cash = await self.accounting.get_company_cash(player.id)
+            
+            # Get budget percent from memory (default 0)
+            memory = player.strategy_memory or {}
+            budget_pct = memory.get("marketing_budget_percent", 0.0)
+            
+            # Cap at 50% to prevent bankruptcy by typo
+            budget_pct = min(budget_pct, 0.50)
+            
+            if budget_pct <= 0 or cash < 100:
+                return
+
+            # Calculate spend
+            spend = round(cash * budget_pct, 2)
+            
+            if spend <= 0:
+                return
+
+            # Execute Transaction
+            # "5200" is Marketing Expense (need to ensure this account exists or finding it dynamically)
+            # In `_manage_branding` for bots, we used code "5200".
+            marketing_acc = await self.accounting._get_account_by_code(player.id, "5200")
+            cash_acc = await self.accounting._get_account_by_code(player.id, "1000")
+            
+            if not marketing_acc:
+                print("Error: Marketing account 5200 not found for player")
+                return
+            
+            if not cash_acc:
+                print("Error: Cash account 1000 not found for player")
+                return
+
+            await self.accounting.create_transaction(
+                company_id=player.id,
+                description=f"Monthly marketing campaign (Budget: {budget_pct*100:.1f}%)",
+                entries=[
+                    (marketing_acc.id, spend),      # Debit Expense
+                    (cash_acc.id, -spend),          # Credit Cash
+                ]
+            )
+            
+            # Update Brand Equity
+            # Logic: 1.0 + (Spend / 10000) - utilizing same scaling as bots for fairness
+            brand_boost = spend / 10000.0
+            old_brand = player.brand_equity
+            player.brand_equity += brand_boost
+            
+            # Log it
+            # We append to logs to show in the "Detailed turn processing logs"
+            header = "\n📢 PLAYER MARKETING CAMPAIGN:"
+            print(header)
+            logs.append(header)
+            
+            msg_budget = f"  💰 Marketing Budget: {budget_pct*100:.1f}% of available cash"
+            msg_spend = f"  📉 Marketing Expense: ${spend:,.2f}"
+            msg_impact = f"  📈 Brand Equity: {old_brand:.2f} → {player.brand_equity:.2f} (+{brand_boost:.2f})"
+            
+            print(msg_budget)
+            print(msg_spend)
+            print(msg_impact)
+            
+            logs.append(msg_budget)
+            logs.append(msg_spend)
+            logs.append(msg_impact)
+            
+            # Commit changes
+            await self.db.commit()
+            
+
+
+            
+        except Exception as e:
+            import traceback
+            print(f"ERROR in _manage_player_branding: {e}")
+            traceback.print_exc()
+            logs.append(f"ERROR processing marketing: {str(e)}")
+            try:
+                await self.db.rollback()
+            except:
+                pass
+
+    async def _record_player_report(self, logs: List[str]):
+        """
+        Record a dedicated performance report for the Player.
+        Includes Brand Presence, Strategy feedback (if any), and key alerts.
+        """
+        result = await self.db.execute(select(Company).where(Company.is_player == True))
+        player = result.scalar_one_or_none()
+        
+        if not player:
+            return
+            
+        header = "\n👤 PLAYER PERFORMANCE REPORT:"
+        print(header)
+        logs.append(header)
+        
+        # 1. Brand Presence
+        log_brand = f"  🌐 Brand Presence: {player.brand_equity:.2f}x Multiplier"
+        print(log_brand)
+        logs.append(log_brand)
+        
+        # 2. Market Advantage context
+        advantage = (player.brand_equity - 1.0) * 100
+        if advantage > 0:
+            msg = f"     (You have a +{advantage:.1f}% advantage in attracting demand vs. equal priced competitors)"
+            print(msg)
+            logs.append(msg)
+        else:
+             msg = f"     (Standard market presence. Invest in marketing to grow this.)"
+             print(msg)
+             logs.append(msg)
+             
+        # 3. Quick Financial Health Check (Redundant but good for summary)
+        cash = await self.accounting.get_company_cash(player.id)
+        msg_cash = f"  💰 Cash on Hand: ${cash:,.2f}"
+        print(msg_cash)
+        logs.append(msg_cash)
 
     async def _apply_brand_decay(self, logs: List[str] = None):
         """Apply monthly decay to brand equity to force continuous investment."""

@@ -8,6 +8,7 @@ export interface Company {
         stockouts?: Record<string, number>;
         pricing_regret?: Record<string, number>;
         inventory_waste?: Record<string, number>;
+        marketing_budget_percent?: number;
         adaptations?: any[];
     };
     personality?: string;

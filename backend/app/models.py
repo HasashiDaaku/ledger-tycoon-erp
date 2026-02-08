@@ -170,13 +170,21 @@ class MarketEvent(Base):
     __tablename__ = "market_events"
     
     id = Column(Integer, primary_key=True, index=True)
-    event_type = Column(String)  # "ECONOMIC_BOOM", "RECESSION", "SUPPLY_DISRUPTION", "SEASONAL"
+    event_type = Column(String)  # "ECONOMIC_BOOM", "RECESSION", "SUPPLY_DISRUPTION", "SEASONAL", "DECISION_EVENT"
     start_month = Column(Integer)
     start_year = Column(Integer)
     duration_months = Column(Integer)  # Remaining duration
     intensity = Column(Float)  # Multiplier: 1.25 for +25%, 0.80 for -20%, etc
     affected_product_id = Column(Integer, ForeignKey("products.id"), nullable=True)  # Null for economy-wide
     description = Column(String)
+    
+    # Decision Event fields
+    requires_player_decision = Column(Boolean, default=False)
+    decision_deadline_month = Column(Integer, nullable=True)
+    decision_deadline_year = Column(Integer, nullable=True)
+    player_decision = Column(String, nullable=True)  # "CHOICE_A", "CHOICE_B", etc.
+    decision_made = Column(Boolean, default=False)
+    event_data = Column(JSON, nullable=True)  # Stores event details, choices, and effects
     
     product = relationship("Product")
 

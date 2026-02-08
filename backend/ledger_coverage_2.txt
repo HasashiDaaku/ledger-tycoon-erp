@@ -1,0 +1,348 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\van Houten\accounting_erp_software\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\van Houten\accounting_erp_software\backend
+configfile: pytest.ini
+plugins: anyio-4.12.1, asyncio-1.3.0, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 12 items
+
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_success FAILED [  8%]
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_no_player PASSED [ 16%]
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_success FAILED [ 25%]
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_no_player PASSED [ 33%]
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_with_multiple_entries FAILED [ 41%]
+tests/test_ledger.py::TestLedgerRouter::test_get_balance_sheet_success PASSED [ 50%]
+tests/test_ledger.py::TestLedgerRouter::test_get_balance_sheet_no_player PASSED [ 58%]
+tests/test_ledger.py::TestLedgerRouter::test_get_income_statement_success PASSED [ 66%]
+tests/test_ledger.py::TestLedgerRouter::test_get_income_statement_no_player PASSED [ 75%]
+tests/test_ledger.py::TestLedgerRouter::test_get_key_metrics_success PASSED [ 83%]
+tests/test_ledger.py::TestLedgerRouter::test_get_key_metrics_no_player PASSED [ 91%]
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_empty_accounts PASSED [100%]
+
+================================== FAILURES ===================================
+_________________ TestLedgerRouter.test_get_accounts_success __________________
+
+self = <test_ledger.TestLedgerRouter object at 0x000001F79F53FD90>
+client = <httpx.AsyncClient object at 0x000001F79F5A78C0>
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x000001F79F5A6A50>
+test_company = <app.models.Company object at 0x000001F79F6901A0>
+
+    async def test_get_accounts_success(self, client, db_session, test_company):
+        """Test GET /ledger/accounts returns accounts with balances."""
+        # Setup: Make test_company the player
+        test_company.is_player = True
+        await db_session.commit()
+    
+        # Initialize accounts
+        accounting = AccountingEngine(db_session)
+        await accounting.initialize_company_accounts(test_company.id)
+    
+        # Make a transaction to create some balance
+        await accounting.record_cash_investment(test_company.id, 10000.0)
+    
+        # Test
+        response = await client.get("/ledger/accounts")
+    
+        # Verify
+        assert response.status_code == 200
+        accounts = response.json()
+        assert len(accounts) > 0
+    
+        # Check structure
+        for account in accounts:
+            assert "id" in account
+            assert "name" in account
+            assert "code" in account
+            assert "type" in account
+            assert "balance" in account
+    
+        # Verify cash account has balance
+        cash_account = next((a for a in accounts if a["code"] == "1010"), None)
+>       assert cash_account is not None
+E       assert None is not None
+
+tests\test_ledger.py:65: AssertionError
+_______________ TestLedgerRouter.test_get_transactions_success ________________
+
+self = <test_ledger.TestLedgerRouter object at 0x000001F79F5FA520>
+client = <httpx.AsyncClient object at 0x000001F79F819090>
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x000001F79F5A5FD0>
+test_company = <app.models.Company object at 0x000001F79F81AD50>
+
+    async def test_get_transactions_success(self, client, db_session, test_company):
+        """Test GET /ledger/transactions returns transactions with entries."""
+        # Setup: Make test_company the player
+        test_company.is_player = True
+        await db_session.commit()
+    
+        # Initialize accounts and create transaction
+        accounting = AccountingEngine(db_session)
+        await accounting.initialize_company_accounts(test_company.id)
+        await accounting.record_cash_investment(test_company.id, 5000.0)
+    
+        # Test
+>       response = await client.get("/ledger/transactions")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_ledger.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\venv\Lib\site-packages\httpx\_client.py:1768: in get
+    return await self.request(
+..\venv\Lib\site-packages\httpx\_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\httpx\_client.py:1629: in send
+    response = await self._send_handling_auth(
+..\venv\Lib\site-packages\httpx\_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+..\venv\Lib\site-packages\httpx\_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\httpx\_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\httpx\_transports\asgi.py:170: in handle_async_request
+    await self.app(scope, receive, send)
+..\venv\Lib\site-packages\fastapi\applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+..\venv\Lib\site-packages\starlette\applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+..\venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+..\venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+..\venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+..\venv\Lib\site-packages\starlette\routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\venv\Lib\site-packages\starlette\routing.py:736: in app
+    await route.handle(scope, receive, send)
+..\venv\Lib\site-packages\starlette\routing.py:290: in handle
+    await self.app(scope, receive, send)
+..\venv\Lib\site-packages\fastapi\routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+..\venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\venv\Lib\site-packages\fastapi\routing.py:107: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\fastapi\routing.py:426: in app
+    raw_response = await run_endpoint_function(
+..\venv\Lib\site-packages\fastapi\routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db = <sqlalchemy.orm.session.AsyncSession object at 0x000001F79F5A5FD0>
+
+    @router.get("/transactions", response_model=List[TransactionResponse])
+    async def get_transactions(db: AsyncSession = Depends(get_db)):
+        """Get all transactions for the player company."""
+        # Get player company
+        result = await db.execute(select(Company).where(Company.is_player == True))
+        player = result.scalar_one_or_none()
+    
+        if not player:
+            raise HTTPException(status_code=404, detail="Player company not found")
+    
+        # Get transactions with entries
+        result = await db.execute(
+            select(Transaction)
+            .where(Transaction.company_id == player.id)
+>           .options(selectinload(Transaction.entries).selectinload(JournalEntry.account))
+                                  ^^^^^^^^^^^^^^^^^^^
+            .order_by(Transaction.date.desc())
+        )
+E       AttributeError: type object 'Transaction' has no attribute 'entries'
+
+app\routers\ledger.py:65: AttributeError
+________ TestLedgerRouter.test_get_transactions_with_multiple_entries _________
+
+self = <test_ledger.TestLedgerRouter object at 0x000001F79F5DDD90>
+client = <httpx.AsyncClient object at 0x000001F79F83F360>
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x000001F79F693620>
+test_company = <app.models.Company object at 0x000001F79F61B250>
+
+    async def test_get_transactions_with_multiple_entries(self, client, db_session, test_company):
+        """Test transactions with multiple journal entries are properly formatted."""
+        # Setup
+        test_company.is_player = True
+        await db_session.commit()
+    
+        accounting = AccountingEngine(db_session)
+        await accounting.initialize_company_accounts(test_company.id)
+    
+        # Create multiple transactions
+        await accounting.record_cash_investment(test_company.id, 5000.0)
+        await accounting.record_cash_investment(test_company.id, 3000.0)
+    
+        # Test
+>       response = await client.get("/ledger/transactions")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_ledger.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\venv\Lib\site-packages\httpx\_client.py:1768: in get
+    return await self.request(
+..\venv\Lib\site-packages\httpx\_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\httpx\_client.py:1629: in send
+    response = await self._send_handling_auth(
+..\venv\Lib\site-packages\httpx\_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+..\venv\Lib\site-packages\httpx\_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\httpx\_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\httpx\_transports\asgi.py:170: in handle_async_request
+    await self.app(scope, receive, send)
+..\venv\Lib\site-packages\fastapi\applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+..\venv\Lib\site-packages\starlette\applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+..\venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+..\venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+..\venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+..\venv\Lib\site-packages\starlette\routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\venv\Lib\site-packages\starlette\routing.py:736: in app
+    await route.handle(scope, receive, send)
+..\venv\Lib\site-packages\starlette\routing.py:290: in handle
+    await self.app(scope, receive, send)
+..\venv\Lib\site-packages\fastapi\routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+..\venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\venv\Lib\site-packages\fastapi\routing.py:107: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+..\venv\Lib\site-packages\fastapi\routing.py:426: in app
+    raw_response = await run_endpoint_function(
+..\venv\Lib\site-packages\fastapi\routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db = <sqlalchemy.orm.session.AsyncSession object at 0x000001F79F693620>
+
+    @router.get("/transactions", response_model=List[TransactionResponse])
+    async def get_transactions(db: AsyncSession = Depends(get_db)):
+        """Get all transactions for the player company."""
+        # Get player company
+        result = await db.execute(select(Company).where(Company.is_player == True))
+        player = result.scalar_one_or_none()
+    
+        if not player:
+            raise HTTPException(status_code=404, detail="Player company not found")
+    
+        # Get transactions with entries
+        result = await db.execute(
+            select(Transaction)
+            .where(Transaction.company_id == player.id)
+>           .options(selectinload(Transaction.entries).selectinload(JournalEntry.account))
+                                  ^^^^^^^^^^^^^^^^^^^
+            .order_by(Transaction.date.desc())
+        )
+E       AttributeError: type object 'Transaction' has no attribute 'entries'
+
+app\routers\ledger.py:65: AttributeError
+============================== warnings summary ===============================
+app\schemas.py:16
+app\schemas.py:16
+app\schemas.py:16
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class CompanyResponse(CompanyBase):
+
+app\schemas.py:28
+app\schemas.py:28
+app\schemas.py:28
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:28: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class AccountResponse(BaseModel):
+
+app\schemas.py:39
+app\schemas.py:39
+app\schemas.py:39
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:39: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class JournalEntryResponse(BaseModel):
+
+app\schemas.py:47
+app\schemas.py:47
+app\schemas.py:47
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:47: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class TransactionResponse(BaseModel):
+
+app\schemas.py:74
+app\schemas.py:74
+app\schemas.py:74
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:74: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class MarketHistoryResponse(BaseModel):
+
+app\schemas.py:88
+app\schemas.py:88
+app\schemas.py:88
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:88: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class FinancialSnapshotResponse(BaseModel):
+
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_success
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_success
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_with_multiple_entries
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_with_multiple_entries
+tests/test_ledger.py::TestLedgerRouter::test_get_balance_sheet_success
+tests/test_ledger.py::TestLedgerRouter::test_get_income_statement_success
+tests/test_ledger.py::TestLedgerRouter::test_get_key_metrics_success
+  C:\Users\van Houten\accounting_erp_software\backend\core\accounting.py:48: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    date=datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.13.5-final-0 _______________
+
+Name                        Stmts   Miss  Cover   Missing
+---------------------------------------------------------
+app\__init__.py                 0      0   100%
+app\database.py                10      2    80%   21-22
+app\main.py                    23     23     0%   1-55
+app\models.py                 128      0   100%
+app\routers\__init__.py         2      0   100%
+app\routers\ledger.py          66     40    39%   24-49, 56-91, 98-106, 113-121, 128-136
+app\routers\ledger_api.py      75     75     0%   2-187
+app\routers\simulation.py     131    102    22%   32-49, 58-71, 76-88, 93-133, 145-149, 163-177, 187-211, 217-244, 249-278, 286-305
+app\schemas.py                 75      0   100%
+core\__init__.py                0      0   100%
+core\accounting.py             62     20    68%   42, 67-74, 82-83, 89-91, 99-121
+core\bot_ai.py                346    346     0%   7-673
+core\engine.py                527    503     5%   20-24, 28-40, 45-167, 171-179, 183-373, 382-408, 414-423, 439-495, 499-657, 663-750, 757-787, 791-809, 813-826, 830-927, 936-1005
+core\inventory_manager.py      56     56     0%   8-190
+core\market.py                117    107     9%   17-19, 36-74, 92-134, 148-278
+core\market_events.py          71     71     0%   8-192
+core\reports.py                52     32    38%   30-50, 56, 76-93, 97-99, 111-120
+---------------------------------------------------------
+TOTAL                        1741   1377    21%
+=========================== short test summary info ===========================
+FAILED tests/test_ledger.py::TestLedgerRouter::test_get_accounts_success - as...
+FAILED tests/test_ledger.py::TestLedgerRouter::test_get_transactions_success
+FAILED tests/test_ledger.py::TestLedgerRouter::test_get_transactions_with_multiple_entries
+================== 3 failed, 9 passed, 25 warnings in 3.56s ===================

@@ -62,8 +62,8 @@ export const JournalEntriesTable: React.FC<JournalEntriesTableProps> = ({ compan
                             <th>Date</th>
                             <th>Description</th>
                             <th>Account</th>
-                            <th>Debit</th>
-                            <th>Credit</th>
+                            <th className="text-right">Debit</th>
+                            <th className="text-right">Credit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,10 +74,10 @@ export const JournalEntriesTable: React.FC<JournalEntriesTableProps> = ({ compan
                                         <td>{index === 0 ? new Date(tx.date).toLocaleDateString() : ''}</td>
                                         <td>{index === 0 ? tx.description : ''}</td>
                                         <td>{entry.account.code} - {entry.account.name}</td>
-                                        <td className={entry.debit > 0 ? "debit-cell" : ""}>
+                                        <td className={`text-right ${entry.debit > 0 ? "debit-cell" : ""}`}>
                                             {entry.debit > 0 ? `$${entry.debit.toLocaleString()}` : ''}
                                         </td>
-                                        <td className={entry.credit > 0 ? "credit-cell" : ""}>
+                                        <td className={`text-right ${entry.credit > 0 ? "credit-cell" : ""}`}>
                                             {entry.credit > 0 ? `$${entry.credit.toLocaleString()}` : ''}
                                         </td>
                                     </tr>

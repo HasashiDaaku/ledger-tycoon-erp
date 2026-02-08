@@ -4,9 +4,25 @@ import { AnalyticsDashboard } from './AnalyticsDashboard'
 import { GeneralLedgerTable } from './components/GeneralLedgerTable'
 import { JournalEntriesTable } from './components/JournalEntriesTable'
 import { MarketIntelligence } from './components/MarketIntelligence'
+import { CollapsiblePanel } from './components/CollapsiblePanel'
+import { EventDecisionModal } from './components/EventDecisionModal'
 import type { GameState, Account, Product, FinancialMetrics, InventoryItem, LogEntry } from './types/index'
 
 const API_URL = 'http://localhost:8000'
+
+interface DecisionEvent {
+  id: number;
+  title: string;
+  description: string;
+  choices: Array<{
+    id: string;
+    label: string;
+    description: string;
+    effects: Record<string, any>;
+  }>;
+  deadline_month: number;
+  deadline_year: number;
+}
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false)
@@ -18,6 +34,7 @@ function App() {
   const [logs, setLogs] = useState<LogEntry[]>([])
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<'dashboard' | 'pricing' | 'inventory' | 'reports' | 'logs' | 'analytics' | 'market'>('dashboard')
+  const [pendingEvents, setPendingEvents] = useState<DecisionEvent[]>([])
 
   const startGame = async () => {
     setLoading(true)
@@ -170,6 +187,47 @@ function App() {
     }
   }
 
+  const updateMarketingBudget = async (percent: number) => {
+    try {
+      await fetch(`${API_URL}/game/player/marketing?budget_percent=${percent}`, {
+        method: 'POST'
+      })
+      await loadGameState()
+    } catch (error) {
+      console.error('Error setting marketing budget:', error)
+    }
+  }
+
+  const checkPendingEvents = async () => {
+    try {
+      const response = await fetch(`${API_URL}/game/events/pending`)
+      const data = await response.json()
+      setPendingEvents(data.pending_events || [])
+    } catch (error) {
+      console.error('Error checking pending events:', error)
+    }
+  }
+
+  const makeDecision = async (eventId: number, choiceId: string) => {
+    try {
+      const response = await fetch(`${API_URL}/game/events/${eventId}/decide?choice_id=${choiceId}`, {
+        method: 'POST'
+      })
+      const data = await response.json()
+      console.log('Decision made:', data)
+
+      // Remove the event from pending
+      setPendingEvents(prev => prev.filter(e => e.id !== eventId))
+
+      // Reload game state to reflect changes
+      await loadGameState()
+      await loadAccounts()
+    } catch (error) {
+      console.error('Error making decision:', error)
+      throw error
+    }
+  }
+
   useEffect(() => {
     // Check if game is already started
     loadGameState().then(() => {
@@ -182,6 +240,18 @@ function App() {
       }
     })
   }, [])
+
+  // Poll for pending decision events
+  useEffect(() => {
+    if (!gameStarted) return
+
+    // Check immediately
+    checkPendingEvents()
+
+    // Then poll every 5 seconds
+    const interval = setInterval(checkPendingEvents, 5000)
+    return () => clearInterval(interval)
+  }, [gameStarted])
 
   if (!gameStarted) {
     return (
@@ -289,7 +359,59 @@ function App() {
               </div>
             </section>
 
-            <section className="panel">
+            {/* Marketing Strategy Section */}
+            <section className="panel" style={{ marginBottom: '20px', borderLeft: '4px solid #FFD700' }}>
+              <h2>📢 Marketing Strategy</h2>
+              {gameState && gameState.companies.find(c => c.is_player) && (
+                (() => {
+                  const player = gameState.companies.find(c => c.is_player);
+                  const budgetPct = player?.strategy_memory?.marketing_budget_percent || 0;
+                  const currentCash = gameState.cash_balance;
+                  const estimatedSpend = currentCash * budgetPct;
+
+                  return (
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                        <div>
+                          <strong>Current Brand Equity: </strong>
+                          <span style={{ fontSize: '1.2em', color: '#FFD700' }}>
+                            {(player?.brand_equity || 1.0).toFixed(2)}x
+                          </span>
+                        </div>
+                        <div>
+                          <strong>Monthly Budget: </strong>
+                          <span>{(budgetPct * 100).toFixed(0)}%</span>
+                        </div>
+                      </div>
+
+                      <div className="budget-control" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <input
+                          type="range"
+                          min="0"
+                          max="0.5"
+                          step="0.01"
+                          value={budgetPct}
+                          onChange={(e) => updateMarketingBudget(parseFloat(e.target.value))}
+                          style={{ flex: 1 }}
+                        />
+                        <span style={{ minWidth: '60px', textAlign: 'right' }}>
+                          {(budgetPct * 100).toFixed(0)}%
+                        </span>
+                      </div>
+
+                      <p className="help-text" style={{ marginTop: '0.5rem' }}>
+                        Estimated Spend: <strong>${estimatedSpend.toLocaleString(undefined, { maximumFractionDigits: 0 })}</strong> next month.
+                        <br />
+                        Invest in marketing to grow your Brand Equity and attract more customers.
+                      </p>
+                    </div>
+                  );
+                })()
+              )}
+            </section>
+
+            {/* Companies Section - Always Visible */}
+            <section className="panel" style={{ marginBottom: '20px' }}>
               <h2>Companies</h2>
               {gameState && (
                 <table>
@@ -311,17 +433,36 @@ function App() {
               )}
             </section>
 
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', gridColumn: '1 / -1' }}>
+              <CollapsiblePanel
+                title="General Ledger (Trial Balance)"
+                defaultExpanded={true}
+                summary={
+                  <span>
+                    Total Debits: <strong>${accounts.reduce((sum, a) => ['Asset', 'Expense'].includes(a.type) ? sum + a.balance : sum, 0).toLocaleString()}</strong> |
+                    Total Credits: <strong>${accounts.reduce((sum, a) => ['Liability', 'Equity', 'Revenue'].includes(a.type) ? sum + a.balance : sum, 0).toLocaleString()}</strong>
+                  </span>
+                }
+              >
+                <GeneralLedgerTable accounts={accounts} />
+              </CollapsiblePanel>
 
-            <div className="accounting-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-              <section className="panel accounts-panel">
-                <h2>Chart of Accounts</h2>
+              <CollapsiblePanel
+                title="Chart of Accounts"
+                defaultExpanded={false}
+                summary={
+                  <span>
+                    Total Assets: <strong>${accounts.filter(a => a.type === 'Asset').reduce((sum, a) => sum + a.balance, 0).toLocaleString()}</strong>
+                  </span>
+                }
+              >
                 <table>
                   <thead>
                     <tr>
                       <th>Code</th>
                       <th>Account</th>
                       <th>Type</th>
-                      <th>Balance</th>
+                      <th className="text-right">Balance</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -330,22 +471,25 @@ function App() {
                         <td>{account.code}</td>
                         <td>{account.name}</td>
                         <td><span className={`badge badge-${account.type.toLowerCase()}`}>{account.type}</span></td>
-                        <td className={account.balance >= 0 ? 'positive' : 'negative'}>
+                        <td className={`text-right ${account.balance >= 0 ? 'positive' : 'negative'}`}>
                           ${Math.abs(account.balance).toLocaleString()}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </section>
+              </CollapsiblePanel>
 
-              <GeneralLedgerTable accounts={accounts} />
+              <CollapsiblePanel
+                title="Journal Entries"
+                defaultExpanded={false}
+                summary={
+                  <span>View recent transactions</span>
+                }
+              >
+                <JournalEntriesTable companyId={gameState?.companies.find(c => c.is_player)?.id || 1} />
+              </CollapsiblePanel>
             </div>
-
-            <section className="panel" style={{ marginTop: '20px' }}>
-              {/* Assuming Player Company ID is 1 for now, or we can find it in gameState */}
-              <JournalEntriesTable companyId={gameState?.companies.find(c => c.is_player)?.id || 1} />
-            </section>
           </div>
         )}
 
@@ -506,6 +650,15 @@ function App() {
           <MarketIntelligence />
         )}
       </main>
+
+      {/* Decision Event Modal */}
+      {pendingEvents.length > 0 && (
+        <EventDecisionModal
+          event={pendingEvents[0]}
+          onDecide={async (choiceId) => await makeDecision(pendingEvents[0].id, choiceId)}
+          onClose={() => setPendingEvents(prev => prev.slice(1))}
+        />
+      )}
     </div>
   )
 }

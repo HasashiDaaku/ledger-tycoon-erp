@@ -1,0 +1,93 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\van Houten\accounting_erp_software\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\van Houten\accounting_erp_software\backend
+configfile: pytest.ini
+plugins: anyio-4.12.1, asyncio-1.3.0, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 12 items
+
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_success PASSED [  8%]
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_no_player PASSED [ 16%]
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_empty_accounts PASSED [ 25%]
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_no_player PASSED [ 33%]
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_bug_with_entries PASSED [ 41%]
+tests/test_ledger.py::TestLedgerRouter::test_get_balance_sheet_success PASSED [ 50%]
+tests/test_ledger.py::TestLedgerRouter::test_get_balance_sheet_no_player PASSED [ 58%]
+tests/test_ledger.py::TestLedgerRouter::test_get_income_statement_success PASSED [ 66%]
+tests/test_ledger.py::TestLedgerRouter::test_get_income_statement_no_player PASSED [ 75%]
+tests/test_ledger.py::TestLedgerRouter::test_get_key_metrics_success PASSED [ 83%]
+tests/test_ledger.py::TestLedgerRouter::test_get_key_metrics_no_player PASSED [ 91%]
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_multiple_accounts PASSED [100%]
+
+============================== warnings summary ===============================
+app\schemas.py:16
+app\schemas.py:16
+app\schemas.py:16
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class CompanyResponse(CompanyBase):
+
+app\schemas.py:28
+app\schemas.py:28
+app\schemas.py:28
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:28: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class AccountResponse(BaseModel):
+
+app\schemas.py:39
+app\schemas.py:39
+app\schemas.py:39
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:39: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class JournalEntryResponse(BaseModel):
+
+app\schemas.py:47
+app\schemas.py:47
+app\schemas.py:47
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:47: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class TransactionResponse(BaseModel):
+
+app\schemas.py:74
+app\schemas.py:74
+app\schemas.py:74
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:74: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class MarketHistoryResponse(BaseModel):
+
+app\schemas.py:88
+app\schemas.py:88
+app\schemas.py:88
+  C:\Users\van Houten\accounting_erp_software\backend\app\schemas.py:88: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class FinancialSnapshotResponse(BaseModel):
+
+tests/test_ledger.py::TestLedgerRouter::test_get_accounts_success
+tests/test_ledger.py::TestLedgerRouter::test_get_transactions_bug_with_entries
+tests/test_ledger.py::TestLedgerRouter::test_get_balance_sheet_success
+tests/test_ledger.py::TestLedgerRouter::test_get_income_statement_success
+tests/test_ledger.py::TestLedgerRouter::test_get_key_metrics_success
+  C:\Users\van Houten\accounting_erp_software\backend\core\accounting.py:48: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    date=datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.13.5-final-0 _______________
+
+Name                        Stmts   Miss  Cover   Missing
+---------------------------------------------------------
+app\__init__.py                 0      0   100%
+app\database.py                10      2    80%   21-22
+app\main.py                    23     23     0%   1-55
+app\models.py                 128      0   100%
+app\routers\__init__.py         2      0   100%
+app\routers\ledger.py          66     40    39%   24-49, 56-91, 98-106, 113-121, 128-136
+app\routers\ledger_api.py      75     75     0%   2-187
+app\routers\simulation.py     131    102    22%   32-49, 58-71, 76-88, 93-133, 145-149, 163-177, 187-211, 217-244, 249-278, 286-305
+app\schemas.py                 75      0   100%
+core\__init__.py                0      0   100%
+core\accounting.py             62     20    68%   42, 67-74, 82-83, 89-91, 99-121
+core\bot_ai.py                346    346     0%   7-673
+core\engine.py                527    503     5%   20-24, 28-40, 45-167, 171-179, 183-373, 382-408, 414-423, 439-495, 499-657, 663-750, 757-787, 791-809, 813-826, 830-927, 936-1005
+core\inventory_manager.py      56     56     0%   8-190
+core\market.py                117    107     9%   17-19, 36-74, 92-134, 148-278
+core\market_events.py          71     71     0%   8-192
+core\reports.py                52     32    38%   30-50, 56, 76-93, 97-99, 111-120
+---------------------------------------------------------
+TOTAL                        1741   1377    21%
+======================= 12 passed, 23 warnings in 2.76s =======================

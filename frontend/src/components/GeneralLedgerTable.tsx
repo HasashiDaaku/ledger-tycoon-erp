@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface Account {
     id: number;
@@ -23,9 +23,9 @@ export const GeneralLedgerTable: React.FC<GeneralLedgerTableProps> = ({ accounts
                         <th>Code</th>
                         <th>Account</th>
                         <th>Type</th>
-                        <th>Debit</th>
-                        <th>Credit</th>
-                        <th>Net Balance</th>
+                        <th className="text-right">Debit</th>
+                        <th className="text-right">Credit</th>
+                        <th className="text-right">Net Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@ export const GeneralLedgerTable: React.FC<GeneralLedgerTableProps> = ({ accounts
 
                         // Better approach for Trial Balance:
                         // If we don't have raw debit/credit sums, we just map balance to column.
-                        const absBalance = Math.abs(balance);
+
                         if (balance >= 0) {
                             // Positive number. 
                             // If Asset/Expense, it's a Debit balance.
@@ -89,9 +89,9 @@ export const GeneralLedgerTable: React.FC<GeneralLedgerTableProps> = ({ accounts
                                 <td>{account.code}</td>
                                 <td>{account.name}</td>
                                 <td><span className={`badge badge-${account.type.toLowerCase()}`}>{account.type}</span></td>
-                                <td>{debit !== 0 ? `$${debit.toLocaleString()}` : '-'}</td>
-                                <td>{credit !== 0 ? `$${credit.toLocaleString()}` : '-'}</td>
-                                <td className={account.balance >= 0 ? 'positive' : 'negative'}>
+                                <td className="text-right">{debit !== 0 ? `$${debit.toLocaleString()}` : '-'}</td>
+                                <td className="text-right">{credit !== 0 ? `$${credit.toLocaleString()}` : '-'}</td>
+                                <td className={`text-right ${account.balance >= 0 ? 'positive' : 'negative'}`}>
                                     ${Math.abs(account.balance).toLocaleString()}
                                 </td>
                             </tr>
@@ -100,12 +100,12 @@ export const GeneralLedgerTable: React.FC<GeneralLedgerTableProps> = ({ accounts
                     <tr className="total-row" style={{ fontWeight: 'bold', borderTop: '2px solid #ccc' }}>
                         <td colSpan={3} style={{ textAlign: 'right' }}>Totals:</td>
                         {/* Calculating totals would be good validation */}
-                        <td>
+                        <td className="text-right">
                             ${accounts.reduce((sum, a) => {
                                 return ['Asset', 'Expense'].includes(a.type) ? sum + a.balance : sum;
                             }, 0).toLocaleString()}
                         </td>
-                        <td>
+                        <td className="text-right">
                             ${accounts.reduce((sum, a) => {
                                 return ['Liability', 'Equity', 'Revenue'].includes(a.type) ? sum + a.balance : sum;
                             }, 0).toLocaleString()}
