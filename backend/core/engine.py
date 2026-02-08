@@ -297,6 +297,9 @@ class GameEngine:
             if not company.is_player:
                 log(f"\n  {company.name}:")
                 bot_ai = BotAI(self.db)
+                # 1. Learn from previous turn (before making new decisions)
+                await bot_ai._update_strategy_memory(company, logs)
+                # 2. Make new decisions based on updated memory
                 await bot_ai.make_decisions(company, logs, events_engine=events_engine)  # Pass logs list and events_engine
         
         
@@ -321,8 +324,20 @@ class GameEngine:
         state.current_year = self.current_year
         
         log(f"\n⏰ Advanced to: {self.current_month}/{self.current_year}")
+
+        # Update brand equity durations (decay)
+        await self._apply_brand_decay(logs)
+        
+        # New: Branding & Competitive Advantage Report
+        await self._record_brand_report(logs)
+        
+        # New: Strategy Evolution Report accounts for learning
+        await self._record_strategy_evolution(logs)
         
         await self.db.commit()
+        
+        # New: Branding & Competitive Advantage Report
+        await self._record_brand_report(logs)
         
         # Final state
         log("\n📊 FINAL SUMMARY:")
@@ -537,3 +552,110 @@ class GameEngine:
                 
                 logs.append(f"  [{company.name}] Cash: {cash:.2f} | Assets: {assets:.2f} | Total Profit: {total_profit:.2f}")
             logs.append("=" * 50 + "\n")
+
+    async def _apply_brand_decay(self, logs: List[str] = None):
+        """Apply monthly decay to brand equity to force continuous investment."""
+        result = await self.db.execute(select(Company))
+        companies = result.scalars().all()
+        
+        if logs is not None:
+            title = "\n📉 BRAND EQUITY DECAY:"
+            print(title)
+            logs.append(title)
+            
+        for company in companies:
+            if company.brand_equity > 1.0:
+                old_brand = company.brand_equity
+                # 10% decay per month, floor at 1.0
+                decay_amt = (company.brand_equity - 1.0) * 0.10
+                company.brand_equity = max(1.0, company.brand_equity - decay_amt)
+                
+                if logs is not None:
+                    msg = f"    {company.name}: {old_brand:.2f} → {company.brand_equity:.2f} (-{decay_amt:.2f} decay)"
+                    print(msg)
+                    logs.append(msg)
+
+    async def _record_brand_report(self, logs: List[str]):
+        """Special log section for competitive branding analysis."""
+        result = await self.db.execute(select(Company).order_by(Company.brand_equity.desc()))
+        companies = result.scalars().all()
+        
+        header = "\n🏆 MARKET COMPETITIVENESS & BRANDING:"
+        print(header)
+        logs.append(header)
+        
+        for company in companies:
+            # Calculate how much "extra" market share they get per price unit
+            # Advantage = (Brand Equity - 1.0) * 100%
+            advantage = (company.brand_equity - 1.0) * 100
+            msg = f"  - {company.name}: Brand Equity {company.brand_equity:.2f} ({advantage:+.1f}% Market Weight Advantage)"
+            print(msg)
+            logs.append(msg)
+
+    async def _record_strategy_evolution(self, logs: List[str]):
+        """Log how bot strategies are evolving based on memory."""
+        result = await self.db.execute(select(Company).where(Company.is_player == False))
+        bots = result.scalars().all()
+        
+        header = "\n🧠 STRATEGY EVOLUTION REPORT:"
+        print(header)
+        logs.append(header)
+        
+        from core.bot_ai import BotAI
+        bot_ai = BotAI(self.db)
+        
+        for bot in bots:
+            personality = bot_ai._get_personality(bot)
+            memory = bot.strategy_memory
+            
+            if not memory:
+                msg = f"  {bot.name} ({personality}): No history yet."
+                print(msg)
+                logs.append(msg)
+                continue
+                
+            # Summarize memory state
+            stockouts = memory.get("stockouts", {})
+            total_stockouts = sum(stockouts.values())
+            
+            msg_header = f"  {bot.name} ({personality} strategy):"
+            print(msg_header)
+            logs.append(msg_header)
+            
+            if total_stockouts > 0:
+                # Format stockout details
+                details = []
+                for pid, count in stockouts.items():
+                    if count >= 1.0: # Filter out decayed fractional values
+                        # Get product name (inefficient but safe)
+                        prod_res = await self.db.execute(select(Product).where(Product.id == int(pid)))
+                        prod = prod_res.scalar_one()
+                        details.append(f"{prod.name}: {count:.1f}x")
+                
+                if details:
+                    msg_mem = f"    ⚠️  Stockout Memory: {', '.join(details)}"
+                    print(msg_mem)
+                    logs.append(msg_mem)
+            
+            # Show active adaptations
+            adjustments = await bot_ai._apply_learned_adjustments(bot, personality, logs=[])
+            
+            safety = adjustments.get("safety_stock_multiplier", 1.0)
+            margin = adjustments.get("margin_offset", 0.0)
+            marketing = adjustments.get("marketing_budget_offset", 0.0)
+            
+            if safety != 1.0 or margin != 0.0 or marketing != 0.0:
+                drift_msg = f"    🔄 Active Adaptations:"
+                if safety != 1.0:
+                    drift_msg += f" Safety Stock {int(safety*100)}% |"
+                if margin != 0.0:
+                    drift_msg += f" Margin {margin:+.0%} |"
+                if marketing != 0.0:
+                    drift_msg += f" Marketing {marketing:+.0%} |"
+                
+                print(drift_msg)
+                logs.append(drift_msg)
+            else:
+                msg_stable = "    ✅ Strategy Stable (No active adaptations)"
+                print(msg_stable)
+                logs.append(msg_stable)

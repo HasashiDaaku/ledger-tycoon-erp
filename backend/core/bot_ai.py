@@ -26,9 +26,9 @@ class BotAI:
         
         # Personality targets
         self.personality_config = {
-            BotPersonality.AGGRESSIVE: {"margin": 0.15, "price_adjust": 0.95},
-            BotPersonality.PREMIUM: {"margin": 0.50, "price_adjust": 1.10},
-            BotPersonality.BALANCED: {"margin": 0.30, "price_adjust": 1.00},
+            BotPersonality.AGGRESSIVE: {"margin": 0.15, "marketing_budget": 0.10}, # 10% of cash
+            BotPersonality.PREMIUM: {"margin": 0.50, "marketing_budget": 0.05},    # 5% of cash
+            BotPersonality.BALANCED: {"margin": 0.30, "marketing_budget": 0.03},   # 3% of cash
         }
     
     async def make_decisions(self, company: Company, logs: List[str] = None, events_engine=None):
@@ -51,18 +51,121 @@ class BotAI:
         
         # 2. Inventory management
         await self._manage_inventory(company, logs, events_engine)
+
+        # 3. Branding & Marketing spend
+        await self._manage_branding(company, personality, logs)
     
     def _get_personality(self, company: Company) -> str:
         """Get or assign personality to a bot."""
         # Simple hash-based assignment for consistency
         personalities = [BotPersonality.AGGRESSIVE, BotPersonality.PREMIUM, BotPersonality.BALANCED]
         return personalities[company.id % 3]
+
+    async def _update_strategy_memory(self, company: Company, logs: List[str]):
+        """Analyze turn performance and update strategy memory."""
+        # Ensure memory is initialized
+        if not company.strategy_memory:
+            company.strategy_memory = {
+                "stockouts": {},
+                "pricing_regret": {},
+                "inventory_waste": {},
+                "adaptations": []
+            }
+        
+        # 1. Check for Stockouts (Missed Sales)
+        # This requires checking if inventory hits 0 during sales processing
+        # We'll infer it: if inventory is 0 and demand > 0 (complex without direct signal)
+        # Better approach: The MarketEngine logs "Insufficient inventory" warnings
+        # For now, let's look at current inventory. If 0, it's a stockout risk.
+        
+        from sqlalchemy import select
+        from app.models import InventoryItem, Product
+        
+        # Get all products
+        products_result = await self.db.execute(select(Product))
+        products = products_result.scalars().all()
+        
+        memory = dict(company.strategy_memory) # Copy validation
+        stockout_occurred = False
+        
+        for product in products:
+            # Check inventory
+            inv_result = await self.db.execute(
+                select(InventoryItem).where(
+                    InventoryItem.company_id == company.id, 
+                    InventoryItem.product_id == product.id
+                )
+            )
+            item = inv_result.scalar_one_or_none()
+            
+            if not item or item.quantity == 0:
+                # Stockout!
+                pid_str = str(product.id)
+                current_count = memory["stockouts"].get(pid_str, 0)
+                memory["stockouts"][pid_str] = current_count + 1
+                stockout_occurred = True
+                
+                # Log the failure
+                if current_count == 0:
+                    msg = f"    🧠 MEMORY UPDATE: First stockout for {product.name} recorded."
+                else:
+                    msg = f"    🧠 MEMORY UPDATE: Stockout #{current_count+1} for {product.name}."
+                print(msg)
+                logs.append(msg)
+        
+        # 2. Memory Decay (Forget old mistakes slowly)
+        # Every turn, reduce stockout counts by 0.1 (so 10 turns heals 1 stockout)
+        for pid in list(memory["stockouts"].keys()):
+            if memory["stockouts"][pid] > 0:
+                memory["stockouts"][pid] = max(0, memory["stockouts"][pid] - 0.1)
+                
+        # Save back to DB
+        company.strategy_memory = memory
+        await self.db.commit()
+
+    async def _apply_learned_adjustments(self, company: Company, personality: str, logs: List[str]) -> dict:
+        """Calculate adjustments to base personality based on memory."""
+        if not company.strategy_memory:
+            return {}
+            
+        adjustments = {
+            "safety_stock_multiplier": 1.0,
+            "margin_offset": 0.0,
+            "marketing_budget_offset": 0.0
+        }
+        
+        memory = company.strategy_memory
+        stockouts = memory.get("stockouts", {})
+        
+        # 1. Safety Stock Adjustment
+        # Total stockout points across all products
+        total_stockout_severity = sum(stockouts.values())
+        
+        if total_stockout_severity > 0:
+            # Increase safety stock by 10% per severity point, max +100%
+            safety_boost = min(1.0, total_stockout_severity * 0.10)
+            adjustments["safety_stock_multiplier"] += safety_boost
+            
+            msg = f"    🧠 ADAPTATION: Safety Stock +{safety_boost*100:.0f}% (Due to past stockouts)"
+            print(msg)
+            logs.append(msg)
+            
+        # 2. Caution Adjustment (Aggressive bot becomes more careful)
+        if personality == BotPersonality.AGGRESSIVE and total_stockout_severity > 3:
+            # If failing often, reduce marketing to save cash for inventory
+            adjustments["marketing_budget_offset"] = -0.02 # -2% marketing
+            
+            msg = f"    🧠 ADAPTATION: Marketing -2% (Becoming more cautious)"
+            print(msg)
+            logs.append(msg)
+            
+        return adjustments
+
     
     async def _adjust_pricing(self, company: Company, personality: str, logs: List[str]):
         """Adjust product prices based on personality and actual inventory costs."""
         config = self.personality_config[personality]
         target_margin = config["margin"]
-        
         # Get all company products
         result = await self.db.execute(
             select(CompanyProduct, Product)
@@ -70,6 +173,10 @@ class BotAI:
             .where(CompanyProduct.company_id == company.id)
         )
         rows = result.all()
+        
+        # Apply learned adjustments
+        adjustments = await self._apply_learned_adjustments(company, personality, logs)
+        target_margin += adjustments.get("margin_offset", 0.0)
         
         for cp, product in rows:
             # Use cost-aware pricing that considers actual inventory costs
@@ -298,16 +405,34 @@ class BotAI:
         # Initialize inventory manager
         inv_mgr = InventoryManager(self.db)
         
+        # Apply learned adjustments
+        personality = self._get_personality(company)
+        adjustments = await self._apply_learned_adjustments(company, personality, logs)
+        safety_multiplier = adjustments.get("safety_stock_multiplier", 1.0)
+        
         # Get all products
         result = await self.db.execute(select(Product))
         products = result.scalars().all()
         
         for product in products:
-            # Get intelligent reorder recommendation
+            # Get intelligent reorder recommendation (with learned safety stock)
+            # We need to manually adjust the recommendation because inv_mgr doesn't know about our memory
+            # So we'll get the standard recommendation, and if safety_multiplier > 1.0, we add more.
+            # Actually, simpler: let's just calc safety stock ourselves and add it.
+            
+            # Standard recommendation includes standard safety stock.
+            # We calculate EXTRA safety stock needed.
+            base_safety = await inv_mgr.calculate_safety_stock(company.id, product.id)
+            extra_safety = base_safety * (safety_multiplier - 1.0)
+            
             recommended_qty = await inv_mgr.get_reorder_quantity(
                 company_id=company.id,
                 product_id=product.id
             )
+            
+            # Add learned extra safety stock
+            if extra_safety > 0:
+                recommended_qty += int(extra_safety)
             
             if recommended_qty == 0:
                 msg_skip = f"    ℹ️  {product.name}: Inventory sufficient (no reorder needed)"
@@ -364,7 +489,8 @@ class BotAI:
             
             # Get forecast info for logging
             forecast = await inv_mgr.forecast_demand(company.id, product.id)
-            safety_stock = await inv_mgr.calculate_safety_stock(company.id, product.id)
+            base_safety_stock = await inv_mgr.calculate_safety_stock(company.id, product.id)
+            safety_stock = base_safety_stock * safety_multiplier # Apply learning multiplier
             current_inv = await inv_mgr.get_current_inventory(company.id, product.id)
             
             msg_analysis = f"    📊 {product.name} Analysis: Forecast={int(forecast)}, Safety={int(safety_stock)}, Current={current_inv}"
@@ -399,3 +525,59 @@ class BotAI:
                 msg_fail = f"    ❌ Purchase failed: {e}"
                 print(msg_fail)
                 logs.append(msg_fail)
+
+    async def _manage_branding(self, company: Company, personality: str, logs: List[str]):
+        """Decide and execute marketing spend to build Brand Equity."""
+        # Get current cash after inventory purchases
+        cash = await self.accounting.get_company_cash(company.id)
+        
+        if cash < 5000:
+            return
+
+        config = self.personality_config[personality]
+        budget_pct = config["marketing_budget"]
+        
+        # Apply learned adjustments
+        adjustments = await self._apply_learned_adjustments(company, personality, logs)
+        budget_pct += adjustments.get("marketing_budget_offset", 0.0)
+        budget_pct = max(0.0, budget_pct) # Ensure non-negative
+        
+        # Calculate spend
+        marketing_spend = round(cash * budget_pct, 2)
+        
+        if marketing_spend < 100:
+            return
+
+        # Record expense (Debit: Marketing Expense, Credit: Cash)
+        cash_acc = await self.accounting._get_account_by_code(company.id, "1000")
+        marketing_acc = await self.accounting._get_account_by_code(company.id, "5200")
+        
+        await self.accounting.create_transaction(
+            company_id=company.id,
+            description=f"Monthly marketing campaign - {personality} strategy",
+            entries=[
+                (marketing_acc.id, marketing_spend),   # Debit Expense
+                (cash_acc.id, -marketing_spend),       # Credit Cash
+            ]
+        )
+        
+        # Convert spend to Brand Equity
+        # Formula: Each $1000 spent adds 0.1 to brand equity (diminishing returns or scaling?)
+        # For now, linear: 1.0 + (Spend / 10000)
+        brand_boost = marketing_spend / 10000.0
+        old_brand = company.brand_equity
+        company.brand_equity += brand_boost
+        
+        msg_header = f"    📢 BRANDING REPORT:"
+        msg_spend = f"      💰 Marketing Spend: ${marketing_spend:,.2f} ({budget_pct*100:.0f}% of available cash)"
+        msg_equity = f"      📈 Brand Equity: {old_brand:.2f} → {company.brand_equity:.2f} (+{brand_boost:.2f})"
+        
+        print(msg_header)
+        print(msg_spend)
+        print(msg_equity)
+        
+        logs.append(msg_header)
+        logs.append(msg_spend)
+        logs.append(msg_equity)
+        
+        await self.db.commit()

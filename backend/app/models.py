@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Float, Enum as SQLEnum
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Float, Enum as SQLEnum, JSON
 from sqlalchemy.orm import relationship
 from datetime import datetime
 import enum
@@ -53,7 +53,14 @@ class Company(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)  # Removed unique=True
     is_player = Column(Boolean, default=False)
+    brand_equity = Column(Float, default=1.0) # Base multiplier for market share
     cash = Column(Float, default=0.0) # Redundant but good for quick access? No, calculate from Ledger.
+    strategy_memory = Column(JSON, default=lambda: {
+        "stockouts": {},      # {product_id: count}
+        "pricing_regret": {}, # {product_id: cumulative_regret_score}
+        "inventory_waste": {},# {product_id: units_unsold_for_3+_turns}
+        "adaptations": []     # [{turn, reason, adjustment}]
+    })
     
     accounts = relationship("Account", back_populates="company")
     transactions = relationship("Transaction", back_populates="company")
